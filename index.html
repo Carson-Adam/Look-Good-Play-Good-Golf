@@ -28,33 +28,42 @@
       padding: 30px;
       text-align: center;
     }
-    #shop, #about, #testimonials, #contact {
+    section {
       padding: 20px;
     }
     .products {
       display: flex;
       gap: 20px;
-      justify-content: center;
       flex-wrap: wrap;
+      justify-content: center;
     }
     .product {
       background-color: white;
-      padding: 10px;
+      padding: 15px;
       text-align: center;
       border: 1px solid #ddd;
       border-radius: 5px;
-      width: 200px;
+      width: 250px;
     }
     .product img {
       width: 100%;
-      height: 180px;
+      height: 160px;
       object-fit: cover;
+    }
+    .product p.description {
+      font-style: italic;
+      color: #555;
+      font-size: 0.95em;
+      margin-top: 0.5em;
     }
     footer {
       background-color: #4CAF50;
       color: white;
-      padding: 10px;
+      padding: 15px;
       text-align: center;
+    }
+    footer p {
+      margin: 5px;
     }
   </style>
 </head>
@@ -77,24 +86,27 @@
   </div>
 
   <section id="shop">
-    <h2>Our Golf Ball Selection</h2>
+    <h2>Shop Our Golf Balls</h2>
     <div class="products">
       <div class="product">
         <img src="https://via.placeholder.com/300x180?text=Callaway+Mix+12" alt="Callaway Mix 12">
         <h3>Callaway Mix 12</h3>
         <p>$15 per dozen</p>
+        <p class="description">"A trusted feel for your everyday game."</p>
         <button onclick="addToCart('Callaway Mix 12', 'https://via.placeholder.com/300x180?text=Callaway+Mix+12')">Add to Cart</button>
       </div>
       <div class="product">
         <img src="https://via.placeholder.com/300x180?text=TaylorMade+Mix+12" alt="TaylorMade Mix 12">
         <h3>TaylorMade Mix 12</h3>
         <p>$15 per dozen</p>
+        <p class="description">"Engineered to go the distance every time."</p>
         <button onclick="addToCart('TaylorMade Mix 12', 'https://via.placeholder.com/300x180?text=TaylorMade+Mix+12')">Add to Cart</button>
       </div>
       <div class="product">
         <img src="https://via.placeholder.com/300x180?text=Titleist+Pro+V1" alt="Titleist Pro V1">
         <h3>Titleist Pro V1 (24-Pack)</h3>
         <p>$30 for 24 balls</p>
+        <p class="description">"For players who demand total performance."</p>
         <button onclick="addToCart('Titleist Pro V1 (24-Pack)', 'https://via.placeholder.com/300x180?text=Titleist+Pro+V1')">Add to Cart</button>
       </div>
     </div>
@@ -102,11 +114,11 @@
 
   <section id="about">
     <h2>About Us</h2>
-    <p>We have great quality used golf balls and we like to produce the best for our shoppers.</p>
+    <p>We provide great quality used golf balls and strive to deliver the best for our shoppers. Whether you're a weekend warrior or a seasoned pro, you'll find value and performance here.</p>
   </section>
 
   <section id="testimonials">
-    <h2>What Our Customers Say</h2>
+    <h2>Customer Testimonials</h2>
     <p>"I saved a ton and still play like a pro!" — Mike from PA</p>
     <p>"Amazing quality for used balls. Highly recommend." — Sarah T.</p>
     <p>"Fast shipping and great service!" — John D.</p>
@@ -114,13 +126,15 @@
 
   <section id="contact">
     <h2>Contact Us</h2>
-    <p>Email: <a href="mailto:bernardocarson16@gmail.com">bernardocarson16@gmail.com</a></p>
-    <p>Phone: <a href="tel:4124001286">412-400-1286</a></p>
+    <p>📧 Email: <a href="mailto:bernardocarson16@gmail.com">bernardocarson16@gmail.com</a></p>
+    <p>📞 Phone: <a href="tel:4124001286">412-400-1286</a></p>
+    <p>We currently do not have social media. Reach out directly with any questions or orders!</p>
   </section>
 
   <footer>
-    <p>&copy; 2025 Look Good, Play Good Golf. All rights reserved.</p>
-    <p>Contact: <a href="mailto:bernardocarson16@gmail.com">bernardocarson16@gmail.com</a> | Phone: 412-400-1286</p>
+    <p>&copy; 2025 Look Good, Play Good Golf</p>
+    <p>Email: <a href="mailto:bernardocarson16@gmail.com" style="color:white;">bernardocarson16@gmail.com</a></p>
+    <p>Phone: <a href="tel:4124001286" style="color:white;">412-400-1286</a></p>
   </footer>
 
   <script>
@@ -134,4 +148,5 @@
 
 </body>
 </html>
+
 
