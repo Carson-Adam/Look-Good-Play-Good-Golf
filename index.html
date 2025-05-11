@@ -114,6 +114,37 @@
 
   <section id="about">
     <h2>About Us</h2>
-    <p>We provide great quality used golf balls and strive to deliver the best for our shopp
+    <p>We provide great quality used golf balls and strive to deliver the best for our shoppers. Whether you're a weekend warrior or a seasoned pro, you'll find value and performance here.</p>
+  </section>
 
+  <section id="testimonials">
+    <h2>Customer Testimonials</h2>
+    <p>"I saved a ton and still play like a pro!" — Mike from PA</p>
+    <p>"Amazing quality for used balls. Highly recommend." — Sarah T.</p>
+    <p>"Fast shipping and great service!" — John D.</p>
+  </section>
 
+  <section id="contact">
+    <h2>Contact Us</h2>
+    <p>📧 Email: <a href="mailto:bernardocarson16@gmail.com">bernardocarson16@gmail.com</a></p>
+    <p>📞 Phone: <a href="tel:4124001286">412-400-1286</a></p>
+    <p>We currently do not have social media. Reach out directly with any questions or orders!</p>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Look Good, Play Good Golf</p>
+    <p>Email: <a href="mailto:bernardocarson16@gmail.com" style="color:white;">bernardocarson16@gmail.com</a></p>
+    <p>Phone: <a href="tel:4124001286" style="color:white;">412-400-1286</a></p>
+  </footer>
+
+  <script>
+    function addToCart(name, image) {
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+      cart.push({ name, image });
+      localStorage.setItem('cart', JSON.stringify(cart));
+      alert(`${name} has been added to your cart!`);
+    }
+  </script>
+
+</body>
+</html>
