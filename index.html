@@ -30,6 +30,17 @@
       text-decoration: underline;
     }
 
+    #cart {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background-color: #fff;
+      color: #2e8b57;
+      padding: 10px;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+
     .hero {
       background: #1f1f1f url('https://images.unsplash.com/photo-1549924231-f129b911e442') center/cover no-repeat;
       color: white;
@@ -126,6 +137,9 @@
       <a href="#testimonials">Testimonials</a>
       <a href="#contact">Contact</a>
     </nav>
+    <div id="cart">
+      Cart: <span id="cartCount">0</span> items
+    </div>
   </header>
 
   <div class="hero">
@@ -141,28 +155,28 @@
         <h3>Callaway Mix 12</h3>
         <p>$15 / dozen</p>
         <p>Top-performing used Callaway golf balls perfect for everyday play and practice.</p>
-        <button>Add to Cart</button>
+        <button onclick="addToCart()">Add to Cart</button>
       </div>
       <div class="product">
         <img src="https://via.placeholder.com/300x180?text=TaylorMade" alt="TaylorMade">
         <h3>TaylorMade Mix</h3>
         <p>$15 / dozen</p>
         <p>Reliable and soft-feeling TaylorMade balls for golfers who love control and value.</p>
-        <button>Add to Cart</button>
+        <button onclick="addToCart()">Add to Cart</button>
       </div>
       <div class="product">
         <img src="https://via.placeholder.com/300x180?text=Titleist" alt="Titleist">
         <h3>Titleist Mix</h3>
         <p>$15 / dozen</p>
         <p>Trusted Titleist performance in lightly used condition—great feel and distance.</p>
-        <button>Add to Cart</button>
+        <button onclick="addToCart()">Add to Cart</button>
       </div>
       <div class="product">
         <img src="https://via.placeholder.com/300x180?text=Pro+V1" alt="Pro V1">
         <h3>Pro V1 - 24 Pack</h3>
         <p>$30 for 24</p>
         <p>Elite-level performance from Titleist’s Pro V1 — precision, power, and spin.</p>
-        <button>Add to Cart</button>
+        <button onclick="addToCart()">Add to Cart</button>
       </div>
     </div>
   </section>
@@ -189,7 +203,21 @@
     <p>&copy; 2025 Look Good, Play Good Golf. All rights reserved.</p>
   </footer>
 
+  <script>
+    // Create a cart counter
+    let cartCount = 0;
+
+    // Function to handle adding to the cart
+    function addToCart() {
+      cartCount++;
+      document.getElementById('cartCount').innerText = cartCount;
+      alert("Item added to cart! Total items: " + cartCount);
+    }
+  </script>
+
 </body>
 </html>
+
+
 
 
