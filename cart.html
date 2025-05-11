@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Your Cart</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+    }
+    header {
+      background-color: #4CAF50;
+      color: white;
+      padding: 1em;
+      text-align: center;
+    }
+    header nav a {
+      margin: 0 15px;
+      color: white;
+      text-decoration: none;
+    }
+    #cartItems {
+      padding: 20px;
+      text-align: center;
+    }
+    .cart-item {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 15px;
+    }
+    .cart-item img {
+      width: 100px;
+      height: 60px;
+      object-fit: cover;
+    }
+    footer {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Your Cart</h1>
+    <nav>
+      <a href="index.html">Back to Shop</a>
+      <a href="checkout.html">Proceed to Checkout</a>
+    </nav>
+  </header>
+
+  <section id="cartItems">
+    <h2>Items in Your Cart</h2>
+    <div id="cartContents">
+      <p>No items in the cart yet.</p>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Look Good, Play Good Golf. All rights reserved.</p>
+  </footer>
+
+  <script>
+    function loadCart() {
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+      const cartContents = document.getElementById('cartContents');
+      cartContents.innerHTML = '';
+
+      if (cart.length === 0) {
+        cartContents.innerHTML = '<p>No items in the cart yet.</p>';
+      } else {
+        cart.forEach(item => {
+          const cartItem = document.createElement('div');
+          cartItem.classList.add('cart-item');
+          cartItem.innerHTML = `
+            <img src="${item.image}" alt="${item.name}">
+            <span>${item.name}</span>
+          `;
+          cartContents.appendChild(cartItem);
+        });
+      }
+    }
+
+    window.onload = loadCart;
+  </script>
+
+</body>
+</html>
