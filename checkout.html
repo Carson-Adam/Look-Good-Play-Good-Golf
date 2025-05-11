@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Checkout</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+    }
+    header {
+      background-color: #4CAF50;
+      color: white;
+      padding: 1em;
+      text-align: center;
+    }
+    #checkoutSection {
+      padding: 20px;
+      text-align: center;
+    }
+    footer {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Checkout</h1>
+  </header>
+
+  <section id="checkoutSection">
+    <h2>Complete Your Order</h2>
+    <form id="checkoutForm">
+      <label for="name">Full Name:</label>
+      <input type="text" id="name" required /><br /><br />
+      
+      <label for="email">Email:</label>
+      <input type="email" id="email" required /><br /><br />
+      
+      <label for="address">Shipping Address:</label>
+      <textarea id="address" required></textarea><br /><br />
+      
+      <label for="payment">Payment Method:</label>
+      <select id="payment">
+        <option value="credit_card">Credit Card</option>
+        <option value="paypal">PayPal</option>
+        <option value="cash_on_delivery">Cash on Delivery</option>
+      </select><br /><br />
+      
+      <button type="submit">Submit Order</button>
+    </form>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Look Good, Play Good Golf. All rights reserved.</p>
+  </footer>
+
+  <script>
+    document.getElementById('checkoutForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const address = document.getElementById('address').value;
+      const paymentMethod = document.getElementById('payment').value;
+
+      alert(`Thank you, ${name}! Your order has been placed successfully. 
+            We'll send an email to ${email} with the details of your order.
+            Shipping Address: ${address} 
+            Payment Method: ${paymentMethod}`);
+
+      localStorage.removeItem('cart');
+    });
+  </script>
+
+</body>
+</html>
