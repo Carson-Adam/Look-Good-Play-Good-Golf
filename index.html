@@ -9,141 +9,52 @@
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
-      background-color: #f4f4f9;
+      background-color: #f5f5f5;
     }
     header {
-      background-color: #2c3e50;
+      background-color: #4CAF50;
       color: white;
-      padding: 10px 0;
+      padding: 1em;
       text-align: center;
-    }
-    header nav {
-      margin-top: 10px;
     }
     header nav a {
-      color: white;
       margin: 0 15px;
+      color: white;
       text-decoration: none;
-      font-size: 18px;
-    }
-    header nav a:hover {
-      text-decoration: underline;
     }
     .hero {
-      background-color: #3498db;
+      background-color: #6FBF73;
       color: white;
+      padding: 30px;
       text-align: center;
-      padding: 50px 0;
     }
-    .hero h1 {
-      font-size: 3rem;
-      margin-bottom: 20px;
+    #shop, #about, #testimonials, #contact {
+      padding: 20px;
     }
     .products {
       display: flex;
-      justify-content: space-around;
+      gap: 20px;
+      justify-content: center;
       flex-wrap: wrap;
-      padding: 20px;
     }
     .product {
       background-color: white;
-      border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      width: 30%;
-      margin: 10px 0;
+      padding: 10px;
       text-align: center;
-      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      width: 200px;
     }
     .product img {
       width: 100%;
-      height: auto;
-      border-radius: 8px;
+      height: 180px;
+      object-fit: cover;
     }
-    .product h3 {
-      margin-top: 10px;
-      font-size: 1.5rem;
-    }
-    .product p {
-      font-size: 1.2rem;
-      margin-top: 5px;
-    }
-    .product button {
-      background-color: #2ecc71;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      font-size: 1rem;
-      cursor: pointer;
-      border-radius: 5px;
-      margin-top: 10px;
-    }
-    .product button:hover {
-      background-color: #27ae60;
-    }
-    #cart {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      background-color: #e74c3c;
+    footer {
+      background-color: #4CAF50;
       color: white;
       padding: 10px;
-      border-radius: 50%;
-      font-size: 20px;
-    }
-    #cartItems {
-      padding: 20px;
-    }
-    #cartItems h2 {
-      font-size: 2rem;
-    }
-    .cart-item {
-      display: flex;
-      align-items: center;
-      margin: 10px 0;
-    }
-    .cart-item img {
-      width: 50px;
-      height: 50px;
-      margin-right: 10px;
-    }
-    #checkoutSection {
-      background-color: #ecf0f1;
-      padding: 20px;
-      display: none;
-    }
-    #checkoutSection form {
-      width: 50%;
-      margin: 0 auto;
-      background-color: white;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-    #checkoutSection label {
-      font-size: 1rem;
-      margin-bottom: 5px;
-      display: block;
-    }
-    #checkoutSection input,
-    #checkoutSection select,
-    #checkoutSection textarea {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 15px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-    }
-    #checkoutSection button {
-      background-color: #3498db;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      font-size: 1rem;
-      cursor: pointer;
-      border-radius: 5px;
-    }
-    #checkoutSection button:hover {
-      background-color: #2980b9;
+      text-align: center;
     }
   </style>
 </head>
@@ -156,10 +67,8 @@
       <a href="#about">About</a>
       <a href="#testimonials">Testimonials</a>
       <a href="#contact">Contact</a>
+      <a href="cart.html">Cart</a>
     </nav>
-    <div id="cart">
-      Cart: <span id="cartCount">0</span> items
-    </div>
   </header>
 
   <div class="hero">
@@ -170,132 +79,59 @@
   <section id="shop">
     <h2>Our Golf Ball Selection</h2>
     <div class="products">
-      <!-- Product 1 -->
       <div class="product">
         <img src="https://via.placeholder.com/300x180?text=Callaway+Mix+12" alt="Callaway Mix 12">
         <h3>Callaway Mix 12</h3>
         <p>$15 per dozen</p>
         <button onclick="addToCart('Callaway Mix 12', 'https://via.placeholder.com/300x180?text=Callaway+Mix+12')">Add to Cart</button>
       </div>
-
-      <!-- Product 2 -->
       <div class="product">
         <img src="https://via.placeholder.com/300x180?text=TaylorMade+Mix+12" alt="TaylorMade Mix 12">
         <h3>TaylorMade Mix 12</h3>
         <p>$15 per dozen</p>
         <button onclick="addToCart('TaylorMade Mix 12', 'https://via.placeholder.com/300x180?text=TaylorMade+Mix+12')">Add to Cart</button>
       </div>
-
-      <!-- Product 3 -->
       <div class="product">
         <img src="https://via.placeholder.com/300x180?text=Titleist+Pro+V1" alt="Titleist Pro V1">
-        <h3>Titleist Pro V1</h3>
-        <p>$30 per dozen</p>
-        <button onclick="addToCart('Titleist Pro V1', 'https://via.placeholder.com/300x180?text=Titleist+Pro+V1')">Add to Cart</button>
+        <h3>Titleist Pro V1 (24-Pack)</h3>
+        <p>$30 for 24 balls</p>
+        <button onclick="addToCart('Titleist Pro V1 (24-Pack)', 'https://via.placeholder.com/300x180?text=Titleist+Pro+V1')">Add to Cart</button>
       </div>
     </div>
-
-    <!-- Button to go to the checkout -->
-    <button id="checkoutButton" onclick="showCheckoutForm()">Proceed to Checkout</button>
   </section>
 
-  <section id="cartItems">
-    <h2>Your Cart</h2>
-    <div id="cartContents">
-      <p>No items in the cart yet.</p>
-    </div>
+  <section id="about">
+    <h2>About Us</h2>
+    <p>We have great quality used golf balls and we like to produce the best for our shoppers.</p>
   </section>
 
-  <!-- Checkout Form Section (hidden initially) -->
-  <section id="checkoutSection" style="display: none;">
-    <h2>Checkout</h2>
-    <form id="checkoutForm">
-      <label for="name">Full Name:</label>
-      <input type="text" id="name" required /><br /><br />
-      
-      <label for="email">Email:</label>
-      <input type="email" id="email" required /><br /><br />
-      
-      <label for="address">Shipping Address:</label>
-      <textarea id="address" required></textarea><br /><br />
-      
-      <label for="payment">Payment Method:</label>
-      <select id="payment">
-        <option value="credit_card">Credit Card</option>
-        <option value="paypal">PayPal</option>
-        <option value="cash_on_delivery">Cash on Delivery</option>
-      </select><br /><br />
-      
-      <button type="submit">Submit Order</button>
-    </form>
+  <section id="testimonials">
+    <h2>What Our Customers Say</h2>
+    <p>"I saved a ton and still play like a pro!" — Mike from PA</p>
+    <p>"Amazing quality for used balls. Highly recommend." — Sarah T.</p>
+    <p>"Fast shipping and great service!" — John D.</p>
+  </section>
+
+  <section id="contact">
+    <h2>Contact Us</h2>
+    <p>Email: <a href="mailto:bernardocarson16@gmail.com">bernardocarson16@gmail.com</a></p>
+    <p>Phone: <a href="tel:4124001286">412-400-1286</a></p>
   </section>
 
   <footer>
     <p>&copy; 2025 Look Good, Play Good Golf. All rights reserved.</p>
+    <p>Contact: <a href="mailto:bernardocarson16@gmail.com">bernardocarson16@gmail.com</a> | Phone: 412-400-1286</p>
   </footer>
 
   <script>
-    let cart = [];
-
     function addToCart(name, image) {
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
       cart.push({ name, image });
-      document.getElementById('cartCount').innerText = cart.length;
-      updateCartDisplay();
+      localStorage.setItem('cart', JSON.stringify(cart));
+      alert(`${name} has been added to your cart!`);
     }
-
-    function updateCartDisplay() {
-      const cartContents = document.getElementById('cartContents');
-      cartContents.innerHTML = ''; // Clear current content
-
-      if (cart.length === 0) {
-        cartContents.innerHTML = '<p>No items in the cart yet.</p>';
-      } else {
-        cart.forEach(item => {
-          const cartItem = document.createElement('div');
-          cartItem.classList.add('cart-item');
-          cartItem.innerHTML = `
-            <img src="${item.image}" alt="${item.name}">
-            <span>${item.name}</span>
-          `;
-          cartContents.appendChild(cartItem);
-        });
-      }
-    }
-
-    function showCheckoutForm() {
-      const checkoutSection = document.getElementById('checkoutSection');
-      checkoutSection.style.display = 'block'; // Show the checkout form
-    }
-
-    // Handle form submission
-    document.getElementById('checkoutForm').addEventListener('submit', function(event) {
-      event.preventDefault(); // Prevent form from submitting to a server (for now)
-
-      // Gather form data
-      const name = document.getElementById('name').value;
-      const email = document.getElementById('email').value;
-      const address = document.getElementById('address').value;
-      const paymentMethod = document.getElementById('payment').value;
-
-      // Here, you could send this data to your server or payment gateway.
-      // For now, we will show a confirmation message.
-
-      alert(`Thank you, ${name}! Your order has been placed successfully. 
-            We'll send an email to ${email} with the details of your order.
-            Shipping Address: ${address} 
-            Payment Method: ${paymentMethod}`);
-      
-      // Optionally, you can reset the cart or redirect to a confirmation page
-      cart = []; // Clear the cart
-      document.getElementById('cartCount').innerText = '0';
-      updateCartDisplay(); // Update the cart display
-
-      // Hide checkout form
-      checkoutSection.style.display = 'none';
-    });
   </script>
 
 </body>
 </html>
-
 
