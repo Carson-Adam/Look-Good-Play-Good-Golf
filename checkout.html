@@ -1,9 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Checkout</title>
+  <title>Your Cart</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -15,9 +16,25 @@
       padding: 1em;
       text-align: center;
     }
-    #checkoutSection {
+    header nav a {
+      margin: 0 15px;
+      color: white;
+      text-decoration: none;
+    }
+    #cartItems {
       padding: 20px;
       text-align: center;
+    }
+    .cart-item {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 15px;
+    }
+    .cart-item img {
+      width: 100px;
+      height: 60px;
+      object-fit: cover;
     }
     footer {
       background-color: #4CAF50;
@@ -30,30 +47,18 @@
 <body>
 
   <header>
-    <h1>Checkout</h1>
+    <h1>Your Cart</h1>
+    <nav>
+      <a href="index.html">Back to Shop</a>
+      <a href="checkout.html">Proceed to Checkout</a>
+    </nav>
   </header>
 
-  <section id="checkoutSection">
-    <h2>Complete Your Order</h2>
-    <form id="checkoutForm">
-      <label for="name">Full Name:</label>
-      <input type="text" id="name" required /><br /><br />
-      
-      <label for="email">Email:</label>
-      <input type="email" id="email" required /><br /><br />
-      
-      <label for="address">Shipping Address:</label>
-      <textarea id="address" required></textarea><br /><br />
-      
-      <label for="payment">Payment Method:</label>
-      <select id="payment">
-        <option value="credit_card">Credit Card</option>
-        <option value="paypal">PayPal</option>
-        <option value="cash_on_delivery">Cash on Delivery</option>
-      </select><br /><br />
-      
-      <button type="submit">Submit Order</button>
-    </form>
+  <section id="cartItems">
+    <h2>Items in Your Cart</h2>
+    <div id="cartContents">
+      <p>No items in the cart yet.</p>
+    </div>
   </section>
 
   <footer>
@@ -61,22 +66,29 @@
   </footer>
 
   <script>
-    document.getElementById('checkoutForm').addEventListener('submit', function(event) {
-      event.preventDefault();
+    function loadCart() {
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+      const cartContents = document.getElementById('cartContents');
+      cartContents.innerHTML = '';
 
-      const name = document.getElementById('name').value;
-      const email = document.getElementById('email').value;
-      const address = document.getElementById('address').value;
-      const paymentMethod = document.getElementById('payment').value;
+      if (cart.length === 0) {
+        cartContents.innerHTML = '<p>No items in the cart yet.</p>';
+      } else {
+        cart.forEach(item => {
+          const cartItem = document.createElement('div');
+          cartItem.classList.add('cart-item');
+          cartItem.innerHTML = `
+            <img src="${item.image}" alt="${item.name}">
+            <span>${item.name}</span>
+          `;
+          cartContents.appendChild(cartItem);
+        });
+      }
+    }
 
-      alert(`Thank you, ${name}! Your order has been placed successfully. 
-            We'll send an email to ${email} with the details of your order.
-            Shipping Address: ${address} 
-            Payment Method: ${paymentMethod}`);
-
-      localStorage.removeItem('cart');
-    });
+    window.onload = loadCart;
   </script>
 
 </body>
 </html>
+
