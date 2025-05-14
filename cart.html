@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,75 +11,56 @@
       margin: 0;
       padding: 0;
     }
-
     header {
       background-color: #4CAF50;
       color: white;
       padding: 1em;
       text-align: center;
     }
-
-    nav {
-      margin-top: 10px;
-    }
-
     nav a {
       margin: 0 10px;
       color: white;
       text-decoration: none;
-      font-weight: bold;
     }
-
-    section#cartItems {
+    #cartItems {
       padding: 20px;
+      text-align: center;
     }
-
     .cart-item {
       display: flex;
       align-items: center;
-      margin-bottom: 15px;
-      background-color: white;
+      gap: 15px;
+      justify-content: center;
+      margin: 10px 0;
+      background: white;
       padding: 10px;
-      border-radius: 5px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
-
     .cart-item img {
       width: 80px;
       height: 80px;
       object-fit: cover;
-      margin-right: 15px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
+      border-radius: 4px;
     }
-
-    footer {
-      background-color: #4CAF50;
-      color: white;
-      padding: 15px;
-      text-align: center;
-      position: relative;
-      bottom: 0;
-      width: 100%;
-    }
-
     .actions {
-      margin-top: 20px;
       text-align: center;
+      margin: 20px;
     }
-
     .actions a {
-      display: inline-block;
-      margin: 0 10px;
       padding: 10px 20px;
       background-color: #4CAF50;
       color: white;
       text-decoration: none;
       border-radius: 5px;
+      margin: 0 10px;
     }
-
-    .actions a:hover {
-      background-color: #45a049;
+    footer {
+      background-color: #4CAF50;
+      color: white;
+      padding: 15px;
+      text-align: center;
+      margin-top: 30px;
     }
   </style>
 </head>
@@ -90,6 +70,7 @@
     <h1>Your Cart</h1>
     <nav>
       <a href="index.html">Back to Shop</a>
+      <a href="checkout.html">Proceed to Checkout</a>
     </nav>
   </header>
 
@@ -97,10 +78,6 @@
     <h2>Items in Your Cart</h2>
     <div id="cartContents">
       <p>No items in the cart yet.</p>
-    </div>
-
-    <div class="actions">
-      <a href="checkout.html">Proceed to Checkout</a>
     </div>
   </section>
 
