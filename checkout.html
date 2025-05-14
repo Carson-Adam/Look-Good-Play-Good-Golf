@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Your Cart</title>
+  <title>Checkout</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -16,49 +15,72 @@
       padding: 1em;
       text-align: center;
     }
-    header nav a {
-      margin: 0 15px;
-      color: white;
-      text-decoration: none;
-    }
-    #cartItems {
+    #checkoutSection {
       padding: 20px;
       text-align: center;
     }
-    .cart-item {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-      margin-bottom: 15px;
+    .cart-summary {
+      margin-bottom: 30px;
+      background: white;
+      padding: 15px;
+      border-radius: 8px;
+      display: inline-block;
+      text-align: left;
     }
-    .cart-item img {
-      width: 100px;
-      height: 60px;
-      object-fit: cover;
+    .cart-summary li {
+      list-style: none;
+      margin: 5px 0;
     }
     footer {
       background-color: #4CAF50;
       color: white;
       padding: 10px;
       text-align: center;
+      margin-top: 30px;
+    }
+    input, textarea, select, button {
+      margin: 10px 0;
+      padding: 8px;
+      width: 80%;
+      max-width: 400px;
+      font-size: 1em;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
     }
   </style>
 </head>
 <body>
 
   <header>
-    <h1>Your Cart</h1>
-    <nav>
-      <a href="index.html">Back to Shop</a>
-      <a href="checkout.html">Proceed to Checkout</a>
-    </nav>
+    <h1>Checkout</h1>
   </header>
 
-  <section id="cartItems">
-    <h2>Items in Your Cart</h2>
-    <div id="cartContents">
-      <p>No items in the cart yet.</p>
-    </div>
+  <section id="checkoutSection">
+    <h2>Complete Your Order</h2>
+
+    <ul class="cart-summary" id="summaryList">
+      <!-- Items and totals will be injected here -->
+    </ul>
+
+    <form id="checkoutForm">
+      <input type="text" id="name" placeholder="Full Name" required /><br />
+      <input type="email" id="email" placeholder="Email" required /><br />
+      <textarea id="address" placeholder="Shipping Address" required></textarea><br />
+      <select id="payment" required>
+        <option value="">Select Payment Method</option>
+        <option value="credit_card">Credit Card</option>
+        <option value="paypal">PayPal</option>
+        <option value="cash_on_delivery">Cash on Delivery</option>
+      </select><br />
+      <button type="submit">Submit Order</button>
+    </form>
   </section>
 
   <footer>
@@ -66,27 +88,59 @@
   </footer>
 
   <script>
-    function loadCart() {
-      let cart = JSON.parse(localStorage.getItem('cart')) || [];
-      const cartContents = document.getElementById('cartContents');
-      cartContents.innerHTML = '';
+    const PRICES = {
+      "Callaway Mix 12": 15,
+      "TaylorMade Mix 12": 15,
+      "Titleist Pro V1 (12-Pack)": 27
+    };
+
+    function loadCartSummary() {
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      const summaryList = document.getElementById('summaryList');
+      summaryList.innerHTML = '';
 
       if (cart.length === 0) {
-        cartContents.innerHTML = '<p>No items in the cart yet.</p>';
-      } else {
-        cart.forEach(item => {
-          const cartItem = document.createElement('div');
-          cartItem.classList.add('cart-item');
-          cartItem.innerHTML = `
-            <img src="${item.image}" alt="${item.name}">
-            <span>${item.name}</span>
-          `;
-          cartContents.appendChild(cartItem);
-        });
+        summaryList.innerHTML = '<li>No items in your cart.</li>';
+        return;
       }
+
+      let subtotal = 0;
+      cart.forEach(item => {
+        const price = PRICES[item.name] || 0;
+        subtotal += price;
+        const li = document.createElement('li');
+        li.textContent = `${item.name} — $${price.toFixed(2)}`;
+        summaryList.appendChild(li);
+      });
+
+      const tax = subtotal * 0.08;
+      const total = subtotal + tax;
+
+      summaryList.innerHTML += `
+        <li><strong>Subtotal:</strong> $${subtotal.toFixed(2)}</li>
+        <li><strong>Tax (8%):</strong> $${tax.toFixed(2)}</li>
+        <li><strong>Total:</strong> $${total.toFixed(2)}</li>
+      `;
     }
 
-    window.onload = loadCart;
+    document.getElementById('checkoutForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const address = document.getElementById('address').value;
+      const paymentMethod = document.getElementById('payment').value;
+
+      alert(`Thank you, ${name}! Your order has been placed.
+Email: ${email}
+Address: ${address}
+Payment Method: ${paymentMethod}`);
+
+      localStorage.removeItem('cart');
+      window.location.href = "index.html"; // Redirect after order
+    });
+
+    window.onload = loadCartSummary;
   </script>
 
 </body>
