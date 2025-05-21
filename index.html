@@ -3,114 +3,119 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Mulligan Market - Deals</title>
+  <title>Mulligan Market - Golf Ball Deals</title>
   <style>
-    /* Basic styling for layout and design */
-    body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
-    header, footer { background-color: #2e7d32; color: white; text-align: center; padding: 1em; }
-    nav { background-color: #4caf50; padding: 1em; text-align: center; }
-    nav a { color: white; margin: 0 1em; text-decoration: none; }
-    .product-list { display: flex; flex-wrap: wrap; justify-content: center; padding: 2em; }
-    .product-card { border: 1px solid #ccc; border-radius: 5px; margin: 1em; padding: 1em; width: 200px; text-align: center; }
-    .product-card img { width: 100%; height: auto; }
-    .product-card select, .product-card button { margin-top: 0.5em; }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f4f4;
+      color: #333;
+    }
+    header {
+      background-color: #1a1a1a;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    nav {
+      background-color: #333;
+      display: flex;
+      justify-content: center;
+      padding: 10px 0;
+    }
+    nav a {
+      color: white;
+      margin: 0 15px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .container {
+      padding: 40px;
+    }
+    .product {
+      background: white;
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .product h3 {
+      margin-top: 0;
+    }
+    .product select, .product button {
+      padding: 10px;
+      margin-top: 10px;
+    }
+    .add-to-cart {
+      background-color: #28a745;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    footer {
+      background-color: #1a1a1a;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
   </style>
 </head>
 <body>
   <header>
     <h1>Mulligan Market</h1>
-    <p>Affordable, Premium Golf Balls</p>
+    <p>Your trusted source for premium used golf balls</p>
   </header>
   <nav>
     <a href="index.html">Home</a>
     <a href="cart.html">Cart</a>
     <a href="checkout.html">Checkout</a>
   </nav>
-  <main>
-    <div class="product-list" id="product-list">
-      <!-- Products will be dynamically inserted here -->
+
+  <div class="container">
+    <div class="product">
+      <h3>Titleist Pro V1</h3>
+      <p>Top-tier performance golf balls</p>
+      <label for="titleist-qty">Quantity:</label>
+      <select id="titleist-qty">
+        <option value="12">12 - $28</option>
+        <option value="24">24 - $52</option>
+      </select>
+      <button class="add-to-cart" onclick="addToCart('Titleist Pro V1', titleistQty.value)">Add to Cart</button>
     </div>
-  </main>
+
+    <div class="product">
+      <h3>Callaway Chrome Soft</h3>
+      <p>Soft feel with excellent control</p>
+      <label for="callaway-qty">Quantity:</label>
+      <select id="callaway-qty">
+        <option value="12">12 - $18</option>
+        <option value="24">24 - $33</option>
+      </select>
+      <button class="add-to-cart" onclick="addToCart('Callaway Chrome Soft', callawayQty.value)">Add to Cart</button>
+    </div>
+
+    <div class="product">
+      <h3>TaylorMade TP5</h3>
+      <p>Tour performance with incredible distance</p>
+      <label for="taylormade-qty">Quantity:</label>
+      <select id="taylormade-qty">
+        <option value="12">12 - $18</option>
+        <option value="24">24 - $33</option>
+      </select>
+      <button class="add-to-cart" onclick="addToCart('TaylorMade TP5', taylormadeQty.value)">Add to Cart</button>
+    </div>
+  </div>
+
   <footer>
-    &copy; 2025 Mulligan Market. All rights reserved.
+    <p>© 2025 Mulligan Market. All rights reserved.</p>
   </footer>
+
   <script>
-    const products = [
-      {
-        id: 1,
-        name: "Titleist Pro V1 2021",
-        image: "https://via.placeholder.com/150",
-        grades: {
-          "Mint (5A)": 25.99,
-          "Near Mint (4A)": 20.99,
-          "Good (3A)": 15.99
-        }
-      },
-      {
-        id: 2,
-        name: "Callaway Supersoft",
-        image: "https://via.placeholder.com/150",
-        grades: {
-          "Mint (5A)": 16.99,
-          "Near Mint (4A)": 12.99
-        }
-      },
-      {
-        id: 3,
-        name: "TaylorMade Project (a)",
-        image: "https://via.placeholder.com/150",
-        grades: {
-          "Mint (5A)": 18.99,
-          "Near Mint (4A)": 14.99
-        }
-      }
-    ];
-
-    const productList = document.getElementById('product-list');
-
-    products.forEach(product => {
-      const card = document.createElement('div');
-      card.className = 'product-card';
-
-      const gradeOptions = Object.entries(product.grades).map(([grade, price]) => {
-        return `<option value="${grade}">${grade} - $${price.toFixed(2)}</option>`;
-      }).join('');
-
-      card.innerHTML = `
-        <img src="${product.image}" alt="${product.name}">
-        <h3>${product.name}</h3>
-        <label for="grade-${product.id}">Grade:</label>
-        <select id="grade-${product.id}">
-          ${gradeOptions}
-        </select>
-        <label for="quantity-${product.id}">Quantity:</label>
-        <select id="quantity-${product.id}">
-          <option value="12">12</option>
-          <option value="24">24</option>
-        </select>
-        <button onclick="addToCart(${product.id})">Add to Cart</button>
-      `;
-      productList.appendChild(card);
-    });
-
-    function addToCart(productId) {
-      const product = products.find(p => p.id === productId);
-      const gradeSelect = document.getElementById(`grade-${productId}`);
-      const quantitySelect = document.getElementById(`quantity-${productId}`);
-      const selectedGrade = gradeSelect.value;
-      const selectedQuantity = parseInt(quantitySelect.value);
-      const unitPrice = product.grades[selectedGrade];
-      const totalPrice = unitPrice * (selectedQuantity / 12);
-
-      let cart = JSON.parse(localStorage.getItem('cart')) || [];
-      cart.push({
-        name: product.name,
-        grade: selectedGrade,
-        quantity: selectedQuantity,
-        price: totalPrice
-      });
-      localStorage.setItem('cart', JSON.stringify(cart));
-      alert(`${product.name} (${selectedGrade}) - ${selectedQuantity} balls added to cart.`);
+    function addToCart(product, quantity) {
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+      cart.push({ product, quantity });
+      localStorage.setItem("cart", JSON.stringify(cart));
+      alert(`${product} (${quantity}) added to cart.`);
     }
   </script>
 </body>
