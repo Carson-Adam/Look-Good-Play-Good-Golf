@@ -3,146 +3,95 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Checkout</title>
+  <title>Checkout - Mulligan Market</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background-color: #f5f5f5;
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f4f4;
+      color: #333;
     }
-    header {
-      background-color: #4CAF50;
+    header, footer {
+      background-color: #1a1a1a;
       color: white;
-      padding: 1em;
       text-align: center;
-    }
-    #checkoutSection {
       padding: 20px;
-      text-align: center;
     }
-    .cart-summary {
-      margin-bottom: 30px;
-      background: white;
-      padding: 15px;
-      border-radius: 8px;
-      display: inline-block;
-      text-align: left;
+    nav {
+      background-color: #333;
+      display: flex;
+      justify-content: center;
+      padding: 10px 0;
     }
-    .cart-summary li {
-      list-style: none;
-      margin: 5px 0;
-    }
-    footer {
-      background-color: #4CAF50;
+    nav a {
       color: white;
-      padding: 10px;
-      text-align: center;
-      margin-top: 30px;
+      margin: 0 15px;
+      text-decoration: none;
+      font-weight: bold;
     }
-    input, textarea, select, button {
+    .container {
+      padding: 40px;
+      max-width: 600px;
+      margin: auto;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    input, button {
+      width: 100%;
+      padding: 10px;
       margin: 10px 0;
-      padding: 8px;
-      width: 80%;
-      max-width: 400px;
-      font-size: 1em;
+      font-size: 16px;
     }
     button {
-      background-color: #4CAF50;
+      background-color: #28a745;
       color: white;
       border: none;
       cursor: pointer;
     }
-    button:hover {
-      background-color: #45a049;
-    }
   </style>
 </head>
 <body>
-
   <header>
     <h1>Checkout</h1>
   </header>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="cart.html">Cart</a>
+    <a href="checkout.html">Checkout</a>
+  </nav>
 
-  <section id="checkoutSection">
-    <h2>Complete Your Order</h2>
+  <div class="container">
+    <form onsubmit="submitOrder(event)">
+      <h3>Customer Information</h3>
+      <input type="text" placeholder="Full Name" required />
+      <input type="email" placeholder="Email Address" required />
+      <input type="text" placeholder="Shipping Address" required />
+      <input type="text" placeholder="City" required />
+      <input type="text" placeholder="State" required />
+      <input type="text" placeholder="Zip Code" required />
 
-    <ul class="cart-summary" id="summaryList">
-      <!-- Items and totals will be injected here -->
-    </ul>
+      <h3>Payment (placeholder only)</h3>
+      <input type="text" placeholder="Card Number" required />
+      <input type="text" placeholder="MM/YY" required />
+      <input type="text" placeholder="CVV" required />
 
-    <form id="checkoutForm">
-      <input type="text" id="name" placeholder="Full Name" required /><br />
-      <input type="email" id="email" placeholder="Email" required /><br />
-      <textarea id="address" placeholder="Shipping Address" required></textarea><br />
-      <select id="payment" required>
-        <option value="">Select Payment Method</option>
-        <option value="credit_card">Credit Card</option>
-        <option value="paypal">PayPal</option>
-        <option value="cash_on_delivery">Cash on Delivery</option>
-      </select><br />
-      <button type="submit">Submit Order</button>
+      <button type="submit">Place Order</button>
     </form>
-  </section>
+  </div>
 
   <footer>
-    <p>&copy; 2025 Look Good, Play Good Golf. All rights reserved.</p>
+    <p>© 2025 Mulligan Market. All rights reserved.</p>
   </footer>
 
   <script>
-    const PRICES = {
-      "Callaway Mix 12": 15,
-      "TaylorMade Mix 12": 15,
-      "Titleist Pro V1 (12-Pack)": 27
-    };
-
-    function loadCartSummary() {
-      const cart = JSON.parse(localStorage.getItem('cart')) || [];
-      const summaryList = document.getElementById('summaryList');
-      summaryList.innerHTML = '';
-
-      if (cart.length === 0) {
-        summaryList.innerHTML = '<li>No items in your cart.</li>';
-        return;
-      }
-
-      let subtotal = 0;
-      cart.forEach(item => {
-        const price = PRICES[item.name] || 0;
-        subtotal += price;
-        const li = document.createElement('li');
-        li.textContent = `${item.name} — $${price.toFixed(2)}`;
-        summaryList.appendChild(li);
-      });
-
-      const tax = subtotal * 0.08;
-      const total = subtotal + tax;
-
-      summaryList.innerHTML += `
-        <li><strong>Subtotal:</strong> $${subtotal.toFixed(2)}</li>
-        <li><strong>Tax (8%):</strong> $${tax.toFixed(2)}</li>
-        <li><strong>Total:</strong> $${total.toFixed(2)}</li>
-      `;
-    }
-
-    document.getElementById('checkoutForm').addEventListener('submit', function(event) {
+    function submitOrder(event) {
       event.preventDefault();
-
-      const name = document.getElementById('name').value;
-      const email = document.getElementById('email').value;
-      const address = document.getElementById('address').value;
-      const paymentMethod = document.getElementById('payment').value;
-
-      alert(`Thank you, ${name}! Your order has been placed.
-Email: ${email}
-Address: ${address}
-Payment Method: ${paymentMethod}`);
-
-      localStorage.removeItem('cart');
-      window.location.href = "index.html"; // Redirect after order
-    });
-
-    window.onload = loadCartSummary;
+      alert("Order placed successfully! (Demo only)");
+      localStorage.removeItem("cart");
+      window.location.href = "index.html";
+    }
   </script>
-
 </body>
 </html>
 
