@@ -1,19 +1,58 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Your Cart - Mulligan Market</title>
+  <title>Cart - Mulligan Market</title>
   <style>
-    body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
-    header, footer { background-color: #2e7d32; color: white; text-align: center; padding: 1em; }
-    nav { background-color: #4caf50; padding: 1em; text-align: center; }
-    nav a { color: white; margin: 0 1em; text-decoration: none; }
-    main { padding: 2em; }
-    .cart-item { border-bottom: 1px solid #ccc; padding: 1em 0; }
-    .cart-item:last-child { border-bottom: none; }
-    .total { font-weight: bold; margin-top: 1em; }
-    .checkout-button { margin-top: 2em; padding: 1em; background-color: #2e7d32; color: white; border: none; cursor: pointer; }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f4f4;
+      color: #333;
+    }
+    header, footer {
+      background-color: #1a1a1a;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+    nav {
+      background-color: #333;
+      display: flex;
+      justify-content: center;
+      padding: 10px 0;
+    }
+    nav a {
+      color: white;
+      margin: 0 15px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .container {
+      padding: 40px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+    th, td {
+      padding: 15px;
+      border-bottom: 1px solid #ccc;
+      text-align: left;
+    }
+    .checkout-button {
+      background-color: #007bff;
+      color: white;
+      padding: 10px 20px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      border-radius: 4px;
+    }
   </style>
 </head>
 <body>
@@ -25,44 +64,54 @@
     <a href="cart.html">Cart</a>
     <a href="checkout.html">Checkout</a>
   </nav>
-  <main>
-    <div id="cart-container"></div>
-    <div class="total" id="total-price">Total: $0.00</div>
-    <button class="checkout-button" onclick="window.location.href='checkout.html'">Proceed to Checkout</button>
-  </main>
+
+  <div class="container">
+    <table id="cart-table">
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Quantity</th>
+          <th>Price</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+    <h3>Total: $<span id="total-price">0.00</span></h3>
+    <a href="checkout.html"><button class="checkout-button">Proceed to Checkout</button></a>
+  </div>
+
   <footer>
-    &copy; 2025 Mulligan Market. All rights reserved.
+    <p>© 2025 Mulligan Market. All rights reserved.</p>
   </footer>
+
   <script>
-    function loadCart() {
-      const cart = JSON.parse(localStorage.getItem('cart')) || [];
-      const container = document.getElementById('cart-container');
-      container.innerHTML = '';
-      let total = 0;
+    const pricing = {
+      "Titleist Pro V1": { "12": 28, "24": 52 },
+      "Callaway Chrome Soft": { "12": 18, "24": 33 },
+      "TaylorMade TP5": { "12": 18, "24": 33 }
+    };
 
-      if (cart.length === 0) {
-        container.innerHTML = '<p>Your cart is empty.</p>';
-        document.getElementById('total-price').innerText = 'Total: $0.00';
-        return;
-      }
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const tbody = document.querySelector("#cart-table tbody");
+    const totalPriceElem = document.getElementById("total-price");
+    let total = 0;
 
-      cart.forEach((item, index) => {
-        const itemDiv = document.createElement('div');
-        itemDiv.className = 'cart-item';
-        itemDiv.innerHTML = `
-          <p><strong>${item.name}</strong></p>
-          <p>Grade: ${item.grade}</p>
-          <p>Quantity: ${item.quantity} balls</p>
-          <p>Price: $${item.price.toFixed(2)}</p>
-        `;
-        total += item.price;
-        container.appendChild(itemDiv);
-      });
+    cart.forEach(item => {
+      const price = pricing[item.product][item.quantity];
+      total += price;
 
-      document.getElementById('total-price').innerText = `Total: $${total.toFixed(2)}`;
-    }
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${item.product}</td>
+        <td>${item.quantity}</td>
+        <td>$${price.toFixed(2)}</td>
+      `;
+      tbody.appendChild(row);
+    });
 
-    loadCart();
+    totalPriceElem.textContent = total.toFixed(2);
   </script>
 </body>
 </html>
+
+
