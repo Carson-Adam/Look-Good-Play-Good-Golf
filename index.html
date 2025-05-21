@@ -3,143 +3,115 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Mulligan Market</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
+  <title>Mulligan Market - Deals</title>
   <style>
-    body {
-      font-family: 'Montserrat', sans-serif;
-      margin: 0;
-      background-color: #f4f9f4;
-      color: #333;
-    }
-    header {
-      background-color: #2e7d32;
-      color: white;
-      padding: 1.5rem;
-      text-align: center;
-    }
-    header h1 {
-      margin: 0;
-      font-size: 2.5rem;
-    }
-    nav {
-      background-color: #4caf50;
-      padding: 1rem;
-      display: flex;
-      justify-content: center;
-      gap: 2rem;
-    }
-    nav a {
-      color: white;
-      text-decoration: none;
-      font-weight: 600;
-    }
-    .container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.5rem;
-      padding: 2rem;
-    }
-    .product-card {
-      background-color: white;
-      border-radius: 1rem;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      padding: 1.5rem;
-      text-align: center;
-      transition: transform 0.2s ease;
-    }
-    .product-card:hover {
-      transform: scale(1.03);
-    }
-    .product-card h3 {
-      margin-bottom: 0.5rem;
-    }
-    select {
-      padding: 0.5rem;
-      margin-top: 0.5rem;
-      border-radius: 0.5rem;
-    }
-    button {
-      margin-top: 1rem;
-      padding: 0.5rem 1rem;
-      border: none;
-      background-color: #2e7d32;
-      color: white;
-      border-radius: 0.5rem;
-      cursor: pointer;
-    }
-    footer {
-      background-color: #2e7d32;
-      color: white;
-      text-align: center;
-      padding: 1rem;
-      margin-top: 2rem;
-    }
+    /* Basic styling for layout and design */
+    body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
+    header, footer { background-color: #2e7d32; color: white; text-align: center; padding: 1em; }
+    nav { background-color: #4caf50; padding: 1em; text-align: center; }
+    nav a { color: white; margin: 0 1em; text-decoration: none; }
+    .product-list { display: flex; flex-wrap: wrap; justify-content: center; padding: 2em; }
+    .product-card { border: 1px solid #ccc; border-radius: 5px; margin: 1em; padding: 1em; width: 200px; text-align: center; }
+    .product-card img { width: 100%; height: auto; }
+    .product-card select, .product-card button { margin-top: 0.5em; }
   </style>
 </head>
 <body>
   <header>
     <h1>Mulligan Market</h1>
-    <p>Your Home for Affordable, Premium Golf Balls</p>
+    <p>Affordable, Premium Golf Balls</p>
   </header>
   <nav>
     <a href="index.html">Home</a>
     <a href="cart.html">Cart</a>
     <a href="checkout.html">Checkout</a>
   </nav>
-
-  <div class="container" id="product-list">
-    <!-- Products will be loaded here -->
-  </div>
-
+  <main>
+    <div class="product-list" id="product-list">
+      <!-- Products will be dynamically inserted here -->
+    </div>
+  </main>
   <footer>
     &copy; 2025 Mulligan Market. All rights reserved.
   </footer>
-
   <script>
     const products = [
-      { name: "Titleist", prices: { "12": 18, "24": 33 } },
-      { name: "Callaway", prices: { "12": 18, "24": 33 } },
-      { name: "TaylorMade", prices: { "12": 18, "24": 33 } },
-      { name: "Pro V1", prices: { "12": 28, "24": 52 } }
+      {
+        id: 1,
+        name: "Titleist Pro V1 2021",
+        image: "https://via.placeholder.com/150",
+        grades: {
+          "Mint (5A)": 25.99,
+          "Near Mint (4A)": 20.99,
+          "Good (3A)": 15.99
+        }
+      },
+      {
+        id: 2,
+        name: "Callaway Supersoft",
+        image: "https://via.placeholder.com/150",
+        grades: {
+          "Mint (5A)": 16.99,
+          "Near Mint (4A)": 12.99
+        }
+      },
+      {
+        id: 3,
+        name: "TaylorMade Project (a)",
+        image: "https://via.placeholder.com/150",
+        grades: {
+          "Mint (5A)": 18.99,
+          "Near Mint (4A)": 14.99
+        }
+      }
     ];
 
-    const container = document.getElementById('product-list');
+    const productList = document.getElementById('product-list');
 
     products.forEach(product => {
       const card = document.createElement('div');
       card.className = 'product-card';
 
+      const gradeOptions = Object.entries(product.grades).map(([grade, price]) => {
+        return `<option value="${grade}">${grade} - $${price.toFixed(2)}</option>`;
+      }).join('');
+
       card.innerHTML = `
+        <img src="${product.image}" alt="${product.name}">
         <h3>${product.name}</h3>
-        <label for="qty-${product.name}">Quantity:</label>
-        <select id="qty-${product.name}">
-          <option value="12">12 ($${product.prices["12"]})</option>
-          <option value="24">24 ($${product.prices["24"]})</option>
+        <label for="grade-${product.id}">Grade:</label>
+        <select id="grade-${product.id}">
+          ${gradeOptions}
         </select>
-        <button onclick="addToCart('${product.name}')">Add to Cart</button>
+        <label for="quantity-${product.id}">Quantity:</label>
+        <select id="quantity-${product.id}">
+          <option value="12">12</option>
+          <option value="24">24</option>
+        </select>
+        <button onclick="addToCart(${product.id})">Add to Cart</button>
       `;
-      container.appendChild(card);
+      productList.appendChild(card);
     });
 
-    function addToCart(productName) {
-      const select = document.getElementById('qty-' + productName);
-      const quantity = select.value;
-      const product = products.find(p => p.name === productName);
-      const price = product.prices[quantity];
+    function addToCart(productId) {
+      const product = products.find(p => p.id === productId);
+      const gradeSelect = document.getElementById(`grade-${productId}`);
+      const quantitySelect = document.getElementById(`quantity-${productId}`);
+      const selectedGrade = gradeSelect.value;
+      const selectedQuantity = parseInt(quantitySelect.value);
+      const unitPrice = product.grades[selectedGrade];
+      const totalPrice = unitPrice * (selectedQuantity / 12);
 
       let cart = JSON.parse(localStorage.getItem('cart')) || [];
-      const existing = cart.find(item => item.name === productName && item.quantity === quantity);
-      if (existing) {
-        existing.count += 1;
-      } else {
-        cart.push({ name: productName, quantity, price, count: 1 });
-      }
+      cart.push({
+        name: product.name,
+        grade: selectedGrade,
+        quantity: selectedQuantity,
+        price: totalPrice
+      });
       localStorage.setItem('cart', JSON.stringify(cart));
-      alert(`${quantity} ${productName} added to cart`);
+      alert(`${product.name} (${selectedGrade}) - ${selectedQuantity} balls added to cart.`);
     }
   </script>
 </body>
 </html>
-
-
