@@ -4,31 +4,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Cart - Mulligan Market</title>
+  <title>Your Cart - Mulligan Market</title>
   <style>
     body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f4f4f4;
       margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f4f4f4;
       color: #333;
     }
     header, footer {
-      background-color: #1a1a1a;
+      background: #2c3e50;
       color: white;
       text-align: center;
       padding: 20px;
-    }
-    nav {
-      background-color: #333;
-      display: flex;
-      justify-content: center;
-      padding: 10px 0;
-    }
-    nav a {
-      color: white;
-      margin: 0 15px;
-      text-decoration: none;
-      font-weight: bold;
     }
     .container {
       padding: 40px;
@@ -37,21 +25,21 @@
       width: 100%;
       border-collapse: collapse;
       margin-bottom: 20px;
+      background: white;
     }
     th, td {
       padding: 15px;
-      border-bottom: 1px solid #ccc;
+      border: 1px solid #ccc;
       text-align: left;
     }
     .checkout-button {
-      background-color: #007bff;
+      background-color: #27ae60;
       color: white;
       padding: 10px 20px;
-      text-decoration: none;
       border: none;
-      cursor: pointer;
       font-size: 16px;
       border-radius: 4px;
+      cursor: pointer;
     }
   </style>
 </head>
@@ -59,25 +47,22 @@
   <header>
     <h1>Your Cart</h1>
   </header>
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="cart.html">Cart</a>
-    <a href="checkout.html">Checkout</a>
-  </nav>
 
   <div class="container">
-    <table id="cart-table">
+    <table>
       <thead>
         <tr>
           <th>Product</th>
           <th>Quantity</th>
-          <th>Price</th>
+          <th>Each</th>
+          <th>Count</th>
+          <th>Total</th>
         </tr>
       </thead>
-      <tbody></tbody>
+      <tbody id="cart-body"></tbody>
     </table>
     <h3>Total: $<span id="total-price">0.00</span></h3>
-    <a href="checkout.html"><button class="checkout-button">Proceed to Checkout</button></a>
+    <button class="checkout-button" onclick="alert('Checkout not set up yet.')">Proceed to Checkout</button>
   </div>
 
   <footer>
@@ -85,26 +70,22 @@
   </footer>
 
   <script>
-    const pricing = {
-      "Titleist Pro V1": { "12": 28, "24": 52 },
-      "Callaway Chrome Soft": { "12": 18, "24": 33 },
-      "TaylorMade TP5": { "12": 18, "24": 33 }
-    };
-
     const cart = JSON.parse(localStorage.getItem("cart")) || [];
-    const tbody = document.querySelector("#cart-table tbody");
+    const tbody = document.getElementById("cart-body");
     const totalPriceElem = document.getElementById("total-price");
     let total = 0;
 
     cart.forEach(item => {
-      const price = pricing[item.product][item.quantity];
-      total += price;
+      const rowTotal = item.price * item.count;
+      total += rowTotal;
 
       const row = document.createElement("tr");
       row.innerHTML = `
-        <td>${item.product}</td>
+        <td>${item.name}</td>
         <td>${item.quantity}</td>
-        <td>$${price.toFixed(2)}</td>
+        <td>$${item.price.toFixed(2)}</td>
+        <td>${item.count}</td>
+        <td>$${rowTotal.toFixed(2)}</td>
       `;
       tbody.appendChild(row);
     });
@@ -113,5 +94,9 @@
   </script>
 </body>
 </html>
+
+
+
+
 
 
