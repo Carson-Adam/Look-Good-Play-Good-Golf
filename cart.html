@@ -3,112 +3,66 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Your Cart</title>
+  <title>Your Cart - Mulligan Market</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f5f5f5;
-      margin: 0;
-      padding: 0;
-    }
-    header {
-      background-color: #4CAF50;
-      color: white;
-      padding: 1em;
-      text-align: center;
-    }
-    nav a {
-      margin: 0 10px;
-      color: white;
-      text-decoration: none;
-    }
-    #cartItems {
-      padding: 20px;
-      text-align: center;
-    }
-    .cart-item {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      justify-content: center;
-      margin: 10px 0;
-      background: white;
-      padding: 10px;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
-    .cart-item img {
-      width: 80px;
-      height: 80px;
-      object-fit: cover;
-      border-radius: 4px;
-    }
-    .actions {
-      text-align: center;
-      margin: 20px;
-    }
-    .actions a {
-      padding: 10px 20px;
-      background-color: #4CAF50;
-      color: white;
-      text-decoration: none;
-      border-radius: 5px;
-      margin: 0 10px;
-    }
-    footer {
-      background-color: #4CAF50;
-      color: white;
-      padding: 15px;
-      text-align: center;
-      margin-top: 30px;
-    }
+    body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
+    header, footer { background-color: #2e7d32; color: white; text-align: center; padding: 1em; }
+    nav { background-color: #4caf50; padding: 1em; text-align: center; }
+    nav a { color: white; margin: 0 1em; text-decoration: none; }
+    main { padding: 2em; }
+    .cart-item { border-bottom: 1px solid #ccc; padding: 1em 0; }
+    .cart-item:last-child { border-bottom: none; }
+    .total { font-weight: bold; margin-top: 1em; }
+    .checkout-button { margin-top: 2em; padding: 1em; background-color: #2e7d32; color: white; border: none; cursor: pointer; }
   </style>
 </head>
 <body>
-
   <header>
     <h1>Your Cart</h1>
-    <nav>
-      <a href="index.html">Back to Shop</a>
-      <a href="checkout.html">Proceed to Checkout</a>
-    </nav>
   </header>
-
-  <section id="cartItems">
-    <h2>Items in Your Cart</h2>
-    <div id="cartContents">
-      <p>No items in the cart yet.</p>
-    </div>
-  </section>
-
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="cart.html">Cart</a>
+    <a href="checkout.html">Checkout</a>
+  </nav>
+  <main>
+    <div id="cart-container"></div>
+    <div class="total" id="total-price">Total: $0.00</div>
+    <button class="checkout-button" onclick="window.location.href='checkout.html'">Proceed to Checkout</button>
+  </main>
   <footer>
-    <p>&copy; 2025 Look Good, Play Good Golf. All rights reserved.</p>
+    &copy; 2025 Mulligan Market. All rights reserved.
   </footer>
-
   <script>
     function loadCart() {
-      let cart = JSON.parse(localStorage.getItem('cart')) || [];
-      const cartContents = document.getElementById('cartContents');
-      cartContents.innerHTML = '';
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      const container = document.getElementById('cart-container');
+      container.innerHTML = '';
+      let total = 0;
 
       if (cart.length === 0) {
-        cartContents.innerHTML = '<p>No items in the cart yet.</p>';
-      } else {
-        cart.forEach(item => {
-          const cartItem = document.createElement('div');
-          cartItem.classList.add('cart-item');
-          cartItem.innerHTML = `
-            <img src="${item.image}" alt="${item.name}">
-            <span>${item.name}</span>
-          `;
-          cartContents.appendChild(cartItem);
-        });
+        container.innerHTML = '<p>Your cart is empty.</p>';
+        document.getElementById('total-price').innerText = 'Total: $0.00';
+        return;
       }
+
+      cart.forEach((item, index) => {
+        const itemDiv = document.createElement('div');
+        itemDiv.className = 'cart-item';
+        itemDiv.innerHTML = `
+          <p><strong>${item.name}</strong></p>
+          <p>Grade: ${item.grade}</p>
+          <p>Quantity: ${item.quantity} balls</p>
+          <p>Price: $${item.price.toFixed(2)}</p>
+        `;
+        total += item.price;
+        container.appendChild(itemDiv);
+      });
+
+      document.getElementById('total-price').innerText = `Total: $${total.toFixed(2)}`;
     }
 
-    window.onload = loadCart;
+    loadCart();
   </script>
-
 </body>
 </html>
-
