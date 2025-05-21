@@ -3,119 +3,135 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Mulligan Market - Golf Ball Deals</title>
+  <title>Mulligan Market</title>
+  <link rel="stylesheet" href="styles.css"/>
   <style>
     body {
+      font-family: 'Segoe UI', sans-serif;
       margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f4f4f4;
+      padding: 0;
+      background: #f4f4f4;
       color: #333;
     }
     header {
-      background-color: #1a1a1a;
-      color: white;
-      padding: 20px;
+      background: #2c3e50;
+      color: #fff;
+      padding: 20px 0;
       text-align: center;
     }
-    nav {
-      background-color: #333;
-      display: flex;
-      justify-content: center;
-      padding: 10px 0;
-    }
-    nav a {
-      color: white;
-      margin: 0 15px;
-      text-decoration: none;
-      font-weight: bold;
-    }
-    .container {
+    main {
       padding: 40px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
     }
     .product {
-      background: white;
-      padding: 20px;
-      margin: 20px 0;
+      background: #fff;
+      border: 1px solid #ddd;
       border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
-    .product h3 {
-      margin-top: 0;
-    }
-    .product select, .product button {
-      padding: 10px;
-      margin-top: 10px;
-    }
-    .add-to-cart {
-      background-color: #28a745;
-      color: white;
-      border: none;
-      cursor: pointer;
-    }
-    footer {
-      background-color: #1a1a1a;
-      color: white;
-      text-align: center;
       padding: 20px;
+      margin: 10px;
+      width: 260px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    .product h2 {
+      font-size: 1.2em;
+    }
+    .product select {
+      margin: 10px 0;
+    }
+    button {
+      padding: 10px 15px;
+      border: none;
+      background: #27ae60;
+      color: #fff;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    button:hover {
+      background: #219150;
     }
   </style>
 </head>
 <body>
   <header>
     <h1>Mulligan Market</h1>
-    <p>Your trusted source for premium used golf balls</p>
+    <p>Your source for premium used golf balls</p>
   </header>
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="cart.html">Cart</a>
-    <a href="checkout.html">Checkout</a>
-  </nav>
 
-  <div class="container">
-    <div class="product">
-      <h3>Titleist Pro V1</h3>
-      <p>Top-tier performance golf balls</p>
-      <label for="titleist-qty">Quantity:</label>
-      <select id="titleist-qty">
-        <option value="12">12 - $28</option>
-        <option value="24">24 - $52</option>
-      </select>
-      <button class="add-to-cart" onclick="addToCart('Titleist Pro V1', titleistQty.value)">Add to Cart</button>
-    </div>
-
-    <div class="product">
-      <h3>Callaway Chrome Soft</h3>
-      <p>Soft feel with excellent control</p>
+  <main>
+    <div class="product" data-name="Callaway" data-price12="18" data-price24="33">
+      <h2>Callaway</h2>
       <label for="callaway-qty">Quantity:</label>
       <select id="callaway-qty">
-        <option value="12">12 - $18</option>
-        <option value="24">24 - $33</option>
+        <option value="12">12</option>
+        <option value="24">24</option>
       </select>
-      <button class="add-to-cart" onclick="addToCart('Callaway Chrome Soft', callawayQty.value)">Add to Cart</button>
+      <p class="price">$18.00</p>
+      <button onclick="addToCart('Callaway')">Add to Cart</button>
     </div>
 
-    <div class="product">
-      <h3>TaylorMade TP5</h3>
-      <p>Tour performance with incredible distance</p>
+    <div class="product" data-name="TaylorMade" data-price12="18" data-price24="33">
+      <h2>TaylorMade</h2>
       <label for="taylormade-qty">Quantity:</label>
       <select id="taylormade-qty">
-        <option value="12">12 - $18</option>
-        <option value="24">24 - $33</option>
+        <option value="12">12</option>
+        <option value="24">24</option>
       </select>
-      <button class="add-to-cart" onclick="addToCart('TaylorMade TP5', taylormadeQty.value)">Add to Cart</button>
+      <p class="price">$18.00</p>
+      <button onclick="addToCart('TaylorMade')">Add to Cart</button>
     </div>
-  </div>
 
-  <footer>
-    <p>© 2025 Mulligan Market. All rights reserved.</p>
-  </footer>
+    <div class="product" data-name="Titleist" data-price12="18" data-price24="33">
+      <h2>Titleist</h2>
+      <label for="titleist-qty">Quantity:</label>
+      <select id="titleist-qty">
+        <option value="12">12</option>
+        <option value="24">24</option>
+      </select>
+      <p class="price">$18.00</p>
+      <button onclick="addToCart('Titleist')">Add to Cart</button>
+    </div>
+
+    <div class="product" data-name="Titleist Pro V1" data-price12="28" data-price24="52">
+      <h2>Titleist Pro V1</h2>
+      <label for="prov1-qty">Quantity:</label>
+      <select id="prov1-qty">
+        <option value="12">12</option>
+        <option value="24">24</option>
+      </select>
+      <p class="price">$28.00</p>
+      <button onclick="addToCart('Titleist Pro V1')">Add to Cart</button>
+    </div>
+  </main>
 
   <script>
-    function addToCart(product, quantity) {
-      let cart = JSON.parse(localStorage.getItem("cart")) || [];
-      cart.push({ product, quantity });
-      localStorage.setItem("cart", JSON.stringify(cart));
-      alert(`${product} (${quantity}) added to cart.`);
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    document.querySelectorAll('.product select').forEach(select => {
+      select.addEventListener('change', function () {
+        const product = this.closest('.product');
+        const qty = parseInt(this.value);
+        const price = qty === 12 ? product.dataset.price12 : product.dataset.price24;
+        product.querySelector('.price').textContent = `$${price}.00`;
+      });
+    });
+
+    function addToCart(productName) {
+      const product = [...document.querySelectorAll('.product')].find(p => p.dataset.name === productName);
+      const qty = parseInt(product.querySelector('select').value);
+      const price = qty === 12 ? parseFloat(product.dataset.price12) : parseFloat(product.dataset.price24);
+
+      const existingItem = cart.find(item => item.name === productName && item.quantity === qty);
+      if (existingItem) {
+        existingItem.count += 1;
+      } else {
+        cart.push({ name: productName, quantity: qty, price, count: 1 });
+      }
+
+      localStorage.setItem('cart', JSON.stringify(cart));
+      alert(`${productName} (${qty}) added to cart!`);
     }
   </script>
 </body>
