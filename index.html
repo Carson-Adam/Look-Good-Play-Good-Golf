@@ -1,199 +1,127 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Golf Balls Store</title>
-<style>
-  body { font-family: Arial, sans-serif; max-width: 800px; margin: auto; padding: 20px; }
-  .product { border: 1px solid #ccc; padding: 10px; margin-bottom: 15px; }
-  .product h3 { margin: 0 0 10px 0; }
-  .price { font-weight: bold; margin-top: 5px; }
-  .cart { border: 2px solid #333; padding: 15px; margin-top: 30px; }
-  .cart h2 { margin-top: 0; }
-  .cart-item { border-bottom: 1px solid #ccc; padding: 8px 0; }
-  .cart-item:last-child { border-bottom: none; }
-  .total { font-weight: bold; font-size: 1.2em; margin-top: 10px; }
-  button { padding: 5px 10px; cursor: pointer; }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Green Ball Pros</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #e0f7e9;
+      color: #333;
+    }
+    header, footer {
+      background-color: #006400;
+      color: white;
+      padding: 10px 20px;
+      text-align: center;
+    }
+    .product {
+      background: white;
+      border-radius: 12px;
+      padding: 15px;
+      margin: 15px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+    .product h2 {
+      margin-top: 0;
+    }
+    .product select {
+      margin: 10px 0;
+    }
+    .btn {
+      background-color: #28a745;
+      color: white;
+      padding: 8px 16px;
+      border: none;
+      cursor: pointer;
+      border-radius: 8px;
+    }
+  </style>
 </head>
 <body>
+  <header>
+    <h1>Green Ball Pros</h1>
+    <p>Your source for affordable premium golf balls</p>
+  </header>
 
-<h1>Golf Balls Store</h1>
+  <main style="padding: 20px;">
+    <!-- TaylorMade -->
+    <div class="product">
+      <h2>TaylorMade</h2>
+      <label>Quantity:
+        <select onchange="updatePrice(this)" data-brand="TaylorMade">
+          <option value="12">1 Dozen - $18</option>
+          <option value="24">2 Dozen - $33</option>
+        </select>
+      </label>
+      <button class="btn" onclick="addToCart('TaylorMade', this.previousElementSibling.value)">Add to Cart</button>
+    </div>
 
-<div id="products">
+    <!-- Callaway -->
+    <div class="product">
+      <h2>Callaway</h2>
+      <label>Quantity:
+        <select onchange="updatePrice(this)" data-brand="Callaway">
+          <option value="12">1 Dozen - $18</option>
+          <option value="24">2 Dozen - $33</option>
+        </select>
+      </label>
+      <button class="btn" onclick="addToCart('Callaway', this.previousElementSibling.value)">Add to Cart</button>
+    </div>
 
-  <!-- Product Template -->
-  <div class="product" data-product-id="titleist">
-    <h3>Titleist</h3>
-    <label>
-      Quantity: 
-      <select class="quantity-select">
-        <option value="12">12</option>
-        <option value="24">24</option>
-      </select>
-    </label>
-    <div class="price">$18.00</div>
-    <button class="add-to-cart-btn">Add to Cart</button>
-  </div>
+    <!-- Titleist -->
+    <div class="product">
+      <h2>Titleist (Pro V1)</h2>
+      <label>Quantity:
+        <select onchange="updatePrice(this)" data-brand="Titleist">
+          <option value="12">1 Dozen - $28</option>
+          <option value="24">2 Dozen - $52</option>
+        </select>
+      </label>
+      <button class="btn" onclick="addToCart('Titleist', this.previousElementSibling.value)">Add to Cart</button>
+    </div>
 
-  <div class="product" data-product-id="callaway">
-    <h3>Callaway</h3>
-    <label>
-      Quantity: 
-      <select class="quantity-select">
-        <option value="12">12</option>
-        <option value="24">24</option>
-      </select>
-    </label>
-    <div class="price">$18.00</div>
-    <button class="add-to-cart-btn">Add to Cart</button>
-  </div>
+    <a href="cart.html" class="btn" style="margin-top: 30px;">View Cart</a>
+  </main>
 
-  <div class="product" data-product-id="taylormade">
-    <h3>TaylorMade</h3>
-    <label>
-      Quantity: 
-      <select class="quantity-select">
-        <option value="12">12</option>
-        <option value="24">24</option>
-      </select>
-    </label>
-    <div class="price">$18.00</div>
-    <button class="add-to-cart-btn">Add to Cart</button>
-  </div>
+  <footer>
+    <p>Follow us on YouTube: <a href="https://youtube.com/@greenballpros" target="_blank" style="color: #90ee90;">@greenballpros</a></p>
+  </footer>
 
-  <div class="product" data-product-id="pro-v1">
-    <h3>Pro V1</h3>
-    <label>
-      Quantity: 
-      <select class="quantity-select">
-        <option value="12">12</option>
-        <option value="24">24</option>
-      </select>
-    </label>
-    <div class="price">$26.00</div>
-    <button class="add-to-cart-btn">Add to Cart</button>
-  </div>
+  <script>
+    function updatePrice(selectElement) {
+      const brand = selectElement.dataset.brand;
+      let dozen = parseInt(selectElement.value);
+      let price;
 
-</div>
+      if (brand === "Titleist") {
+        price = dozen === 12 ? 28 : 52;
+      } else {
+        price = dozen === 12 ? 18 : 33;
+      }
 
-<div class="cart" id="cart">
-  <h2>Your Cart</h2>
-  <div id="cart-items"></div>
-  <div class="total" id="cart-total">Total: $0.00</div>
-</div>
+      selectElement.options[selectElement.selectedIndex].text = 
+        `${dozen === 12 ? "1 Dozen" : "2 Dozen"} - $${price}`;
+    }
 
-<script>
-// Price data for products by quantity
-const priceData = {
-  "titleist": { "12": 18, "24": 33 },
-  "callaway": { "12": 18, "24": 33 },
-  "taylormade": { "12": 18, "24": 33 },
-  "pro-v1": { "12": 26, "24": 52 }
-};
+    function addToCart(brand, quantity) {
+      quantity = parseInt(quantity);
+      let price;
 
-const productsContainer = document.getElementById('products');
-const cartItemsContainer = document.getElementById('cart-items');
-const cartTotalContainer = document.getElementById('cart-total');
+      if (brand === "Titleist") {
+        price = quantity === 12 ? 28 : 52;
+      } else {
+        price = quantity === 12 ? 18 : 33;
+      }
 
-let cart = {};
-
-// Update price display when quantity changes
-productsContainer.querySelectorAll('.product').forEach(productDiv => {
-  const productId = productDiv.dataset.productId;
-  const select = productDiv.querySelector('.quantity-select');
-  const priceDiv = productDiv.querySelector('.price');
-
-  // Initialize price display
-  priceDiv.textContent = `$${priceData[productId][select.value].toFixed(2)}`;
-
-  select.addEventListener('change', () => {
-    const qty = select.value;
-    priceDiv.textContent = `$${priceData[productId][qty].toFixed(2)}`;
-  });
-
-  // Add to cart button
-  const addToCartBtn = productDiv.querySelector('.add-to-cart-btn');
-  addToCartBtn.addEventListener('click', () => {
-    const qty = select.value;
-    addToCart(productId, qty);
-  });
-});
-
-function addToCart(productId, quantity) {
-  quantity = parseInt(quantity);
-
-  if(cart[productId]) {
-    cart[productId].quantity += quantity;
-  } else {
-    cart[productId] = { quantity: quantity };
-  }
-  renderCart();
-}
-
-function renderCart() {
-  cartItemsContainer.innerHTML = '';
-  let total = 0;
-
-  for(const productId in cart) {
-    const item = cart[productId];
-    const quantity = item.quantity;
-
-    // Calculate price based on quantity - if quantity >= 24, price uses 24 price for each dozen, else 12 price
-    // But here we just multiply the per-unit price by quantity of balls
-    // Since the products are sold by dozen increments, we treat quantity as number of balls, but dropdown only gives 12 or 24.
-    // So assume quantity is always multiple of 12, so price = (quantity/12)*price per dozen
-
-    let dozenCount = quantity / 12;
-    let pricePerDozen = quantity >= 24 ? priceData[productId]["24"] / 2 : priceData[productId]["12"];
-    // Explanation:
-    // priceData[productId]["24"] is price for 24 balls, divide by 2 to get per dozen price in 2 dozen pack.
-    // This captures discounted 2 dozen price divided evenly for display.
-    // If quantity is more than 24, assume multiple dozens, sum accordingly.
-
-    // Actually to avoid confusion, let's do this simply:
-    // If quantity is 12, price = priceData[productId][12]
-    // If quantity is 24, price = priceData[productId][24]
-    // If quantity > 24, multiple dozens — use 24-pack price as two dozen price; 12-pack price as one dozen price
-    // For quantities more than 24, split into 2-dozen packs + 1-dozen packs to calculate price.
-
-    // Implement that now:
-
-    let totalPriceForItem = 0;
-    let qtyLeft = quantity;
-
-    // Use 24-pack price first
-    let packsOf24 = Math.floor(qtyLeft / 24);
-    totalPriceForItem += packsOf24 * priceData[productId]["24"];
-    qtyLeft -= packsOf24 * 24;
-
-    // Use 12-pack price for remainder
-    let packsOf12 = Math.floor(qtyLeft / 12);
-    totalPriceForItem += packsOf12 * priceData[productId]["12"];
-
-    total += totalPriceForItem;
-
-    // Capitalize product name nicely for display
-    let displayName = productId.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
-
-    cartItemsContainer.innerHTML += `
-      <div class="cart-item">
-        ${displayName} — ${quantity} balls — $${totalPriceForItem.toFixed(2)}
-        <button onclick="removeFromCart('${productId}')">Remove</button>
-      </div>
-    `;
-  }
-
-  cartTotalContainer.textContent = `Total: $${total.toFixed(2)}`;
-}
-
-function removeFromCart(productId) {
-  delete cart[productId];
-  renderCart();
-}
-</script>
-
+      const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+      cart.push({ brand, quantity, price });
+      localStorage.setItem('cart', JSON.stringify(cart));
+      alert(`${brand} (${quantity}) added to cart for $${price}`);
+    }
+  </script>
 </body>
 </html>
 
