@@ -1,145 +1,200 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Look Good, Play Good Golf</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f5f5f5;
-    }
-    header {
-      background-color: #4CAF50;
-      color: white;
-      padding: 1em;
-      text-align: center;
-    }
-    header nav a {
-      margin: 0 15px;
-      color: white;
-      text-decoration: none;
-    }
-    .hero {
-      background-color: #6FBF73;
-      color: white;
-      padding: 30px;
-      text-align: center;
-    }
-    section {
-      padding: 20px;
-    }
-    .products {
-      display: flex;
-      gap: 20px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-    .product {
-      background-color: white;
-      padding: 15px;
-      text-align: center;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      width: 250px;
-    }
-    .product img {
-      width: 100%;
-      height: 160px;
-      object-fit: cover;
-    }
-    .product p.description {
-      font-style: italic;
-      color: #555;
-      font-size: 0.95em;
-      margin-top: 0.5em;
-    }
-    footer {
-      background-color: #4CAF50;
-      color: white;
-      padding: 15px;
-      text-align: center;
-    }
-    footer p {
-      margin: 5px;
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Golf Balls Store</title>
+<style>
+  body { font-family: Arial, sans-serif; max-width: 800px; margin: auto; padding: 20px; }
+  .product { border: 1px solid #ccc; padding: 10px; margin-bottom: 15px; }
+  .product h3 { margin: 0 0 10px 0; }
+  .price { font-weight: bold; margin-top: 5px; }
+  .cart { border: 2px solid #333; padding: 15px; margin-top: 30px; }
+  .cart h2 { margin-top: 0; }
+  .cart-item { border-bottom: 1px solid #ccc; padding: 8px 0; }
+  .cart-item:last-child { border-bottom: none; }
+  .total { font-weight: bold; font-size: 1.2em; margin-top: 10px; }
+  button { padding: 5px 10px; cursor: pointer; }
+</style>
 </head>
 <body>
 
-  <header>
-    <h1>Look Good, Play Good Golf</h1>
-    <nav>
-      <a href="#shop">Shop</a>
-      <a href="#about">About</a>
-      <a href="#testimonials">Testimonials</a>
-      <a href="#contact">Contact</a>
-      <a href="cart.html">Cart</a>
-    </nav>
-  </header>
+<h1>Golf Balls Store</h1>
 
-  <div class="hero">
-    <h1>Premium Used Golf Balls, Top Brands</h1>
-    <p>Affordable. Reliable. Game-changing.</p>
+<div id="products">
+
+  <!-- Product Template -->
+  <div class="product" data-product-id="titleist">
+    <h3>Titleist</h3>
+    <label>
+      Quantity: 
+      <select class="quantity-select">
+        <option value="12">12</option>
+        <option value="24">24</option>
+      </select>
+    </label>
+    <div class="price">$18.00</div>
+    <button class="add-to-cart-btn">Add to Cart</button>
   </div>
 
-  <section id="shop">
-    <h2>Shop Our Golf Balls</h2>
-    <div class="products">
-      <div class="product">
-        <img src="callaway.jpg.jpeg" alt="Callaway Mix 12">
-        <h3>Callaway Mix 12</h3>
-        <p>$15 per dozen</p>
-        <p class="description">"A trusted feel for your everyday game."</p>
-        <button onclick="addToCart('Callaway Mix 12', 'callaway.jpg.jpeg')">Add to Cart</button>
+  <div class="product" data-product-id="callaway">
+    <h3>Callaway</h3>
+    <label>
+      Quantity: 
+      <select class="quantity-select">
+        <option value="12">12</option>
+        <option value="24">24</option>
+      </select>
+    </label>
+    <div class="price">$18.00</div>
+    <button class="add-to-cart-btn">Add to Cart</button>
+  </div>
+
+  <div class="product" data-product-id="taylormade">
+    <h3>TaylorMade</h3>
+    <label>
+      Quantity: 
+      <select class="quantity-select">
+        <option value="12">12</option>
+        <option value="24">24</option>
+      </select>
+    </label>
+    <div class="price">$18.00</div>
+    <button class="add-to-cart-btn">Add to Cart</button>
+  </div>
+
+  <div class="product" data-product-id="pro-v1">
+    <h3>Pro V1</h3>
+    <label>
+      Quantity: 
+      <select class="quantity-select">
+        <option value="12">12</option>
+        <option value="24">24</option>
+      </select>
+    </label>
+    <div class="price">$26.00</div>
+    <button class="add-to-cart-btn">Add to Cart</button>
+  </div>
+
+</div>
+
+<div class="cart" id="cart">
+  <h2>Your Cart</h2>
+  <div id="cart-items"></div>
+  <div class="total" id="cart-total">Total: $0.00</div>
+</div>
+
+<script>
+// Price data for products by quantity
+const priceData = {
+  "titleist": { "12": 18, "24": 33 },
+  "callaway": { "12": 18, "24": 33 },
+  "taylormade": { "12": 18, "24": 33 },
+  "pro-v1": { "12": 26, "24": 52 }
+};
+
+const productsContainer = document.getElementById('products');
+const cartItemsContainer = document.getElementById('cart-items');
+const cartTotalContainer = document.getElementById('cart-total');
+
+let cart = {};
+
+// Update price display when quantity changes
+productsContainer.querySelectorAll('.product').forEach(productDiv => {
+  const productId = productDiv.dataset.productId;
+  const select = productDiv.querySelector('.quantity-select');
+  const priceDiv = productDiv.querySelector('.price');
+
+  // Initialize price display
+  priceDiv.textContent = `$${priceData[productId][select.value].toFixed(2)}`;
+
+  select.addEventListener('change', () => {
+    const qty = select.value;
+    priceDiv.textContent = `$${priceData[productId][qty].toFixed(2)}`;
+  });
+
+  // Add to cart button
+  const addToCartBtn = productDiv.querySelector('.add-to-cart-btn');
+  addToCartBtn.addEventListener('click', () => {
+    const qty = select.value;
+    addToCart(productId, qty);
+  });
+});
+
+function addToCart(productId, quantity) {
+  quantity = parseInt(quantity);
+
+  if(cart[productId]) {
+    cart[productId].quantity += quantity;
+  } else {
+    cart[productId] = { quantity: quantity };
+  }
+  renderCart();
+}
+
+function renderCart() {
+  cartItemsContainer.innerHTML = '';
+  let total = 0;
+
+  for(const productId in cart) {
+    const item = cart[productId];
+    const quantity = item.quantity;
+
+    // Calculate price based on quantity - if quantity >= 24, price uses 24 price for each dozen, else 12 price
+    // But here we just multiply the per-unit price by quantity of balls
+    // Since the products are sold by dozen increments, we treat quantity as number of balls, but dropdown only gives 12 or 24.
+    // So assume quantity is always multiple of 12, so price = (quantity/12)*price per dozen
+
+    let dozenCount = quantity / 12;
+    let pricePerDozen = quantity >= 24 ? priceData[productId]["24"] / 2 : priceData[productId]["12"];
+    // Explanation:
+    // priceData[productId]["24"] is price for 24 balls, divide by 2 to get per dozen price in 2 dozen pack.
+    // This captures discounted 2 dozen price divided evenly for display.
+    // If quantity is more than 24, assume multiple dozens, sum accordingly.
+
+    // Actually to avoid confusion, let's do this simply:
+    // If quantity is 12, price = priceData[productId][12]
+    // If quantity is 24, price = priceData[productId][24]
+    // If quantity > 24, multiple dozens — use 24-pack price as two dozen price; 12-pack price as one dozen price
+    // For quantities more than 24, split into 2-dozen packs + 1-dozen packs to calculate price.
+
+    // Implement that now:
+
+    let totalPriceForItem = 0;
+    let qtyLeft = quantity;
+
+    // Use 24-pack price first
+    let packsOf24 = Math.floor(qtyLeft / 24);
+    totalPriceForItem += packsOf24 * priceData[productId]["24"];
+    qtyLeft -= packsOf24 * 24;
+
+    // Use 12-pack price for remainder
+    let packsOf12 = Math.floor(qtyLeft / 12);
+    totalPriceForItem += packsOf12 * priceData[productId]["12"];
+
+    total += totalPriceForItem;
+
+    // Capitalize product name nicely for display
+    let displayName = productId.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+
+    cartItemsContainer.innerHTML += `
+      <div class="cart-item">
+        ${displayName} — ${quantity} balls — $${totalPriceForItem.toFixed(2)}
+        <button onclick="removeFromCart('${productId}')">Remove</button>
       </div>
-      <div class="product">
-        <img src="taylormade.jpg.jpeg" alt="TaylorMade Mix 12">
-        <h3>TaylorMade Mix 12</h3>
-        <p>$15 per dozen</p>
-        <p class="description">"Engineered to go the distance every time."</p>
-        <button onclick="addToCart('TaylorMade Mix 12', 'taylormade.jpg.jpeg')">Add to Cart</button>
-      </div>
-      <div class="product">
-        <img src="prov1.jpg.jpeg" alt="Titleist Pro V1">
-        <h3>Titleist Pro V1 (12-Pack)</h3>
-        <p>$27 per dozen</p>
-        <p class="description">"For players who demand total performance."</p>
-        <button onclick="addToCart('Titleist Pro V1 (12-Pack)', 'prov1.jpg')">Add to Cart</button>
-      </div>
-    </div>
-  </section>
+    `;
+  }
 
-  <section id="about">
-    <h2>About Us</h2>
-    <p>We provide great quality used golf balls and strive to deliver the best for our shoppers. Whether you're a weekend warrior or a seasoned pro, you'll find value and performance here.</p>
-  </section>
+  cartTotalContainer.textContent = `Total: $${total.toFixed(2)}`;
+}
 
-  <section id="testimonials">
-    <h2>Customer Testimonials</h2>
-    <p>"Fast shipping and arrived as described. Packed well. Arrived fast and safely. Great communication with seller." — Sean P.</p>
-  </section>
-
-  <section id="contact">
-    <h2>Contact Us</h2>
-    <p>We currently do not have social media. Reach out directly with any questions or orders!</p>
-  </section>
-
-  <footer>
-    <p>&copy; 2025 Look Good, Play Good Golf</p>
-  </footer>
-
-  <script>
-    function addToCart(name, image) {
-      let cart = JSON.parse(localStorage.getItem('cart')) || [];
-      cart.push({ name, image });
-      localStorage.setItem('cart', JSON.stringify(cart));
-      alert(`${name} has been added to your cart!`);
-    }
-  </script>
+function removeFromCart(productId) {
+  delete cart[productId];
+  renderCart();
+}
+</script>
 
 </body>
 </html>
+
 
