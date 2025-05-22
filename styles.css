@@ -32,6 +32,11 @@ nav a {
   text-decoration: none;
 }
 
+nav a.active {
+  font-weight: bold;
+  color: #f4a261; /* Highlighted Color */
+}
+
 main {
   padding: 2rem;
 }
@@ -73,12 +78,6 @@ section#products {
   background-color: #555;
 }
 
-footer {
-  text-align: center;
-  padding: 1rem;
-  background-color: #eee;
-  margin-top: 2rem;
-}
 /* Cart Page Styles */
 #cart {
   max-width: 900px;
