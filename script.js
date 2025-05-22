@@ -3,8 +3,6 @@ let cart = JSON.parse(localStorage.getItem('cart')) || [];
 // Function to add product to cart
 function addToCart(productName, quantity, price) {
   let totalPrice = quantity === '12' ? price * 12 : price * 24;
-
-  // Check if the product already exists in the cart
   let productIndex = cart.findIndex(item => item.name === productName && item.quantity === (quantity === '12' ? 12 : 24));
 
   if (productIndex !== -1) {
