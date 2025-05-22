@@ -1,29 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mulligan Market</title>
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <!-- Header -->
   <header>
     <div class="logo">
-      <h1>Mulligan Market</h1>
+      <h1>MULLIGAN MARKET</h1>
     </div>
     <nav>
       <a href="index.html">Home</a>
-      <a href="cart.html">Cart</a> <!-- Link to Cart Page -->
-      <a href="checkout.html">Checkout</a>
+      <a href="cart.html">Cart</a>
     </nav>
   </header>
 
+  <!-- Main Content -->
   <main>
-    <section id="products">
-      <h2>Our Golf Balls</h2>
+    <!-- Intro Section -->
+    <section id="intro">
+      <h2>Welcome to Mulligan Market!</h2>
+      <p>Shop the best golf balls for your game at the best prices!</p>
+    </section>
 
+    <!-- Product Section -->
+    <section id="products">
+      <!-- Titleist Ball -->
       <div class="product" id="titleist">
-        <img src="https://via.placeholder.com/200" alt="Titleist Ball" />
+        <img src="images/titleist.jpg" alt="Titleist Ball" />
         <h3>Titleist</h3>
         <p>Price: $18 for 12, $33 for 24</p>
         <label for="titleist-quantity">Quantity:</label>
@@ -34,8 +41,9 @@
         <button class="add-to-cart" onclick="addToCart('Titleist', document.getElementById('titleist-quantity').value, 18)">Add to Cart</button>
       </div>
 
+      <!-- Callaway Ball -->
       <div class="product" id="callaway">
-        <img src="https://via.placeholder.com/200" alt="Callaway Ball" />
+        <img src="images/callaway.jpg.jpeg" alt="Callaway Ball" />
         <h3>Callaway</h3>
         <p>Price: $18 for 12, $33 for 24</p>
         <label for="callaway-quantity">Quantity:</label>
@@ -46,8 +54,9 @@
         <button class="add-to-cart" onclick="addToCart('Callaway', document.getElementById('callaway-quantity').value, 18)">Add to Cart</button>
       </div>
 
+      <!-- TaylorMade Ball -->
       <div class="product" id="taylormade">
-        <img src="https://via.placeholder.com/200" alt="TaylorMade Ball" />
+        <img src="images/taylormade.jpg.jpeg" alt="TaylorMade Ball" />
         <h3>TaylorMade</h3>
         <p>Price: $18 for 12, $33 for 24</p>
         <label for="taylormade-quantity">Quantity:</label>
@@ -58,8 +67,9 @@
         <button class="add-to-cart" onclick="addToCart('TaylorMade', document.getElementById('taylormade-quantity').value, 18)">Add to Cart</button>
       </div>
 
+      <!-- Pro V1 Ball -->
       <div class="product" id="pro-v1">
-        <img src="https://via.placeholder.com/200" alt="Pro V1 Ball" />
+        <img src="images/prov1.jpg.jpeg" alt="Pro V1 Ball" />
         <h3>Titleist Pro V1</h3>
         <p>Price: $27 for 12, $52 for 24</p>
         <label for="pro-v1-quantity">Quantity:</label>
@@ -70,20 +80,19 @@
         <button class="add-to-cart" onclick="addToCart('Pro V1', document.getElementById('pro-v1-quantity').value, 27)">Add to Cart</button>
       </div>
     </section>
-    <div class="product" id="titleist">
-  <img src="images/titleist.jpg" alt="Titleist Ball" />
-  <h3>Titleist</h3>
-  <p>Price: $18 for 12, $33 for 24</p>
-  <label for="titleist-quantity">Quantity:</label>
-  <select id="titleist-quantity">
-    <option value="12">12 Balls</option>
-    <option value="24">24 Balls</option>
-  </select>
-  <button class="add-to-cart" onclick="addToCart('Titleist', document.getElementById('titleist-quantity').value, 18)">Add to Cart</button>
-</div>
-  </main>
-  
 
+    <!-- Shopping Cart Section -->
+    <section id="cart-summary">
+      <h2>Shopping Cart</h2>
+      <div id="cart-items">
+        <!-- Cart items will be displayed here dynamically -->
+      </div>
+      <p>Total: $<span id="cart-total">0</span></p>
+      <button id="checkout-button">Proceed to Checkout</button>
+    </section>
+  </main>
+
+  <!-- Footer -->
   <footer>
     <p>&copy; 2025 Mulligan Market. All rights reserved.</p>
   </footer>
