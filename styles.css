@@ -186,3 +186,18 @@ footer {
 .remove-button:hover {
   background-color: #b02a37;
 }
+.button-link {
+  display: inline-block;
+  padding: 15px 25px;
+  font-size: 1.2em;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.button-link:hover {
+  background-color: #0056b3;
+}
