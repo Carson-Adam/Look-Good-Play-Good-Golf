@@ -79,3 +79,82 @@ footer {
   background-color: #eee;
   margin-top: 2rem;
 }
+/* Cart Page Styles */
+#cart {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 1rem;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+#cart h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+#cart-items {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+  padding: 1rem;
+}
+
+.cart-item img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  margin-right: 1rem;
+}
+
+.cart-item-details {
+  flex-grow: 1;
+}
+
+.cart-item-details h3 {
+  margin: 0;
+}
+
+.cart-item-details p {
+  margin: 0.5rem 0;
+}
+
+.cart-item button {
+  padding: 0.5rem;
+  background-color: red;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.cart-item button:hover {
+  background-color: darkred;
+}
+
+#cart-summary {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+#checkout-btn {
+  padding: 0.75rem 2rem;
+  background-color: #333;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-top: 1rem;
+}
+
+#checkout-btn:hover {
+  background-color: #555;
+}
