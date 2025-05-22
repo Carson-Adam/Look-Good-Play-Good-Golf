@@ -1,21 +1,3 @@
-let cart = [];
-
-function addToCart(product, quantity, price) {
-  const existingProduct = cart.find(item => item.product === product && item.quantity === quantity);
-  
-  if (existingProduct) {
-    existingProduct.quantity += 1;
-  } else {
-    cart.push({
-      product,
-      quantity: parseInt(quantity),
-      price: price,
-    });
-  }
-
-  alert(`${product} added to cart!`);
-  console.log(cart);
-}
 // Sample cart array for testing
 let cart = [];
 
@@ -73,7 +55,21 @@ function removeFromCart(index) {
   loadCart();
 }
 
-// Initialize cart page
-if (document.getElementById('cart-items')) {
-  loadCart();
+// Set the active link based on the current page
+function setActiveLink() {
+  const links = document.querySelectorAll('nav a');
+  links.forEach(link => {
+    if (link.href === window.location.href) {
+      link.classList.add('active');
+    }
+  });
 }
+
+// Initialize cart page and active link
+window.onload = function() {
+  if (document.getElementById('cart-items')) {
+    loadCart();
+  }
+
+  setActiveLink();
+};
