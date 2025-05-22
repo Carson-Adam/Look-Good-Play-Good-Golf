@@ -2,137 +2,80 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Mulligan Market</title>
-  <link rel="stylesheet" href="styles.css"/>
-  <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      margin: 0;
-      padding: 0;
-      background: #f4f4f4;
-      color: #333;
-    }
-    header {
-      background: #2c3e50;
-      color: #fff;
-      padding: 20px 0;
-      text-align: center;
-    }
-    main {
-      padding: 40px;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-around;
-    }
-    .product {
-      background: #fff;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      padding: 20px;
-      margin: 10px;
-      width: 260px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      text-align: center;
-    }
-    .product h2 {
-      font-size: 1.2em;
-    }
-    .product select {
-      margin: 10px 0;
-    }
-    button {
-      padding: 10px 15px;
-      border: none;
-      background: #27ae60;
-      color: #fff;
-      cursor: pointer;
-      border-radius: 5px;
-    }
-    button:hover {
-      background: #219150;
-    }
-  </style>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <header>
-    <h1>Mulligan Market</h1>
-    <p>Your source for premium used golf balls</p>
+    <div class="logo">
+      <h1>Mulligan Market</h1>
+    </div>
+    <nav>
+      <a href="#home">Home</a>
+      <a href="cart.html">Cart</a>
+      <a href="checkout.html">Checkout</a>
+    </nav>
   </header>
 
   <main>
-    <div class="product" data-name="Callaway" data-price12="18" data-price24="33">
-      <h2>Callaway</h2>
-      <label for="callaway-qty">Quantity:</label>
-      <select id="callaway-qty">
-        <option value="12">12</option>
-        <option value="24">24</option>
-      </select>
-      <p class="price">$18.00</p>
-      <button onclick="addToCart('Callaway')">Add to Cart</button>
-    </div>
+    <section id="products">
+      <h2>Our Golf Balls</h2>
 
-    <div class="product" data-name="TaylorMade" data-price12="18" data-price24="33">
-      <h2>TaylorMade</h2>
-      <label for="taylormade-qty">Quantity:</label>
-      <select id="taylormade-qty">
-        <option value="12">12</option>
-        <option value="24">24</option>
-      </select>
-      <p class="price">$18.00</p>
-      <button onclick="addToCart('TaylorMade')">Add to Cart</button>
-    </div>
+      <div class="product" id="titleist">
+        <img src="https://via.placeholder.com/200" alt="Titleist Ball" />
+        <h3>Titleist</h3>
+        <p>Price: $18 for 12, $33 for 24</p>
+        <label for="titleist-quantity">Quantity:</label>
+        <select id="titleist-quantity">
+          <option value="12">12 Balls</option>
+          <option value="24">24 Balls</option>
+        </select>
+        <button class="add-to-cart" onclick="addToCart('Titleist', document.getElementById('titleist-quantity').value, 18)">Add to Cart</button>
+      </div>
 
-    <div class="product" data-name="Titleist" data-price12="18" data-price24="33">
-      <h2>Titleist</h2>
-      <label for="titleist-qty">Quantity:</label>
-      <select id="titleist-qty">
-        <option value="12">12</option>
-        <option value="24">24</option>
-      </select>
-      <p class="price">$18.00</p>
-      <button onclick="addToCart('Titleist')">Add to Cart</button>
-    </div>
+      <div class="product" id="callaway">
+        <img src="https://via.placeholder.com/200" alt="Callaway Ball" />
+        <h3>Callaway</h3>
+        <p>Price: $18 for 12, $33 for 24</p>
+        <label for="callaway-quantity">Quantity:</label>
+        <select id="callaway-quantity">
+          <option value="12">12 Balls</option>
+          <option value="24">24 Balls</option>
+        </select>
+        <button class="add-to-cart" onclick="addToCart('Callaway', document.getElementById('callaway-quantity').value, 18)">Add to Cart</button>
+      </div>
 
-    <div class="product" data-name="Titleist Pro V1" data-price12="28" data-price24="52">
-      <h2>Titleist Pro V1</h2>
-      <label for="prov1-qty">Quantity:</label>
-      <select id="prov1-qty">
-        <option value="12">12</option>
-        <option value="24">24</option>
-      </select>
-      <p class="price">$28.00</p>
-      <button onclick="addToCart('Titleist Pro V1')">Add to Cart</button>
-    </div>
+      <div class="product" id="taylormade">
+        <img src="https://via.placeholder.com/200" alt="TaylorMade Ball" />
+        <h3>TaylorMade</h3>
+        <p>Price: $18 for 12, $33 for 24</p>
+        <label for="taylormade-quantity">Quantity:</label>
+        <select id="taylormade-quantity">
+          <option value="12">12 Balls</option>
+          <option value="24">24 Balls</option>
+        </select>
+        <button class="add-to-cart" onclick="addToCart('TaylorMade', document.getElementById('taylormade-quantity').value, 18)">Add to Cart</button>
+      </div>
+
+      <div class="product" id="pro-v1">
+        <img src="https://via.placeholder.com/200" alt="Pro V1 Ball" />
+        <h3>Titleist Pro V1</h3>
+        <p>Price: $27 for 12, $52 for 24</p>
+        <label for="pro-v1-quantity">Quantity:</label>
+        <select id="pro-v1-quantity">
+          <option value="12">12 Balls</option>
+          <option value="24">24 Balls</option>
+        </select>
+        <button class="add-to-cart" onclick="addToCart('Pro V1', document.getElementById('pro-v1-quantity').value, 27)">Add to Cart</button>
+      </div>
+    </section>
   </main>
 
-  <script>
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+  <footer>
+    <p>&copy; 2025 Mulligan Market. All rights reserved.</p>
+  </footer>
 
-    document.querySelectorAll('.product select').forEach(select => {
-      select.addEventListener('change', function () {
-        const product = this.closest('.product');
-        const qty = parseInt(this.value);
-        const price = qty === 12 ? product.dataset.price12 : product.dataset.price24;
-        product.querySelector('.price').textContent = `$${price}.00`;
-      });
-    });
-
-    function addToCart(productName) {
-      const product = [...document.querySelectorAll('.product')].find(p => p.dataset.name === productName);
-      const qty = parseInt(product.querySelector('select').value);
-      const price = qty === 12 ? parseFloat(product.dataset.price12) : parseFloat(product.dataset.price24);
-
-      const existingItem = cart.find(item => item.name === productName && item.quantity === qty);
-      if (existingItem) {
-        existingItem.count += 1;
-      } else {
-        cart.push({ name: productName, quantity: qty, price, count: 1 });
-      }
-
-      localStorage.setItem('cart', JSON.stringify(cart));
-      alert(`${productName} (${qty}) added to cart!`);
-    }
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
