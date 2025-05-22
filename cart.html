@@ -1,36 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Shopping Cart - Mulligan Market</title>
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <!-- Header -->
   <header>
     <div class="logo">
-      <h1>Mulligan Market</h1>
+      <h1>MULLIGAN MARKET</h1>
     </div>
     <nav>
       <a href="index.html">Home</a>
-      <a href="cart.html" class="active">Cart</a> <!-- Active class will be added here -->
-      <a href="checkout.html">Checkout</a>
+      <a href="cart.html">Cart</a>
     </nav>
   </header>
 
+  <!-- Cart Content -->
   <main>
-    <section id="cart">
+    <section id="cart-summary">
       <h2>Your Cart</h2>
-
-      <div id="cart-items"></div>
-
-      <div id="cart-summary">
-        <p><strong>Total:</strong> $<span id="total-price">0</span></p>
-        <button id="checkout-btn">Proceed to Checkout</button>
+      <div id="cart-items">
+        <!-- Cart items will be displayed here dynamically -->
       </div>
+      <p>Total: $<span id="cart-total">0</span></p>
+      <button id="checkout-button">Proceed to Checkout</button>
     </section>
   </main>
 
+  <!-- Footer -->
   <footer>
     <p>&copy; 2025 Mulligan Market. All rights reserved.</p>
   </footer>
