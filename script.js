@@ -1,75 +1,43 @@
-// Sample cart array for testing
 let cart = [];
 
-function addToCart(product, quantity, price) {
-  const existingProduct = cart.find(item => item.product === product && item.quantity === quantity);
+function addToCart(productName, quantity, price) {
+  let totalPrice = quantity === '12' ? price * 12 : price * 24;
+
+  let productIndex = cart.findIndex(item => item.name === productName && item.quantity === quantity);
   
-  if (existingProduct) {
-    existingProduct.quantity += 1;
+  if (productIndex !== -1) {
+    cart[productIndex].quantity += quantity === '12' ? 12 : 24;
+    cart[productIndex].price += totalPrice;
   } else {
-    cart.push({
-      product,
-      quantity: parseInt(quantity),
-      price: price,
-    });
+    cart.push({ name: productName, quantity: quantity === '12' ? 12 : 24, price: totalPrice });
   }
 
-  alert(`${product} added to cart!`);
-  console.log(cart);
+  updateCart();
 }
 
-// Load cart items into the cart page
-function loadCart() {
-  const cartContainer = document.getElementById('cart-items');
-  const totalPriceElement = document.getElementById('total-price');
-  
-  // Clear current cart items
-  cartContainer.innerHTML = '';
+function updateCart() {
+  const cartItems = document.getElementById('cart-items');
+  cartItems.innerHTML = '';
 
-  let totalPrice = 0;
+  let total = 0;
 
-  cart.forEach((item, index) => {
-    const itemElement = document.createElement('div');
-    itemElement.classList.add('cart-item');
-    
-    itemElement.innerHTML = `
-      <img src="https://via.placeholder.com/60" alt="${item.product}" />
-      <div class="cart-item-details">
-        <h3>${item.product}</h3>
-        <p>Price: $${item.price} x ${item.quantity}</p>
-        <p>Total: $${item.price * item.quantity}</p>
-      </div>
-      <button onclick="removeFromCart(${index})">Remove</button>
-    `;
+  cart.forEach(item => {
+    const itemDiv = document.createElement('div');
+    itemDiv.innerHTML = `${item.name} - ${item.quantity} balls - $${item.price}`;
+    cartItems.appendChild(itemDiv);
 
-    cartContainer.appendChild(itemElement);
-    totalPrice += item.price * item.quantity;
+    total += item.price;
   });
 
-  totalPriceElement.textContent = totalPrice.toFixed(2);
+  document.getElementById('cart-total').innerText = total;
+
+  document.getElementById('checkout-button').style.display = cart.length > 0 ? 'inline-block' : 'none';
 }
 
-// Remove item from cart
-function removeFromCart(index) {
-  cart.splice(index, 1);
-  loadCart();
-}
-
-// Set the active link based on the current page
-function setActiveLink() {
-  const links = document.querySelectorAll('nav a');
-  links.forEach(link => {
-    if (link.href === window.location.href) {
-      link.classList.add('active');
-    }
-  });
-}
-
-// Initialize cart page and active link
-window.onload = function() {
-  if (document.getElementById('cart-items')) {
-    loadCart();
+document.getElementById('checkout-button').addEventListener('click', () => {
+  if (cart.length > 0) {
+    alert("Proceeding to checkout... (This can be implemented further with a checkout page or API)");
+  } else {
+    alert("Your cart is empty.");
   }
-
-  setActiveLink();
-};
+});
