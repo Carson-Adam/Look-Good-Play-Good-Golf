@@ -1,102 +1,40 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Your Cart - Mulligan Market</title>
-  <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background: #f4f4f4;
-      margin: 0;
-      color: #333;
-    }
-    header, footer {
-      background: #2c3e50;
-      color: white;
-      text-align: center;
-      padding: 20px;
-    }
-    .container {
-      padding: 40px;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-bottom: 20px;
-      background: white;
-    }
-    th, td {
-      padding: 15px;
-      border: 1px solid #ccc;
-      text-align: left;
-    }
-    .checkout-button {
-      background-color: #27ae60;
-      color: white;
-      padding: 10px 20px;
-      border: none;
-      font-size: 16px;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shopping Cart - Mulligan Market</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <header>
-    <h1>Your Cart</h1>
+    <div class="logo">
+      <h1>Mulligan Market</h1>
+    </div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="cart.html">Cart</a>
+      <a href="checkout.html">Checkout</a>
+    </nav>
   </header>
 
-  <div class="container">
-    <table>
-      <thead>
-        <tr>
-          <th>Product</th>
-          <th>Quantity</th>
-          <th>Each</th>
-          <th>Count</th>
-          <th>Total</th>
-        </tr>
-      </thead>
-      <tbody id="cart-body"></tbody>
-    </table>
-    <h3>Total: $<span id="total-price">0.00</span></h3>
-    <button class="checkout-button" onclick="alert('Checkout not set up yet.')">Proceed to Checkout</button>
-  </div>
+  <main>
+    <section id="cart">
+      <h2>Your Cart</h2>
+
+      <div id="cart-items"></div>
+
+      <div id="cart-summary">
+        <p><strong>Total:</strong> $<span id="total-price">0</span></p>
+        <button id="checkout-btn">Proceed to Checkout</button>
+      </div>
+    </section>
+  </main>
 
   <footer>
-    <p>© 2025 Mulligan Market. All rights reserved.</p>
+    <p>&copy; 2025 Mulligan Market. All rights reserved.</p>
   </footer>
 
-  <script>
-    const cart = JSON.parse(localStorage.getItem("cart")) || [];
-    const tbody = document.getElementById("cart-body");
-    const totalPriceElem = document.getElementById("total-price");
-    let total = 0;
-
-    cart.forEach(item => {
-      const rowTotal = item.price * item.count;
-      total += rowTotal;
-
-      const row = document.createElement("tr");
-      row.innerHTML = `
-        <td>${item.name}</td>
-        <td>${item.quantity}</td>
-        <td>$${item.price.toFixed(2)}</td>
-        <td>${item.count}</td>
-        <td>$${rowTotal.toFixed(2)}</td>
-      `;
-      tbody.appendChild(row);
-    });
-
-    totalPriceElem.textContent = total.toFixed(2);
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
-
-
-
-
-
-
