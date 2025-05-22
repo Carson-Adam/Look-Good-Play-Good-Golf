@@ -1,14 +1,12 @@
-<!DOCTYPE html>  
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Mulligan Market</title>
-  <link rel="stylesheet" href="styles.css"> <!-- Link to CSS file -->
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-
-  <!-- Header Section -->
   <header>
     <div class="logo">
       <h1>MULLIGAN MARKET</h1>
@@ -20,67 +18,60 @@
     </nav>
   </header>
 
-  <!-- Main Content Section -->
   <main>
     <h2>Golf Balls Available for Purchase</h2>
     <div id="products">
-
-      <!-- Titleist Ball Product -->
+      <!-- Product Template -->
       <div class="product">
-        <img src="titleist.jpg" alt="Titleist Ball">
+        <img src="titleist.jpg" alt="Titleist Ball" />
         <h3>Titleist</h3>
-        <p>Price: $18 (12), $33 (24)</p>
+        <p>$18 (12), $33 (24)</p>
         <select id="titleist-quantity">
           <option value="12">12 balls</option>
           <option value="24">24 balls</option>
         </select>
-        <button class="add-to-cart" onclick="addToCart('Titleist', document.getElementById('titleist-quantity').value, 18)">Add to Cart</button>
+        <button onclick="addToCart('Titleist', getQuantity('titleist-quantity'))">Add to Cart</button>
       </div>
 
-      <!-- Callaway Ball Product -->
       <div class="product">
-        <img src="callaway.jpg.jpeg" alt="Callaway Ball">
+        <img src="callaway.jpg.jpeg" alt="Callaway Ball" />
         <h3>Callaway</h3>
-        <p>Price: $18 (12), $33 (24)</p>
+        <p>$18 (12), $33 (24)</p>
         <select id="callaway-quantity">
           <option value="12">12 balls</option>
           <option value="24">24 balls</option>
         </select>
-        <button class="add-to-cart" onclick="addToCart('Callaway', document.getElementById('callaway-quantity').value, 18)">Add to Cart</button>
+        <button onclick="addToCart('Callaway', getQuantity('callaway-quantity'))">Add to Cart</button>
       </div>
 
-      <!-- TaylorMade Ball Product -->
       <div class="product">
-        <img src="taylormade.jpg.jpeg" alt="TaylorMade Ball">
+        <img src="taylormade.jpg.jpeg" alt="TaylorMade Ball" />
         <h3>TaylorMade</h3>
-        <p>Price: $18 (12), $33 (24)</p>
+        <p>$18 (12), $33 (24)</p>
         <select id="taylormade-quantity">
           <option value="12">12 balls</option>
           <option value="24">24 balls</option>
         </select>
-        <button class="add-to-cart" onclick="addToCart('TaylorMade', document.getElementById('taylormade-quantity').value, 18)">Add to Cart</button>
+        <button onclick="addToCart('TaylorMade', getQuantity('taylormade-quantity'))">Add to Cart</button>
       </div>
 
-      <!-- Pro V1 Ball Product -->
       <div class="product">
-        <img src="prov1.jpg.jpeg" alt="Pro V1 Ball">
+        <img src="prov1.jpg.jpeg" alt="Pro V1 Ball" />
         <h3>Pro V1</h3>
-        <p>Price: $27 (12), $52 (24)</p>
+        <p>$27 (12), $52 (24)</p>
         <select id="prov1-quantity">
           <option value="12">12 balls</option>
           <option value="24">24 balls</option>
         </select>
-        <button class="add-to-cart" onclick="addToCart('Pro V1', document.getElementById('prov1-quantity').value, 27)">Add to Cart</button>
+        <button onclick="addToCart('Pro V1', getQuantity('prov1-quantity'))">Add to Cart</button>
       </div>
-
-    </div> <!-- End of #products div -->
+    </div>
   </main>
 
-  <!-- Footer Section -->
   <footer>
     <p>&copy; 2025 Mulligan Market</p>
   </footer>
 
-  <script src="script.js"></script> <!-- Correct path to script.js -->
+  <script src="script.js"></script>
 </body>
 </html>
