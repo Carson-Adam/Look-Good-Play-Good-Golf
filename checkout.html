@@ -2,200 +2,83 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Checkout - Mulligan Market</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mulligan Market - Checkout</title>
   <link rel="stylesheet" href="style.css" />
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background: #f5f9ff;
-    }
-
-    header {
-      background-color: #003366;
-      color: white;
-      padding: 20px 0;
-      text-align: center;
-    }
-
-    header h1 {
-      margin: 0;
-      font-size: 2.5em;
-      letter-spacing: 1px;
-    }
-
-    nav {
-      margin-top: 10px;
-    }
-
-    nav a {
-      color: white;
-      margin: 0 15px;
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 1.1em;
-    }
-
-    nav a:hover {
-      text-decoration: underline;
-    }
-
-    main {
-      max-width: 1000px;
-      margin: 40px auto;
-      background: white;
-      padding: 30px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      border-radius: 10px;
-    }
-
-    h2 {
-      text-align: center;
-      color: #003366;
-      margin-bottom: 30px;
-    }
-
-    .form-section {
-      margin-bottom: 40px;
-    }
-
-    label {
-      display: block;
-      margin-bottom: 10px;
-      font-weight: bold;
-      color: #333;
-    }
-
-    input, textarea, select {
-      width: 100%;
-      padding: 12px;
-      margin-bottom: 20px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-      font-size: 1em;
-    }
-
-    .cart-review {
-      margin-top: 30px;
-      border-top: 1px solid #ddd;
-      padding-top: 30px;
-    }
-
-    .cart-item {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 15px;
-    }
-
-    .cart-item span {
-      font-size: 1em;
-      color: #333;
-    }
-
-    .cart-total {
-      font-weight: bold;
-      font-size: 1.2em;
-      margin-top: 10px;
-      text-align: right;
-    }
-
-    button {
-      background-color: #007bff;
-      color: white;
-      border: none;
-      padding: 15px 30px;
-      font-size: 1.1em;
-      border-radius: 5px;
-      cursor: pointer;
-      display: block;
-      margin: 30px auto 0;
-      transition: background 0.3s;
-    }
-
-    button:hover {
-      background-color: #0056b3;
-    }
-
-    footer {
-      text-align: center;
-      padding: 20px;
-      background: #003366;
-      color: white;
-      margin-top: 50px;
-    }
-
-    @media (max-width: 768px) {
-      main {
-        margin: 20px;
-        padding: 20px;
-      }
-
-      h2 {
-        font-size: 1.8em;
-      }
-
-      nav a {
-        font-size: 1em;
-      }
-    }
-  </style>
 </head>
 <body>
   <header>
-    <h1>MULLIGAN MARKET</h1>
+    <div class="logo">Mulligan Market</div>
     <nav>
       <a href="index.html">Home</a>
-      <a href="cart.html">Cart</a>
-      <a href="checkout.html">Checkout</a>
+      <a href="cart.html">Cart <span id="cart-count" class="cart-badge"></span></a>
+      <a href="checkout.html" class="active">Checkout</a>
     </nav>
   </header>
 
-  <main>
-    <h2>Checkout</h2>
-    <form id="checkout-form">
-      <div class="form-section">
-        <h3>Contact Information</h3>
-        <label for="name">Full Name</label>
-        <input type="text" id="name" required />
+  <main class="checkout-page">
+    <h1>Checkout</h1>
 
-        <label for="email">Email Address</label>
-        <input type="email" id="email" required />
+    <div id="checkout-summary" class="checkout-summary"></div>
 
-        <label for="phone">Phone Number</label>
-        <input type="tel" id="phone" />
-      </div>
+    <form id="checkout-form" class="checkout-form">
+      <h2>Shipping Information</h2>
+      <label for="name">Full Name</label>
+      <input type="text" id="name" name="name" required />
 
-      <div class="form-section">
-        <h3>Shipping Address</h3>
-        <label for="address">Street Address</label>
-        <input type="text" id="address" required />
+      <label for="email">Email Address</label>
+      <input type="email" id="email" name="email" required />
 
-        <label for="city">City</label>
-        <input type="text" id="city" required />
+      <label for="address">Shipping Address</label>
+      <textarea id="address" name="address" rows="3" required></textarea>
 
-        <label for="state">State</label>
-        <input type="text" id="state" required />
-
-        <label for="zip">ZIP Code</label>
-        <input type="text" id="zip" required />
-      </div>
-
-      <div class="cart-review" id="checkout-cart">
-        <h3>Review Your Cart</h3>
-        <div id="checkout-items"></div>
-        <div class="cart-total">Total: $<span id="checkout-total">0.00</span></div>
-      </div>
-
-      <button type="submit">Place Order</button>
+      <button type="submit" class="btn-primary">Place Order</button>
     </form>
   </main>
 
   <footer>
-    <p>&copy; 2025 Mulligan Market. All rights reserved.</p>
+    &copy; 2025 Mulligan Market
   </footer>
 
-  <script src="script.js"></script>
+  <script>
+    // Minimal checkout page JS that uses localStorage cart from script.js
+    document.addEventListener("DOMContentLoaded", () => {
+      const cart = JSON.parse(localStorage.getItem("mulliganCart")) || [];
+      const summaryDiv = document.getElementById("checkout-summary");
+      const cartCountElem = document.getElementById("cart-count");
+
+      // Update cart count badge in nav
+      const count = cart.reduce((total, item) => total + item.quantity, 0);
+      if (cartCountElem) {
+        cartCountElem.textContent = count > 0 ? count : "";
+      }
+
+      // Show order summary or empty message
+      if (cart.length === 0) {
+        summaryDiv.innerHTML = `<p>Your cart is empty. <a href="index.html">Go back shopping</a>.</p>`;
+        document.getElementById("checkout-form").style.display = "none";
+        return;
+      }
+
+      // Build summary HTML
+      let total = 0;
+      let html = `<h2>Order Summary</h2><ul class="order-summary-list">`;
+      cart.forEach(item => {
+        const subtotal = item.price * item.quantity;
+        total += subtotal;
+        html += `<li>${item.name} (${item.priceKey === 'dozen' ? '12 balls' : '24 balls'}) x ${item.quantity} = $${subtotal.toFixed(2)}</li>`;
+      });
+      html += `</ul><h3>Total: $${total.toFixed(2)}</h3>`;
+      summaryDiv.innerHTML = html;
+
+      // Handle form submission
+      document.getElementById("checkout-form").addEventListener("submit", (e) => {
+        e.preventDefault();
+        alert("Thank you for your order, " + e.target.name.value + "!\nYour order total is $" + total.toFixed(2));
+        localStorage.removeItem("mulliganCart"); // clear cart
+        window.location.href = "index.html"; // redirect home after order
+      });
+    });
+  </script>
 </body>
 </html>
