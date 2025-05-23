@@ -1,235 +1,264 @@
-// script.js
+// Mulligan Market Cart Script
+// Manages products, cart, quantities, localStorage persistence, and UI updates
 
-// Initialize cart array from localStorage or empty
-let cart = [];
-try {
-  const storedCart = localStorage.getItem('cart');
-  cart = storedCart ? JSON.parse(storedCart) : [];
-} catch (error) {
-  console.warn('LocalStorage read error:', error);
-  cart = [];
+// Product data for reference (should align with index.html product data)
+const products = [
+  {
+    id: "pro-v1",
+    name: "Titleist Pro V1",
+    description: "Premium golf balls for precision and control on every shot.",
+    prices: {
+      dozen: 27,
+      twoDozen: 48
+    },
+    image: "pro-v1.jpg" // optional, not used here
+  },
+  {
+    id: "titleist",
+    name: "Titleist",
+    description: "Reliable performance and great feel for casual rounds.",
+    prices: {
+      dozen: 18,
+      twoDozen: 33
+    },
+    image: "titleist.jpg"
+  },
+  {
+    id: "callaway",
+    name: "Callaway",
+    description: "Durable golf balls delivering excellent distance and accuracy.",
+    prices: {
+      dozen: 18,
+      twoDozen: 33
+    },
+    image: "callaway.jpg"
+  },
+  {
+    id: "taylormade",
+    name: "TaylorMade",
+    description: "Innovative design for consistent shots and soft feel.",
+    prices: {
+      dozen: 18,
+      twoDozen: 33
+    },
+    image: "taylormade.jpg"
+  }
+];
+
+// Get DOM elements
+const productsGrid = document.querySelector(".products-grid");
+const cartCountElem = document.querySelector("#cart-count");
+const cartItemsContainer = document.querySelector("#cart-items");
+const cartTotalElem = document.querySelector("#cart-total");
+const checkoutBtn = document.querySelector("#checkout-btn");
+
+// Load cart from localStorage or initialize empty
+let cart = JSON.parse(localStorage.getItem("mulliganCart")) || [];
+
+// Utility: Save cart to localStorage
+function saveCart() {
+  localStorage.setItem("mulliganCart", JSON.stringify(cart));
 }
 
-// Save cart to localStorage
-function saveCart() {
-  try {
-    localStorage.setItem('cart', JSON.stringify(cart));
-  } catch (error) {
-    alert('Unable to save cart. Your browser might be in private mode or storage is disabled.');
+// Utility: Format price as USD string
+function formatPrice(num) {
+  return "$" + num.toFixed(2);
+}
+
+// Render product cards dynamically (if you want to generate products dynamically - optional)
+function renderProducts() {
+  if (!productsGrid) return;
+  productsGrid.innerHTML = "";
+  products.forEach((product) => {
+    const productHTML = `
+      <div class="product" data-id="${product.id}">
+        <img src="${product.image}" alt="${product.name}" class="product-img" />
+        <h3 class="product-name">${product.name}</h3>
+        <p class="product-desc">${product.description}</p>
+        <div class="price-qty">
+          <label class="price-option">
+            <input type="radio" name="price-${product.id}" value="dozen" checked /> 12 balls - ${formatPrice(product.prices.dozen)}
+          </label>
+          <label class="price-option">
+            <input type="radio" name="price-${product.id}" value="twoDozen" /> 24 balls - ${formatPrice(product.prices.twoDozen)}
+          </label>
+        </div>
+        <button class="btn-secondary add-to-cart-btn">Add to Cart</button>
+      </div>
+    `;
+    productsGrid.insertAdjacentHTML("beforeend", productHTML);
+  });
+}
+
+// Update cart count display
+function updateCartCount() {
+  const count = cart.reduce((total, item) => total + item.quantity, 0);
+  if (cartCountElem) {
+    cartCountElem.textContent = count;
+    cartCountElem.style.display = count > 0 ? "inline-block" : "none";
   }
 }
 
-// Add product to cart
-function addToCart(name, quantity, pricePerSet) {
-  const qty = parseInt(quantity, 10);
-  if (isNaN(qty) || (qty !== 12 && qty !== 24)) {
-    alert('Invalid quantity selected.');
+// Calculate and update total price in cart
+function updateCartTotal() {
+  if (!cartTotalElem) return;
+  const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  cartTotalElem.textContent = formatPrice(total);
+}
+
+// Render cart items in the cart page container
+function renderCartItems() {
+  if (!cartItemsContainer) return;
+  if (cart.length === 0) {
+    cartItemsContainer.innerHTML = `<p class="empty-cart-msg">Your cart is empty.</p>`;
+    if (checkoutBtn) checkoutBtn.disabled = true;
     return;
   }
 
-  const existingItemIndex = cart.findIndex(item => item.name === name && item.quantity === qty);
+  let html = "";
+  cart.forEach((item) => {
+    html += `
+      <div class="cart-item" data-id="${item.id}">
+        <div class="cart-item-info">
+          <h4>${item.name}</h4>
+          <p>${item.quantity} x ${formatPrice(item.price)}</p>
+          <p><strong>Subtotal: </strong>${formatPrice(item.price * item.quantity)}</p>
+        </div>
+        <div class="cart-item-controls">
+          <button class="btn-qty btn-decrease" aria-label="Decrease quantity">-</button>
+          <span class="quantity">${item.quantity}</span>
+          <button class="btn-qty btn-increase" aria-label="Increase quantity">+</button>
+          <button class="btn-remove" aria-label="Remove item from cart">&times;</button>
+        </div>
+      </div>
+    `;
+  });
+  cartItemsContainer.innerHTML = html;
 
-  if (existingItemIndex >= 0) {
-    cart[existingItemIndex].count++;
+  if (checkoutBtn) checkoutBtn.disabled = false;
+}
+
+// Add item to cart or increase quantity if exists
+function addToCart(productId) {
+  // Find product info
+  const product = products.find((p) => p.id === productId);
+  if (!product) return;
+
+  // Find selected price option
+  const selectedPriceInput = document.querySelector(`input[name="price-${productId}"]:checked`);
+  const priceKey = selectedPriceInput ? selectedPriceInput.value : "dozen";
+  const price = product.prices[priceKey];
+
+  // Check if product already in cart with same price option
+  const existingIndex = cart.findIndex((item) => item.id === productId && item.price === price);
+  if (existingIndex !== -1) {
+    cart[existingIndex].quantity += 1;
   } else {
-    cart.push({ name, quantity: qty, pricePerSet, count: 1 });
+    cart.push({
+      id: productId,
+      name: product.name,
+      price: price,
+      quantity: 1,
+      priceKey: priceKey
+    });
   }
 
   saveCart();
-  alert(`${qty} ${name} golf balls added to cart.`);
-}
-
-// Event listeners for add to cart buttons on index.html
-function setupAddToCartButtons() {
-  const products = document.querySelectorAll('.product');
-  products.forEach(prod => {
-    const btn = prod.querySelector('.add-to-cart-btn');
-    const select = prod.querySelector('.quantity-select');
-    btn.addEventListener('click', () => {
-      const name = prod.dataset.name;
-      const qty = select.value;
-      const priceKey = qty === '12' ? 'price12' : 'price24';
-      const pricePerSet = parseFloat(prod.dataset[priceKey]);
-      addToCart(name, qty, pricePerSet);
-    });
-  });
-}
-
-// --- CART PAGE FUNCTIONS --- //
-
-function loadCart() {
-  if (!cart.length) return;
-
-  const cartTableBody = document.getElementById('cart-table-body');
-  if (!cartTableBody) return;
-
-  cartTableBody.innerHTML = '';
-
-  cart.forEach((item, idx) => {
-    const tr = document.createElement('tr');
-
-    const tdName = document.createElement('td');
-    tdName.textContent = item.name;
-    tdName.className = 'cart-item-name';
-
-    const tdQuantity = document.createElement('td');
-    tdQuantity.textContent = `${item.quantity} balls x ${item.count} sets`;
-    tdQuantity.className = 'cart-item-qty';
-
-    const tdPricePerSet = document.createElement('td');
-    tdPricePerSet.textContent = `$${item.pricePerSet.toFixed(2)}`;
-    tdPricePerSet.className = 'cart-item-price';
-
-    const tdTotalPrice = document.createElement('td');
-    const totalPrice = item.pricePerSet * item.count;
-    tdTotalPrice.textContent = `$${totalPrice.toFixed(2)}`;
-    tdTotalPrice.className = 'cart-item-total';
-
-    const tdRemove = document.createElement('td');
-    const removeBtn = document.createElement('button');
-    removeBtn.textContent = 'Remove';
-    removeBtn.className = 'remove-btn';
-    removeBtn.addEventListener('click', () => {
-      cart.splice(idx, 1);
-      saveCart();
-      loadCart();
-      updateCartCount();
-    });
-    tdRemove.appendChild(removeBtn);
-
-    tr.append(tdName, tdQuantity, tdPricePerSet, tdTotalPrice, tdRemove);
-    cartTableBody.appendChild(tr);
-  });
-
-  updateCartTotal();
   updateCartCount();
+  alert(`Added 1 ${product.name} (${priceKey === "dozen" ? "12 balls" : "24 balls"}) to cart.`);
 }
 
-function updateCartTotal() {
-  const totalEl = document.getElementById('cart-total');
-  if (!totalEl) return;
-
-  const total = cart.reduce((sum, item) => sum + item.pricePerSet * item.count, 0);
-  totalEl.textContent = `$${total.toFixed(2)}`;
-}
-
-function updateCartCount() {
-  const cartCountEls = document.querySelectorAll('.cart-count');
-  const totalCount = cart.reduce((sum, item) => sum + item.count, 0);
-  cartCountEls.forEach(el => {
-    el.textContent = totalCount;
-  });
-}
-
-// --- CHECKOUT PAGE FUNCTIONS --- //
-
-function loadCheckoutCart() {
-  const checkoutItems = document.getElementById('checkout-items');
-  const totalEl = document.getElementById('checkout-total');
-  if (!checkoutItems || !totalEl) return;
-
-  checkoutItems.innerHTML = '';
-  let total = 0;
-
-  cart.forEach(item => {
-    const row = document.createElement('div');
-    row.className = 'cart-item';
-
-    const name = document.createElement('span');
-    name.textContent = `${item.name} (${item.quantity} balls x ${item.count} sets)`;
-
-    const price = document.createElement('span');
-    const itemTotal = item.pricePerSet * item.count;
-    price.textContent = `$${itemTotal.toFixed(2)}`;
-
-    total += itemTotal;
-
-    row.append(name, price);
-    checkoutItems.appendChild(row);
-  });
-
-  totalEl.textContent = total.toFixed(2);
-}
-
-function validateCheckoutForm() {
-  const nameInput = document.getElementById('name');
-  const emailInput = document.getElementById('email');
-  const addressInput = document.getElementById('address');
-  const cityInput = document.getElementById('city');
-  const stateInput = document.getElementById('state');
-  const zipInput = document.getElementById('zip');
-
-  if (!nameInput.value.trim()) {
-    alert('Please enter your full name.');
-    nameInput.focus();
-    return false;
-  }
-  if (!emailInput.value.trim() || !emailInput.value.includes('@')) {
-    alert('Please enter a valid email address.');
-    emailInput.focus();
-    return false;
-  }
-  if (!addressInput.value.trim()) {
-    alert('Please enter your address.');
-    addressInput.focus();
-    return false;
-  }
-  if (!cityInput.value.trim()) {
-    alert('Please enter your city.');
-    cityInput.focus();
-    return false;
-  }
-  if (!stateInput.value.trim()) {
-    alert('Please enter your state.');
-    stateInput.focus();
-    return false;
-  }
-  if (!zipInput.value.trim()) {
-    alert('Please enter your ZIP/postal code.');
-    zipInput.focus();
-    return false;
-  }
-
-  if (!cart.length) {
-    alert('Your cart is empty. Please add items before checkout.');
-    return false;
-  }
-  return true;
-}
-
-function placeOrder() {
-  if (!validateCheckoutForm()) return;
-
-  alert('Thank you for your order! We will contact you soon.');
-
-  cart = [];
+// Remove item from cart
+function removeFromCart(productId, price) {
+  cart = cart.filter((item) => !(item.id === productId && item.price === price));
   saveCart();
-
-  window.location.href = 'index.html';
+  updateCartCount();
+  renderCartItems();
+  updateCartTotal();
 }
 
-// --- Init page-specific logic --- //
+// Change quantity for cart item
+function changeQuantity(productId, price, delta) {
+  const index = cart.findIndex((item) => item.id === productId && item.price === price);
+  if (index === -1) return;
 
-function init() {
-  const page = document.body.dataset.page;
-
-  if (page === 'index') {
-    setupAddToCartButtons();
+  cart[index].quantity += delta;
+  if (cart[index].quantity < 1) {
+    removeFromCart(productId, price);
+  } else {
+    saveCart();
     updateCartCount();
-  } else if (page === 'cart') {
-    loadCart();
-  } else if (page === 'checkout') {
-    updateCartCount();
-    loadCheckoutCart();
-
-    const orderForm = document.getElementById('checkout-form');
-    if (orderForm) {
-      orderForm.addEventListener('submit', e => {
-        e.preventDefault();
-        placeOrder();
-      });
-    }
+    renderCartItems();
+    updateCartTotal();
   }
 }
 
-document.addEventListener('DOMContentLoaded', init);
+// Event delegation for Add to Cart buttons on index page
+function setupAddToCartButtons() {
+  if (!productsGrid) return;
+  productsGrid.addEventListener("click", (e) => {
+    if (e.target.classList.contains("add-to-cart-btn")) {
+      const productDiv = e.target.closest(".product");
+      if (!productDiv) return;
+      const productId = productDiv.dataset.id;
+      addToCart(productId);
+    }
+  });
+}
+
+// Event delegation for cart item controls on cart page
+function setupCartControls() {
+  if (!cartItemsContainer) return;
+  cartItemsContainer.addEventListener("click", (e) => {
+    const cartItemDiv = e.target.closest(".cart-item");
+    if (!cartItemDiv) return;
+
+    const productId = cartItemDiv.dataset.id;
+    const quantitySpan = cartItemDiv.querySelector(".quantity");
+    const quantity = parseInt(quantitySpan.textContent);
+
+    // Find the price for this cart item displayed subtotal
+    const priceText = cartItemDiv.querySelector(".cart-item-info p:nth-child(2)").textContent;
+    // Extract price number (e.g. "3 x $27.00")
+    const priceMatch = priceText.match(/\$\d+(\.\d{2})?/);
+    if (!priceMatch) return;
+    const price = parseFloat(priceMatch[0].replace("$", ""));
+
+    if (e.target.classList.contains("btn-increase")) {
+      changeQuantity(productId, price, +1);
+    } else if (e.target.classList.contains("btn-decrease")) {
+      changeQuantity(productId, price, -1);
+    } else if (e.target.classList.contains("btn-remove")) {
+      removeFromCart(productId, price);
+    }
+  });
+}
+
+// Initialize everything on page load
+function init() {
+  updateCartCount();
+
+  // Only render cart items if cart page (has cartItemsContainer)
+  if (cartItemsContainer) {
+    renderCartItems();
+    updateCartTotal();
+    setupCartControls();
+  }
+
+  // Setup add to cart buttons on index page
+  if (productsGrid) {
+    // Uncomment if you want to dynamically generate products here
+    // renderProducts();
+    setupAddToCartButtons();
+  }
+
+  // Setup checkout button listener (optional)
+  if (checkoutBtn) {
+    checkoutBtn.addEventListener("click", () => {
+      alert("Checkout feature coming soon!");
+    });
+  }
+}
+
+// Run init on DOMContentLoaded
+document.addEventListener("DOMContentLoaded", init);
