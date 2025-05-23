@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Order Form</title>
+</head>
+<body>
+  <h1>Order Your Golf Balls</h1>
+  
+  <form action="https://formspree.io/f/your-form-id" method="POST">
+    <label>
+      Name:<br />
+      <input type="text" name="name" required />
+    </label><br /><br />
+    
+    <label>
+      Email:<br />
+      <input type="email" name="_replyto" required />
+    </label><br /><br />
+    
+    <label>
+      Shipping Address:<br />
+      <textarea name="address" required></textarea>
+    </label><br /><br />
+    
+    <label>
+      Quantity:<br />
+      <input type="number" name="quantity" min="1" value="1" required />
+    </label><br /><br />
+    
+    <button type="submit">Place Order</button>
+  </form>
+
+  <hr />
+
+  <!-- PayPal payment button -->
+  <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top" style="margin-top: 20px;">
+    <input type="hidden" name="business" value="YOUR_PAYPAL_EMAIL@example.com" />
+    <input type="hidden" name="cmd" value="_xclick" />
+    <input type="hidden" name="item_name" value="Golf Balls" />
+    <input type="hidden" name="amount" value="20.00" />
+    <input type="hidden" name="currency_code" value="USD" />
+    <input type="submit" value="Pay with PayPal" />
+  </form>
+</body>
+</html>
