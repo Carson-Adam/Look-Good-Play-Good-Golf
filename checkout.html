@@ -32,4 +32,28 @@
       <input type="email" id="email" name="email" required autocomplete="email" placeholder="john@example.com" />
 
       <label for="address">Address *</label>
-      <input
+      <input type="text" id="address" name="address" required autocomplete="street-address" placeholder="123 Main St" />
+
+      <label for="city">City *</label>
+      <input type="text" id="city" name="city" required autocomplete="address-level2" placeholder="City" />
+
+      <label for="state">State/Province *</label>
+      <input type="text" id="state" name="state" required autocomplete="address-level1" placeholder="State" />
+
+      <label for="zip">ZIP/Postal Code *</label>
+      <input type="text" id="zip" name="zip" required autocomplete="postal-code" placeholder="ZIP Code" />
+    </fieldset>
+
+    <button type="submit" class="btn submit-btn">Place Order</button>
+  </form>
+</main>
+
+<footer>
+  <div class="container">
+    <p>&copy; 2025 Mulligan Market. All rights reserved.</p>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
