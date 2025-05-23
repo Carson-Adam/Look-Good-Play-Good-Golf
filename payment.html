@@ -1,19 +1,32 @@
-<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
-  <!-- Identify your business using your PayPal email -->
-  <input type="hidden" name="business" value="your-paypal-email@example.com">
-  
-  <!-- Specify a Buy Now button -->
-  <input type="hidden" name="cmd" value="_xclick">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Pay with PayPal</title>
+</head>
+<body>
 
-  <!-- Item details -->
-  <input type="hidden" name="item_name" value="My Product Name">
-  <input type="hidden" name="amount" value="19.99">
-  <input type="hidden" name="currency_code" value="USD">
+  <h1>Buy My Product</h1>
 
-  <!-- URLs after payment or cancellation -->
-  <input type="hidden" name="return" value="https://yourwebsite.com/thank-you.html">
-  <input type="hidden" name="cancel_return" value="https://yourwebsite.com/payment-cancelled.html">
+  <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+    <!-- PayPal business email -->
+    <input type="hidden" name="business" value="your-paypal-email@example.com">
 
-  <!-- Submit button -->
-  <input type="submit" value="Pay with PayPal">
-</form>
+    <!-- Payment type: _xclick is for Buy Now -->
+    <input type="hidden" name="cmd" value="_xclick">
+
+    <!-- Product details -->
+    <input type="hidden" name="item_name" value="Sample Product">
+    <input type="hidden" name="amount" value="9.99">
+    <input type="hidden" name="currency_code" value="USD">
+
+    <!-- Optional: Return URLs -->
+    <input type="hidden" name="return" value="https://yourwebsite.com/thank-you.html">
+    <input type="hidden" name="cancel_return" value="https://yourwebsite.com/cancel.html">
+
+    <!-- Submit button -->
+    <input type="submit" value="Pay with PayPal">
+  </form>
+
+</body>
+</html>
