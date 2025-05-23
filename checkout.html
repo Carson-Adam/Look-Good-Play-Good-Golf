@@ -1,264 +1,35 @@
- <!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="en" data-page="checkout">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Checkout - Mulligan Market</title>
-  <style>
-    /* Your full original CSS is preserved */
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(120deg, #d0e9ff, #ffffff);
-      margin: 0; padding: 0;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-    header {
-      background-color: #004080;
-      color: white;
-      padding: 22px 28px;
-      text-align: center;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-      position: sticky;
-      top: 0;
-      z-index: 10;
-    }
-    header .logo h1 {
-      margin: 0;
-      font-weight: 900;
-      letter-spacing: 3px;
-    }
-    nav {
-      margin-top: 14px;
-    }
-    nav a {
-      color: white;
-      margin: 0 18px;
-      font-weight: 600;
-      font-size: 1.15rem;
-      text-decoration: none;
-      padding: 8px 14px;
-      border-radius: 6px;
-      transition: background-color 0.3s ease;
-      user-select: none;
-    }
-    nav a:hover {
-      background-color: #003060;
-      text-decoration: none;
-    }
-    main {
-      flex: 1;
-      max-width: 700px;
-      margin: 40px auto 60px;
-      background-color: #fdfcff;
-      border-radius: 14px;
-      padding: 30px 35px;
-      box-shadow: 0 8px 22px rgba(0,0,0,0.15);
-    }
-    main h2 {
-      font-size: 2.8rem;
-      color: #003366;
-      font-weight: 800;
-      letter-spacing: 1.4px;
-      margin-bottom: 28px;
-      text-align: center;
-    }
-    form {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-    label {
-      font-weight: 700;
-      font-size: 1.2rem;
-      color: #004080;
-    }
-    input, textarea {
-      padding: 12px 15px;
-      font-size: 1.15rem;
-      border-radius: 8px;
-      border: 2px solid #a9c6ff;
-      font-family: inherit;
-    }
-    input:focus, textarea:focus {
-      border-color: #0056d2;
-      outline: none;
-      box-shadow: 0 0 8px #0056d2aa;
-    }
-    textarea {
-      min-height: 80px;
-    }
-    button[type="submit"] {
-      background-color: #007bff;
-      color: white;
-      border: none;
-      padding: 18px 28px;
-      font-size: 1.5rem;
-      font-weight: 700;
-      border-radius: 12px;
-      cursor: pointer;
-      transition: background-color 0.35s ease;
-      margin-top: 12px;
-      align-self: center;
-      max-width: 280px;
-    }
-    button[type="submit"]:hover {
-      background-color: #0056b3;
-    }
-    #order-summary {
-      background-color: #e1efff;
-      border-radius: 12px;
-      padding: 18px 25px;
-      margin-bottom: 30px;
-      box-shadow: inset 0 0 10px #a1c4ff;
-    }
-    #order-summary h3 {
-      margin-top: 0;
-      color: #003366;
-      font-weight: 800;
-      font-size: 1.6rem;
-      margin-bottom: 12px;
-      text-align: center;
-    }
-    #order-items {
-      font-size: 1.15rem;
-      color: #004080;
-      line-height: 1.4;
-    }
-    #order-total {
-      font-weight: 700;
-      font-size: 1.4rem;
-      margin-top: 15px;
-      text-align: right;
-      color: #003366;
-    }
-    .alert {
-      background-color: #ffdede;
-      border: 1px solid #dc3545;
-      color: #a80000;
-      border-radius: 8px;
-      padding: 14px 18px;
-      margin-bottom: 18px;
-      font-weight: 700;
-      text-align: center;
-    }
-    @media (max-width: 480px) {
-      main {
-        padding: 25px 18px;
-        margin: 30px 12px 50px;
-      }
-      button[type="submit"] {
-        width: 100%;
-      }
-    }
-    footer {
-      background-color: #004080;
-      color: white;
-      text-align: center;
-      padding: 14px 10px;
-      font-size: 1rem;
-      margin-top: auto;
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Checkout - Mulligan Market</title>
+<link rel="stylesheet" href="style.css" />
 </head>
-<body>
-  <header>
-    <div class="logo">
-      <h1>MULLIGAN MARKET</h1>
-    </div>
+<body data-page="checkout">
+
+<header>
+  <div class="container">
+    <h1 class="logo">Mulligan Market</h1>
     <nav>
-      <a href="index.html">Home</a>
-      <a href="cart.html">Cart</a>
-      <a href="checkout.html">Checkout</a>
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="cart.html" class="nav-link">Cart</a>
+      <a href="checkout.html" class="nav-link active">Checkout</a>
     </nav>
-  </header>
+  </div>
+</header>
 
-  <main>
-    <h2>Checkout</h2>
+<main class="container checkout-page">
+  <h2>Checkout</h2>
+  <form id="order-form" novalidate>
+    <fieldset>
+      <legend>Billing Information</legend>
 
-    <section id="order-summary">
-      <h3>Your Order</h3>
-      <div id="order-items"></div>
-      <p id="order-total">Total: $0.00</p>
-    </section>
-
-    <form id="checkout-form" novalidate>
-      <div class="alert" id="form-error" style="display:none;"></div>
-
-      <label for="fullName">Full Name *</label>
-      <input type="text" id="fullName" name="fullName" required />
+      <label for="full-name">Full Name *</label>
+      <input type="text" id="full-name" name="full-name" required autocomplete="name" placeholder="John Doe" />
 
       <label for="email">Email Address *</label>
-      <input type="email" id="email" name="email" required />
+      <input type="email" id="email" name="email" required autocomplete="email" placeholder="john@example.com" />
 
-      <label for="address">Shipping Address *</label>
-      <textarea id="address" name="address" required></textarea>
-
-      <input type="hidden" name="paymentMethod" value="paypal">
-
-      <button type="submit">Pay with PayPal</button>
-    </form>
-  </main>
-
-  <footer>
-    <p>&copy; 2025 Mulligan Market. All rights reserved.</p>
-  </footer>
-
-  <script>
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
-
-    function displayOrderSummary() {
-      const orderItemsDiv = document.getElementById('order-items');
-      const orderTotalEl = document.getElementById('order-total');
-
-      if (cart.length === 0) {
-        orderItemsDiv.innerHTML = '<p style="text-align:center;">Your cart is empty.</p>';
-        orderTotalEl.textContent = 'Total: $0.00';
-        return;
-      }
-
-      let total = 0;
-      let html = '<ul style="list-style:none; padding-left:0;">';
-
-      cart.forEach(item => {
-        html += `<li>${item.name} — ${item.quantity} balls — $${item.price.toFixed(2)}</li>`;
-        total += item.price * item.quantity;
-      });
-
-      html += '</ul>';
-      orderItemsDiv.innerHTML = html;
-      orderTotalEl.textContent = `Total: $${total.toFixed(2)}`;
-    }
-
-    function validateForm() {
-      const form = document.getElementById('checkout-form');
-      const errorDiv = document.getElementById('form-error');
-      errorDiv.style.display = 'none';
-      errorDiv.textContent = '';
-
-      if (cart.length === 0) {
-        errorDiv.textContent = "Your cart is empty.";
-        errorDiv.style.display = 'block';
-        return false;
-      }
-
-      if (!form.checkValidity()) {
-        errorDiv.textContent = "Please fill all required fields.";
-        errorDiv.style.display = 'block';
-        return false;
-      }
-
-      return true;
-    }
-
-    document.getElementById('checkout-form').addEventListener('submit', function(e) {
-      e.preventDefault();
-      if (!validateForm()) return;
-
-      const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0).toFixed(2);
-
-      // Build PayPal URL with dynamic total
-      const params = new URLSearchParams({
-        cmd: '_xclick',
-        business: 'your-paypal-email@example.com', // 🔁 Replace with your PayPal email
+      <label for="address">Address *</label>
+      <input
