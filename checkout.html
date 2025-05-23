@@ -1,134 +1,168 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Your Cart - Mulligan Market</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout - Mulligan Market</title>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
-      background: #f4f4f4;
+      background: linear-gradient(to bottom, #fff5ec, #ffe3cc);
       margin: 0;
-      color: #333;
+      padding: 0 20px 60px;
     }
-    header, footer {
-      background: #2c3e50;
+
+    header {
+      background-color: #e85d04;
       color: white;
       text-align: center;
       padding: 20px;
     }
-    .container {
-      padding: 40px;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-bottom: 20px;
-      background: white;
-    }
-    th, td {
-      padding: 15px;
-      border: 1px solid #ccc;
-      text-align: left;
-      vertical-align: middle;
-    }
-    .checkout-button {
-      background-color: #27ae60;
+
+    nav a {
       color: white;
-      padding: 10px 20px;
+      margin: 0 15px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    main {
+      max-width: 600px;
+      background: white;
+      margin: 40px auto;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      color: #e85d04;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+
+    button {
+      width: 100%;
+      background-color: #28a745;
+      color: white;
+      font-size: 1.1rem;
+      padding: 15px;
       border: none;
-      font-size: 16px;
-      border-radius: 4px;
+      border-radius: 8px;
       cursor: pointer;
     }
-    .delete-btn {
-      cursor: pointer;
-      color: #c0392b;
-      font-size: 18px;
-      border: none;
-      background: none;
+
+    button:hover {
+      background-color: #218838;
     }
-    .delete-btn:hover {
-      color: #e74c3c;
+
+    footer {
+      background-color: #e85d04;
+      color: white;
+      text-align: center;
+      padding: 15px;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+    }
+
+    .summary {
+      background: #fff3cd;
+      padding: 15px;
+      border-left: 6px solid #ffc107;
+      margin-top: 20px;
+      border-radius: 8px;
     }
   </style>
 </head>
 <body>
   <header>
-    <h1>Your Cart</h1>
+    <h1>MULLIGAN MARKET</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="cart.html">Cart</a>
+    </nav>
   </header>
 
-  <div class="container">
-    <table>
-      <thead>
-        <tr>
-          <th>Product</th>
-          <th>Quantity</th>
-          <th>Each</th>
-          <th>Count</th>
-          <th>Total</th>
-          <th>Delete</th>
-        </tr>
-      </thead>
-      <tbody id="cart-body"></tbody>
-    </table>
-    <h3>Total: $<span id="total-price">0.00</span></h3>
-    <button class="checkout-button" onclick="alert('Checkout not set up yet.')">Proceed to Checkout</button>
-  </div>
+  <main>
+    <h2>Complete Your Purchase</h2>
+    <form id="checkout-form">
+      <label for="name">Full Name</label>
+      <input type="text" id="name" name="name" required>
+
+      <label for="address">Shipping Address</label>
+      <input type="text" id="address" name="address" required>
+
+      <label for="payment">Payment Method</label>
+      <select id="payment" name="payment" required>
+        <option value="">Select...</option>
+        <option value="credit">Credit Card</option>
+        <option value="paypal">PayPal</option>
+      </select>
+
+      <button type="submit">Place Order</button>
+    </form>
+
+    <div class="summary" id="summary"></div>
+  </main>
 
   <footer>
-    <p>© 2025 Mulligan Market. All rights reserved.</p>
+    <p>&copy; 2025 Mulligan Market. All rights reserved.</p>
   </footer>
 
   <script>
-    // Load cart from localStorage or empty array
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
-    const tbody = document.getElementById("cart-body");
-    const totalPriceElem = document.getElementById("total-price");
+    const form = document.getElementById('checkout-form');
+    const summary = document.getElementById('summary');
 
-    // Function to render the cart table
-    function renderCart() {
-      tbody.innerHTML = ""; // Clear existing rows
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const name = form.name.value;
+      const address = form.address.value;
+      const payment = form.payment.value;
+
+      if (!name || !address || !payment) {
+        alert("Please fill out all fields.");
+        return;
+      }
+
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      if (cart.length === 0) {
+        alert("Your cart is empty.");
+        return;
+      }
+
+      let orderDetails = `<h3>Order Summary</h3><ul>`;
       let total = 0;
-
-      cart.forEach((item, index) => {
-        const rowTotal = item.price * item.count;
-        total += rowTotal;
-
-        const row = document.createElement("tr");
-        row.innerHTML = `
-          <td>${item.name}</td>
-          <td>${item.quantity}</td>
-          <td>$${item.price.toFixed(2)}</td>
-          <td>${item.count}</td>
-          <td>$${rowTotal.toFixed(2)}</td>
-          <td>
-            <button class="delete-btn" title="Remove item" aria-label="Remove item">
-              🗑️
-            </button>
-          </td>
-        `;
-
-        // Add event listener to delete button
-        row.querySelector(".delete-btn").addEventListener("click", () => {
-          removeItem(index);
-        });
-
-        tbody.appendChild(row);
+      cart.forEach(item => {
+        orderDetails += `<li>${item.quantity}x ${item.name} - $${item.price.toFixed(2)}</li>`;
+        total += item.price;
       });
+      orderDetails += `</ul><p><strong>Total: $${total.toFixed(2)}</strong></p>`;
+      orderDetails += `<p>Thank you, ${name}! Your order will be shipped to ${address}.</p>`;
+      summary.innerHTML = orderDetails;
 
-      totalPriceElem.textContent = total.toFixed(2);
-    }
-
-    // Remove item from cart by index and update localStorage and UI
-    function removeItem(index) {
-      cart.splice(index, 1);
-      localStorage.setItem("cart", JSON.stringify(cart));
-      renderCart();
-    }
-
-    // Initial render
-    renderCart();
+      localStorage.removeItem('cart');
+      form.reset();
+    });
   </script>
 </body>
 </html>
