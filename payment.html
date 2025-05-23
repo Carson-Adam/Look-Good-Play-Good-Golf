@@ -1,83 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Checkout - Pay with PayPal</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f2f9ff;
-      padding: 40px;
-      max-width: 500px;
-      margin: auto;
-    }
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+  <!-- Identify your business using your PayPal email -->
+  <input type="hidden" name="business" value="your-paypal-email@example.com">
+  
+  <!-- Specify a Buy Now button -->
+  <input type="hidden" name="cmd" value="_xclick">
 
-    h1 {
-      text-align: center;
-      color: #003366;
-    }
+  <!-- Item details -->
+  <input type="hidden" name="item_name" value="My Product Name">
+  <input type="hidden" name="amount" value="19.99">
+  <input type="hidden" name="currency_code" value="USD">
 
-    form {
-      background: #ffffff;
-      padding: 25px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
+  <!-- URLs after payment or cancellation -->
+  <input type="hidden" name="return" value="https://yourwebsite.com/thank-you.html">
+  <input type="hidden" name="cancel_return" value="https://yourwebsite.com/payment-cancelled.html">
 
-    label {
-      display: block;
-      margin-top: 15px;
-      font-weight: bold;
-    }
-
-    input, textarea {
-      width: 100%;
-      padding: 10px;
-      margin-top: 5px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-    }
-
-    input[type="submit"] {
-      margin-top: 25px;
-      background-color: #0070ba;
-      color: white;
-      border: none;
-      font-size: 1.2em;
-      cursor: pointer;
-    }
-
-    input[type="submit"]:hover {
-      background-color: #005c9e;
-    }
-  </style>
-</head>
-<body>
-
-  <h1>Pay with PayPal</h1>
-
-  <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-    <!-- PayPal required fields -->
-    <input type="hidden" name="cmd" value="_xclick">
-    <input type="hidden" name="business" value="adamtfig54@icloud.com">
-    <input type="hidden" name="item_name" value="Premium Golf Balls">
-    <input type="hidden" name="amount" value="15.00">
-    <input type="hidden" name="currency_code" value="USD">
-
-    <!-- Customer Info -->
-    <label for="first_name">Full Name *</label>
-    <input type="text" name="first_name" required>
-
-    <label for="email">Email Address *</label>
-    <input type="email" name="email" required>
-
-    <label for="address1">Shipping Address *</label>
-    <textarea name="address1" required></textarea>
-
-    <!-- PayPal Checkout -->
-    <input type="submit" value="Pay with PayPal">
-  </form>
-
-</body>
-</html>
+  <!-- Submit button -->
+  <input type="submit" value="Pay with PayPal">
+</form>
