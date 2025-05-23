@@ -1,86 +1,115 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Mulligan Market - Premium Golf Balls</title>
-<link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Buy premium used golf balls at Mulligan Market. High-quality brands like Titleist, Callaway, TaylorMade, and Pro V1 at unbeatable prices.">
+  <meta name="keywords" content="used golf balls, Titleist, Callaway, TaylorMade, Pro V1, discounted golf balls">
+  <meta name="author" content="Mulligan Market">
+  <title>Mulligan Market | Premium Used Golf Balls</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header>
-  <div class="container">
-    <h1 class="logo">Mulligan Market</h1>
-    <nav>
-      <a href="index.html" class="nav-link active">Home</a>
-      <a href="cart.html" class="nav-link">Cart</a>
-      <a href="checkout.html" class="nav-link">Checkout</a>
-    </nav>
-  </div>
-</header>
+  <header>
+    <div class="top-bar">
+      <div class="logo">
+        <h1>MULLIGAN MARKET</h1>
+        <p class="tagline">Your Source for Premium Used Golf Balls</p>
+      </div>
+      <nav class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="cart.html">Cart</a>
+        <a href="checkout.html">Checkout</a>
+      </nav>
+    </div>
+  </header>
 
-<main>
   <section class="hero">
-    <div class="container">
-      <h2>Premium Used Golf Balls at Great Prices</h2>
-      <p>Choose from our top brands, quality guaranteed.</p>
+    <div class="hero-content">
+      <h2>Premium Brands, Affordable Prices</h2>
+      <p>Save big on top golf balls. Shop Titleist, Callaway, TaylorMade, and more!</p>
+      <a href="#products" class="shop-now-btn">Shop Now</a>
     </div>
   </section>
 
-  <section class="products container" id="products">
+  <main>
+    <section id="products" class="product-section">
+      <h2 class="section-title">Featured Golf Balls</h2>
+      <div class="product-grid">
 
-    <article class="product" data-name="Titleist" data-price12="18" data-price24="33">
-      <img src="titleist.jpg" alt="Titleist Golf Balls" class="product-image" />
-      <h3 class="product-title">Titleist</h3>
-      <p class="product-price">$18 (12 balls), $33 (24 balls)</p>
-      <select class="quantity-select" aria-label="Select quantity for Titleist">
-        <option value="12">12 balls</option>
-        <option value="24">24 balls</option>
-      </select>
-      <button class="add-to-cart-btn">Add to Cart</button>
-    </article>
+        <div class="product-card">
+          <img src="titleist.jpg" alt="Titleist Golf Balls" class="product-img">
+          <h3>Titleist</h3>
+          <p class="price">$18 (12 balls), $33 (24 balls)</p>
+          <select id="titleist-qty">
+            <option value="12">12 balls</option>
+            <option value="24">24 balls</option>
+          </select>
+          <button class="add-to-cart-btn" data-name="Titleist" data-price="18" data-double="33">Add to Cart</button>
+        </div>
 
-    <article class="product" data-name="Callaway" data-price12="18" data-price24="33">
-      <img src="callaway.jpg" alt="Callaway Golf Balls" class="product-image" />
-      <h3 class="product-title">Callaway</h3>
-      <p class="product-price">$18 (12 balls), $33 (24 balls)</p>
-      <select class="quantity-select" aria-label="Select quantity for Callaway">
-        <option value="12">12 balls</option>
-        <option value="24">24 balls</option>
-      </select>
-      <button class="add-to-cart-btn">Add to Cart</button>
-    </article>
+        <div class="product-card">
+          <img src="callaway.jpg" alt="Callaway Golf Balls" class="product-img">
+          <h3>Callaway</h3>
+          <p class="price">$18 (12 balls), $33 (24 balls)</p>
+          <select id="callaway-qty">
+            <option value="12">12 balls</option>
+            <option value="24">24 balls</option>
+          </select>
+          <button class="add-to-cart-btn" data-name="Callaway" data-price="18" data-double="33">Add to Cart</button>
+        </div>
 
-    <article class="product" data-name="TaylorMade" data-price12="18" data-price24="33">
-      <img src="taylormade.jpg" alt="TaylorMade Golf Balls" class="product-image" />
-      <h3 class="product-title">TaylorMade</h3>
-      <p class="product-price">$18 (12 balls), $33 (24 balls)</p>
-      <select class="quantity-select" aria-label="Select quantity for TaylorMade">
-        <option value="12">12 balls</option>
-        <option value="24">24 balls</option>
-      </select>
-      <button class="add-to-cart-btn">Add to Cart</button>
-    </article>
+        <div class="product-card">
+          <img src="taylormade.jpg" alt="TaylorMade Golf Balls" class="product-img">
+          <h3>TaylorMade</h3>
+          <p class="price">$18 (12 balls), $33 (24 balls)</p>
+          <select id="taylormade-qty">
+            <option value="12">12 balls</option>
+            <option value="24">24 balls</option>
+          </select>
+          <button class="add-to-cart-btn" data-name="TaylorMade" data-price="18" data-double="33">Add to Cart</button>
+        </div>
 
-    <article class="product" data-name="Pro V1" data-price12="27" data-price24="52">
-      <img src="prov1.jpg" alt="Pro V1 Golf Balls" class="product-image" />
-      <h3 class="product-title">Pro V1</h3>
-      <p class="product-price">$27 (12 balls), $52 (24 balls)</p>
-      <select class="quantity-select" aria-label="Select quantity for Pro V1">
-        <option value="12">12 balls</option>
-        <option value="24">24 balls</option>
-      </select>
-      <button class="add-to-cart-btn">Add to Cart</button>
-    </article>
+        <div class="product-card">
+          <img src="prov1.jpg" alt="Pro V1 Golf Balls" class="product-img">
+          <h3>Pro V1</h3>
+          <p class="price">$27 (12 balls), $52 (24 balls)</p>
+          <select id="prov1-qty">
+            <option value="12">12 balls</option>
+            <option value="24">24 balls</option>
+          </select>
+          <button class="add-to-cart-btn" data-name="Pro V1" data-price="27" data-double="52">Add to Cart</button>
+        </div>
 
-  </section>
-</main>
+        <!-- More products can be added below in the same format -->
 
-<footer>
-  <div class="container">
-    <p>&copy; 2025 Mulligan Market. All rights reserved.</p>
-  </div>
-</footer>
+      </div>
+    </section>
 
-<script src="script.js"></script>
+    <section class="about">
+      <h2>Why Mulligan Market?</h2>
+      <div class="about-content">
+        <p>
+          At Mulligan Market, we believe every golfer deserves access to high-quality balls without paying a fortune.
+          Our hand-selected used golf balls are carefully cleaned, inspected, and sorted so you can play your best game
+          without breaking the bank.
+        </p>
+        <ul>
+          <li>✔ 100% satisfaction guarantee</li>
+          <li>✔ Fast and free shipping over $35</li>
+          <li>✔ Trusted by thousands of golfers nationwide</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-content">
+      <p>&copy; 2025 Mulligan Market. All rights reserved.</p>
+      <p>Contact us at <a href="mailto:support@mulliganmarket.com">support@mulliganmarket.com</a></p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>
