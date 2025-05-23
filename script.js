@@ -27,14 +27,11 @@ function addToCart(name, quantity, pricePerSet) {
     return;
   }
 
-  // Check if product already in cart
   const existingItemIndex = cart.findIndex(item => item.name === name && item.quantity === qty);
 
   if (existingItemIndex >= 0) {
-    // Increase quantity count (actually, here quantity is fixed 12 or 24, so just increase count of sets)
     cart[existingItemIndex].count++;
   } else {
-    // Add new item with count = 1 (count represents how many sets of that quantity)
     cart.push({ name, quantity: qty, pricePerSet, count: 1 });
   }
 
@@ -126,8 +123,36 @@ function updateCartCount() {
 
 // --- CHECKOUT PAGE FUNCTIONS --- //
 
+function loadCheckoutCart() {
+  const checkoutItems = document.getElementById('checkout-items');
+  const totalEl = document.getElementById('checkout-total');
+  if (!checkoutItems || !totalEl) return;
+
+  checkoutItems.innerHTML = '';
+  let total = 0;
+
+  cart.forEach(item => {
+    const row = document.createElement('div');
+    row.className = 'cart-item';
+
+    const name = document.createElement('span');
+    name.textContent = `${item.name} (${item.quantity} balls x ${item.count} sets)`;
+
+    const price = document.createElement('span');
+    const itemTotal = item.pricePerSet * item.count;
+    price.textContent = `$${itemTotal.toFixed(2)}`;
+
+    total += itemTotal;
+
+    row.append(name, price);
+    checkoutItems.appendChild(row);
+  });
+
+  totalEl.textContent = total.toFixed(2);
+}
+
 function validateCheckoutForm() {
-  const nameInput = document.getElementById('full-name');
+  const nameInput = document.getElementById('name');
   const emailInput = document.getElementById('email');
   const addressInput = document.getElementById('address');
   const cityInput = document.getElementById('city');
@@ -175,32 +200,29 @@ function validateCheckoutForm() {
 function placeOrder() {
   if (!validateCheckoutForm()) return;
 
-  // Simulate order processing
   alert('Thank you for your order! We will contact you soon.');
 
-  // Clear cart
   cart = [];
   saveCart();
 
-  // Redirect to home or clear form
   window.location.href = 'index.html';
 }
 
-// Init function for each page
+// --- Init page-specific logic --- //
+
 function init() {
   const page = document.body.dataset.page;
 
   if (page === 'index') {
     setupAddToCartButtons();
     updateCartCount();
-  }
-  else if (page === 'cart') {
+  } else if (page === 'cart') {
     loadCart();
-  }
-  else if (page === 'checkout') {
+  } else if (page === 'checkout') {
     updateCartCount();
+    loadCheckoutCart();
 
-    const orderForm = document.getElementById('order-form');
+    const orderForm = document.getElementById('checkout-form');
     if (orderForm) {
       orderForm.addEventListener('submit', e => {
         e.preventDefault();
