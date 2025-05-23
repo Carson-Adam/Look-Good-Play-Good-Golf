@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -225,6 +225,27 @@
     // Remove an item by index
     function removeFromCart(index) {
       cart.splice(index, 1);
+      localStorage.setItem('cart', JSON.stringify(cart));
+      updateCart();
+    }
+
+    // Add to cart function with fix: merges quantities of same item instead of duplicating
+    function addToCart(product) {
+      // product: {id, name, price, quantity}
+      const existingIndex = cart.findIndex(item => item.id === product.id);
+      if (existingIndex !== -1) {
+        // Update quantity and price accordingly
+        cart[existingIndex].quantity += product.quantity;
+        cart[existingIndex].price += product.price * product.quantity;
+      } else {
+        // Add new product
+        cart.push({
+          id: product.id,
+          name: product.name,
+          quantity: product.quantity,
+          price: product.price * product.quantity
+        });
+      }
       localStorage.setItem('cart', JSON.stringify(cart));
       updateCart();
     }
