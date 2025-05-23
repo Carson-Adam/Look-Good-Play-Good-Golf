@@ -1,128 +1,224 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Checkout - Mulligan Market</title>
   <style>
+    /* Reset and body */
     body {
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to bottom, #fff5ec, #ffe3cc);
-      margin: 0;
-      padding: 0 20px 60px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(120deg, #d0e9ff, #ffffff);
+      margin: 0; padding: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
-
     header {
-      background-color: #e85d04;
+      background-color: #004080;
       color: white;
+      padding: 22px 28px;
       text-align: center;
-      padding: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+      position: sticky;
+      top: 0;
+      z-index: 10;
     }
-
+    header .logo h1 {
+      margin: 0;
+      font-weight: 900;
+      letter-spacing: 3px;
+    }
+    nav {
+      margin-top: 14px;
+    }
     nav a {
       color: white;
-      margin: 0 15px;
+      margin: 0 18px;
+      font-weight: 600;
+      font-size: 1.15rem;
       text-decoration: none;
-      font-weight: bold;
+      padding: 8px 14px;
+      border-radius: 6px;
+      transition: background-color 0.3s ease;
+      user-select: none;
     }
-
     nav a:hover {
-      text-decoration: underline;
+      background-color: #003060;
+      text-decoration: none;
     }
-
     main {
-      max-width: 600px;
-      background: white;
-      margin: 40px auto;
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      flex: 1;
+      max-width: 700px;
+      margin: 40px auto 60px;
+      background-color: #fdfcff;
+      border-radius: 14px;
+      padding: 30px 35px;
+      box-shadow: 0 8px 22px rgba(0,0,0,0.15);
     }
-
-    h2 {
-      color: #e85d04;
+    main h2 {
+      font-size: 2.8rem;
+      color: #003366;
+      font-weight: 800;
+      letter-spacing: 1.4px;
+      margin-bottom: 28px;
       text-align: center;
-      margin-bottom: 30px;
     }
-
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
     label {
-      display: block;
-      margin-bottom: 5px;
-      font-weight: bold;
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: #004080;
     }
-
-    input, select {
-      width: 100%;
-      padding: 12px;
-      margin-bottom: 20px;
-      border: 1px solid #ccc;
+    input, select, textarea {
+      padding: 12px 15px;
+      font-size: 1.15rem;
       border-radius: 8px;
-      font-size: 1rem;
+      border: 2px solid #a9c6ff;
+      outline-offset: 2px;
+      transition: border-color 0.3s ease;
+      resize: vertical;
+      font-family: inherit;
     }
-
-    button {
-      width: 100%;
-      background-color: #28a745;
+    input:focus, select:focus, textarea:focus {
+      border-color: #0056d2;
+      outline: none;
+      box-shadow: 0 0 8px #0056d2aa;
+    }
+    textarea {
+      min-height: 80px;
+    }
+    button[type="submit"] {
+      background-color: #007bff;
       color: white;
-      font-size: 1.1rem;
-      padding: 15px;
       border: none;
-      border-radius: 8px;
+      padding: 18px 28px;
+      font-size: 1.5rem;
+      font-weight: 700;
+      border-radius: 12px;
       cursor: pointer;
+      transition: background-color 0.35s ease;
+      user-select: none;
+      margin-top: 12px;
+      align-self: center;
+      max-width: 280px;
     }
-
-    button:hover {
-      background-color: #218838;
+    button[type="submit"]:hover {
+      background-color: #0056b3;
     }
-
+    #order-summary {
+      background-color: #e1efff;
+      border-radius: 12px;
+      padding: 18px 25px;
+      margin-bottom: 30px;
+      box-shadow: inset 0 0 10px #a1c4ff;
+    }
+    #order-summary h3 {
+      margin-top: 0;
+      color: #003366;
+      font-weight: 800;
+      letter-spacing: 1.2px;
+      font-size: 1.6rem;
+      margin-bottom: 12px;
+      text-align: center;
+    }
+    #order-items {
+      font-size: 1.15rem;
+      color: #004080;
+      line-height: 1.4;
+    }
+    #order-total {
+      font-weight: 700;
+      font-size: 1.4rem;
+      margin-top: 15px;
+      text-align: right;
+      color: #003366;
+      letter-spacing: 1.1px;
+    }
+    .alert {
+      background-color: #ffdede;
+      border: 1px solid #dc3545;
+      color: #a80000;
+      border-radius: 8px;
+      padding: 14px 18px;
+      margin-bottom: 18px;
+      font-weight: 700;
+      text-align: center;
+    }
+    @media (max-width: 480px) {
+      main {
+        padding: 25px 18px;
+        margin: 30px 12px 50px;
+      }
+      button[type="submit"] {
+        width: 100%;
+        max-width: 100%;
+      }
+    }
     footer {
-      background-color: #e85d04;
+      background-color: #004080;
       color: white;
       text-align: center;
-      padding: 15px;
-      position: fixed;
-      bottom: 0;
-      width: 100%;
-    }
-
-    .summary {
-      background: #fff3cd;
-      padding: 15px;
-      border-left: 6px solid #ffc107;
-      margin-top: 20px;
-      border-radius: 8px;
+      padding: 14px 10px;
+      font-size: 1rem;
+      user-select: none;
+      box-shadow: 0 -2px 6px rgba(0,0,0,0.3);
+      margin-top: auto;
     }
   </style>
 </head>
 <body>
   <header>
-    <h1>MULLIGAN MARKET</h1>
+    <div class="logo">
+      <h1>MULLIGAN MARKET</h1>
+    </div>
     <nav>
       <a href="index.html">Home</a>
       <a href="cart.html">Cart</a>
+      <a href="checkout.html">Checkout</a>
     </nav>
   </header>
 
   <main>
-    <h2>Complete Your Purchase</h2>
-    <form id="checkout-form">
-      <label for="name">Full Name</label>
-      <input type="text" id="name" name="name" required>
+    <h2>Checkout</h2>
 
-      <label for="address">Shipping Address</label>
-      <input type="text" id="address" name="address" required>
+    <section id="order-summary">
+      <h3>Your Order</h3>
+      <div id="order-items">
+        <!-- Order items will be inserted here -->
+      </div>
+      <p id="order-total">Total: $0.00</p>
+    </section>
 
-      <label for="payment">Payment Method</label>
-      <select id="payment" name="payment" required>
-        <option value="">Select...</option>
-        <option value="credit">Credit Card</option>
+    <form id="checkout-form" novalidate>
+      <div class="alert" id="form-error" style="display:none;"></div>
+
+      <label for="fullName">Full Name *</label>
+      <input type="text" id="fullName" name="fullName" placeholder="Your full name" required minlength="3" />
+
+      <label for="email">Email Address *</label>
+      <input type="email" id="email" name="email" placeholder="example@mail.com" required />
+
+      <label for="phone">Phone Number *</label>
+      <input type="tel" id="phone" name="phone" placeholder="(123) 456-7890" required pattern="^[+]?[\d\s()-]{7,}$" />
+
+      <label for="address">Shipping Address *</label>
+      <textarea id="address" name="address" placeholder="Your full shipping address" required minlength="10"></textarea>
+
+      <label for="paymentMethod">Payment Method *</label>
+      <select id="paymentMethod" name="paymentMethod" required>
+        <option value="" disabled selected>Select payment method</option>
+        <option value="credit-card">Credit Card</option>
         <option value="paypal">PayPal</option>
+        <option value="cash-on-delivery">Cash on Delivery</option>
       </select>
 
       <button type="submit">Place Order</button>
     </form>
-
-    <div class="summary" id="summary"></div>
   </main>
 
   <footer>
@@ -130,39 +226,82 @@
   </footer>
 
   <script>
-    const form = document.getElementById('checkout-form');
-    const summary = document.getElementById('summary');
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-    form.addEventListener('submit', function(e) {
-      e.preventDefault();
-      const name = form.name.value;
-      const address = form.address.value;
-      const payment = form.payment.value;
+    // Display order items in summary
+    function displayOrderSummary() {
+      const orderItemsDiv = document.getElementById('order-items');
+      const orderTotalEl = document.getElementById('order-total');
 
-      if (!name || !address || !payment) {
-        alert("Please fill out all fields.");
-        return;
-      }
-
-      const cart = JSON.parse(localStorage.getItem('cart')) || [];
       if (cart.length === 0) {
-        alert("Your cart is empty.");
+        orderItemsDiv.innerHTML = '<p style="text-align:center; font-size:1.3rem; color:#777;">Your cart is empty. Please add items before checking out.</p>';
+        orderTotalEl.textContent = 'Total: $0.00';
         return;
       }
 
-      let orderDetails = `<h3>Order Summary</h3><ul>`;
       let total = 0;
+      let html = '<ul style="list-style:none; padding-left:0;">';
+
       cart.forEach(item => {
-        orderDetails += `<li>${item.quantity}x ${item.name} - $${item.price.toFixed(2)}</li>`;
+        html += `<li style="margin-bottom:12px; font-weight:600; color:#004080;">
+          ${item.name} — ${item.quantity} balls — $${item.price.toFixed(2)}
+        </li>`;
         total += item.price;
       });
-      orderDetails += `</ul><p><strong>Total: $${total.toFixed(2)}</strong></p>`;
-      orderDetails += `<p>Thank you, ${name}! Your order will be shipped to ${address}.</p>`;
-      summary.innerHTML = orderDetails;
 
+      html += '</ul>';
+      orderItemsDiv.innerHTML = html;
+      orderTotalEl.textContent = `Total: $${total.toFixed(2)}`;
+    }
+
+    // Form validation helper
+    function validateForm() {
+      const form = document.getElementById('checkout-form');
+      const errorDiv = document.getElementById('form-error');
+      errorDiv.style.display = 'none';
+      errorDiv.textContent = '';
+
+      if (cart.length === 0) {
+        errorDiv.textContent = "Your cart is empty. Please add items before checking out.";
+        errorDiv.style.display = 'block';
+        return false;
+      }
+
+      if (!form.checkValidity()) {
+        errorDiv.textContent = "Please fill out all required fields correctly.";
+        errorDiv.style.display = 'block';
+        return false;
+      }
+
+      // Additional phone pattern validation
+      const phoneInput = document.getElementById('phone');
+      const phonePattern = /^[+]?[\d\s()-]{7,}$/;
+      if (!phonePattern.test(phoneInput.value.trim())) {
+        errorDiv.textContent = "Please enter a valid phone number.";
+        errorDiv.style.display = 'block';
+        phoneInput.focus();
+        return false;
+      }
+
+      return true;
+    }
+
+    // Handle form submission
+    document.getElementById('checkout-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      if (!validateForm()) return;
+
+      // For now, just thank the user and clear the cart
+      alert("Thank you for your order! We will contact you soon.");
+
+      // Clear cart and redirect home
       localStorage.removeItem('cart');
-      form.reset();
+      window.location.href = 'index.html';
     });
+
+    window.onload = () => {
+      displayOrderSummary();
+    };
   </script>
 </body>
 </html>
