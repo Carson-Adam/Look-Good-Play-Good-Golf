@@ -2,100 +2,34 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Your Cart - Mulligan Market</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mulligan Market - Cart</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <header>
-    <div class="logo">
-      <h1>MULLIGAN MARKET</h1>
-    </div>
+    <div class="logo">Mulligan Market</div>
     <nav>
       <a href="index.html">Home</a>
-      <a href="cart.html" class="active">Cart</a>
+      <a href="cart.html" class="active">Cart <span id="cart-count" class="cart-badge"></span></a>
       <a href="checkout.html">Checkout</a>
     </nav>
   </header>
 
-  <main>
-    <section class="cart-section">
-      <h2>Your Shopping Cart</h2>
-      <p class="cart-intro">Below are the items you've added to your cart. You can adjust, remove, or proceed to checkout.</p>
+  <main class="cart-page">
+    <h1>Your Shopping Cart</h1>
+    <div id="cart-items" class="cart-items-container"></div>
 
-      <div id="cart-items" class="cart-items-container">
-        <!-- JS will populate cart items here -->
-      </div>
-
-      <div class="cart-summary">
-        <h3>Total: $<span id="cart-total">0.00</span></h3>
-        <button id="checkout-button" onclick="goToCheckout()">Proceed to Checkout</button>
-      </div>
-    </section>
+    <div class="cart-summary">
+      <h2>Total: <span id="cart-total">$0.00</span></h2>
+      <button id="checkout-btn" class="btn-primary" disabled>Proceed to Checkout</button>
+    </div>
   </main>
 
   <footer>
-    <p>&copy; 2025 Mulligan Market | All rights reserved</p>
+    &copy; 2025 Mulligan Market
   </footer>
 
   <script src="script.js"></script>
-  <script>
-    function goToCheckout() {
-      if (cart.length === 0) {
-        alert("Your cart is empty.");
-        return;
-      }
-      window.location.href = "checkout.html";
-    }
-
-    function renderCart() {
-      const cartItemsDiv = document.getElementById('cart-items');
-      const cartTotalEl = document.getElementById('cart-total');
-      const checkoutBtn = document.getElementById('checkout-button');
-
-      if (!cartItemsDiv || !cartTotalEl || !checkoutBtn) return;
-
-      cartItemsDiv.innerHTML = '';
-      let total = 0;
-
-      if (cart.length === 0) {
-        cartItemsDiv.innerHTML = `<p class="empty-cart">Your cart is currently empty. <a href="index.html">Shop now</a>.</p>`;
-        checkoutBtn.style.display = "none";
-        cartTotalEl.textContent = "0.00";
-        return;
-      }
-
-      cart.forEach((item, index) => {
-        const itemDiv = document.createElement('div');
-        itemDiv.classList.add('cart-item');
-
-        const itemDetails = `
-          <div class="cart-item-content">
-            <div class="cart-name">${item.name}</div>
-            <div class="cart-qty">${item.quantity} balls</div>
-            <div class="cart-price">$${item.price.toFixed(2)}</div>
-          </div>
-          <button class="remove-button" onclick="removeFromCart(${index})">Remove</button>
-        `;
-
-        itemDiv.innerHTML = itemDetails;
-        cartItemsDiv.appendChild(itemDiv);
-        total += item.price;
-      });
-
-      cartTotalEl.textContent = total.toFixed(2);
-      checkoutBtn.style.display = 'inline-block';
-    }
-
-    function removeFromCart(index) {
-      cart.splice(index, 1);
-      localStorage.setItem('cart', JSON.stringify(cart));
-      renderCart();
-    }
-
-    window.onload = function() {
-      renderCart();
-    };
-  </script>
 </body>
 </html>
