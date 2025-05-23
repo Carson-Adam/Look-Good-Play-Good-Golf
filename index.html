@@ -4,108 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Mulligan Market</title>
-  <style>
-    /* (Same CSS as before, unchanged) */
-    body {
-      font-family: Arial, sans-serif;
-      background: #f0f8ff;
-      margin: 0; padding: 0;
-    }
-    header {
-      background-color: #004080;
-      color: white;
-      padding: 15px 20px;
-      text-align: center;
-    }
-    header .logo h1 {
-      margin: 0;
-    }
-    nav {
-      margin-top: 10px;
-    }
-    nav a {
-      color: white;
-      margin: 0 15px;
-      text-decoration: none;
-      font-weight: bold;
-    }
-    nav a:hover {
-      text-decoration: underline;
-    }
-    main {
-      padding: 20px;
-    }
-    #products {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 20px;
-    }
-    .product {
-      background-color: white;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      padding: 20px;
-      width: 240px;
-      box-sizing: border-box;
-      text-align: center;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      transition: transform 0.2s ease-in-out;
-    }
-    .product:hover {
-      transform: scale(1.03);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-    }
-    .product img {
-      max-width: 100%;
-      height: auto;
-      border-radius: 6px;
-      margin-bottom: 10px;
-    }
-    .product h3 {
-      margin: 10px 0;
-      color: #004080;
-    }
-    .product p {
-      font-size: 1.1em;
-      margin: 10px 0;
-      color: #333;
-    }
-    select {
-      padding: 6px;
-      font-size: 1em;
-      margin-bottom: 10px;
-      border-radius: 4px;
-      border: 1px solid #ccc;
-    }
-    button {
-      background-color: #007bff;
-      border: none;
-      padding: 10px 20px;
-      color: white;
-      font-size: 1em;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-    button:hover {
-      background-color: #0056b3;
-    }
-    @media (max-width: 600px) {
-      #products {
-        flex-direction: column;
-        align-items: center;
-      }
-      .product {
-        width: 90%;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <header>
     <div class="logo">
       <h1>MULLIGAN MARKET</h1>
+      <p class="tagline">Premium Used Golf Balls at the Best Prices</p>
     </div>
     <nav>
       <a href="index.html">Home</a>
@@ -115,13 +20,16 @@
   </header>
 
   <main>
-    <h2>Golf Balls Available for Purchase</h2>
-    <div id="products">
+    <section class="intro">
+      <h2>Top-Quality Golf Balls. Affordable Prices.</h2>
+      <p>Choose from our premium selection of gently used golf balls, hand-sorted and quality-checked to ensure maximum performance at a fraction of the cost.</p>
+    </section>
 
+    <section id="products">
       <div class="product">
-        <img src="titleist.jpg" alt="Titleist Ball" />
+        <img src="titleist.jpg" alt="Titleist Golf Balls">
         <h3>Titleist</h3>
-        <p>$18 (12 balls), $33 (24 balls)</p>
+        <p class="price">$18 (12 balls), $33 (24 balls)</p>
         <select id="titleist-quantity">
           <option value="12">12 balls</option>
           <option value="24">24 balls</option>
@@ -130,9 +38,9 @@
       </div>
 
       <div class="product">
-        <img src="callaway.jpg" alt="Callaway Ball" />
+        <img src="callaway.jpg" alt="Callaway Golf Balls">
         <h3>Callaway</h3>
-        <p>$18 (12 balls), $33 (24 balls)</p>
+        <p class="price">$18 (12 balls), $33 (24 balls)</p>
         <select id="callaway-quantity">
           <option value="12">12 balls</option>
           <option value="24">24 balls</option>
@@ -141,9 +49,9 @@
       </div>
 
       <div class="product">
-        <img src="taylormade.jpg" alt="TaylorMade Ball" />
+        <img src="taylormade.jpg" alt="TaylorMade Golf Balls">
         <h3>TaylorMade</h3>
-        <p>$18 (12 balls), $33 (24 balls)</p>
+        <p class="price">$18 (12 balls), $33 (24 balls)</p>
         <select id="taylormade-quantity">
           <option value="12">12 balls</option>
           <option value="24">24 balls</option>
@@ -152,9 +60,9 @@
       </div>
 
       <div class="product">
-        <img src="prov1.jpg" alt="Pro V1 Ball" />
+        <img src="prov1.jpg" alt="Pro V1 Golf Balls">
         <h3>Pro V1</h3>
-        <p>$27 (12 balls), $52 (24 balls)</p>
+        <p class="price">$27 (12 balls), $52 (24 balls)</p>
         <select id="prov1-quantity">
           <option value="12">12 balls</option>
           <option value="24">24 balls</option>
@@ -162,127 +70,68 @@
         <button id="prov1-add">Add to Cart</button>
       </div>
 
-    </div>
+      <div class="product">
+        <img src="bridgestone.jpg" alt="Bridgestone Golf Balls">
+        <h3>Bridgestone</h3>
+        <p class="price">$16 (12 balls), $30 (24 balls)</p>
+        <select id="bridgestone-quantity">
+          <option value="12">12 balls</option>
+          <option value="24">24 balls</option>
+        </select>
+        <button id="bridgestone-add">Add to Cart</button>
+      </div>
+
+      <div class="product">
+        <img src="srixon.jpg" alt="Srixon Golf Balls">
+        <h3>Srixon</h3>
+        <p class="price">$15 (12 balls), $28 (24 balls)</p>
+        <select id="srixon-quantity">
+          <option value="12">12 balls</option>
+          <option value="24">24 balls</option>
+        </select>
+        <button id="srixon-add">Add to Cart</button>
+      </div>
+
+      <!-- Add 2 more product blocks to extend the layout -->
+      <div class="product">
+        <img src="vice.jpg" alt="Vice Golf Balls">
+        <h3>Vice</h3>
+        <p class="price">$14 (12 balls), $26 (24 balls)</p>
+        <select id="vice-quantity">
+          <option value="12">12 balls</option>
+          <option value="24">24 balls</option>
+        </select>
+        <button id="vice-add">Add to Cart</button>
+      </div>
+
+      <div class="product">
+        <img src="nike.jpg" alt="Nike Golf Balls">
+        <h3>Nike</h3>
+        <p class="price">$17 (12 balls), $31 (24 balls)</p>
+        <select id="nike-quantity">
+          <option value="12">12 balls</option>
+          <option value="24">24 balls</option>
+        </select>
+        <button id="nike-add">Add to Cart</button>
+      </div>
+    </section>
   </main>
 
+  <section class="about">
+    <h2>Why Choose Mulligan Market?</h2>
+    <ul>
+      <li>✅ Hand-washed, hand-sorted, and rated for play</li>
+      <li>✅ Cheaper than retail — save 30–50%</li>
+      <li>✅ Free shipping on orders over $50</li>
+      <li>✅ Secure checkout with no sign-up required</li>
+    </ul>
+  </section>
+
   <footer>
-    <p>&copy; 2025 Mulligan Market</p>
+    <p>&copy; 2025 Mulligan Market — All rights reserved.</p>
+    <p>Made with ❤️ for golfers by golfers.</p>
   </footer>
 
-  <script>
-    let cart = [];
-    try {
-      cart = JSON.parse(localStorage.getItem('cart')) || [];
-    } catch (e) {
-      console.warn("LocalStorage read error:", e);
-      cart = [];
-    }
-
-    function addToCart(productName, quantity, unitPrice) {
-      const qty = parseInt(quantity);
-      if (isNaN(qty) || (qty !== 12 && qty !== 24)) {
-        alert("Please select a valid quantity.");
-        return;
-      }
-
-      let pricePerSet = 0;
-      if (qty === 12) {
-        pricePerSet = unitPrice;
-      } else if (qty === 24) {
-        pricePerSet = unitPrice === 18 ? 33 : 52;
-      }
-
-      const productIndex = cart.findIndex(item => item.name === productName && item.quantity === qty);
-      if (productIndex !== -1) {
-        cart[productIndex].quantity += qty;
-        cart[productIndex].price += pricePerSet;
-      } else {
-        cart.push({ name: productName, quantity: qty, price: pricePerSet });
-      }
-
-      try {
-        localStorage.setItem('cart', JSON.stringify(cart));
-      } catch (e) {
-        alert("Failed to save cart. Your browser might be in private mode or storage is disabled.");
-        return;
-      }
-
-      alert(`${productName} (${qty} balls) added to cart.`);
-      updateCart();
-    }
-
-    function updateCart() {
-      const cartItemsDiv = document.getElementById('cart-items');
-      const cartTotalEl = document.getElementById('cart-total');
-      const checkoutBtn = document.getElementById('checkout-button');
-      if (!cartItemsDiv) return;
-
-      cartItemsDiv.innerHTML = '';
-      let total = 0;
-
-      cart.forEach((item, index) => {
-        const itemDiv = document.createElement('div');
-        itemDiv.classList.add('cart-item');
-        itemDiv.innerHTML = `
-          <strong>${item.name}</strong> - ${item.quantity} balls - $${item.price.toFixed(2)}
-          <button class="remove-button" onclick="removeFromCart(${index})">Remove</button>
-        `;
-        cartItemsDiv.appendChild(itemDiv);
-        total += item.price;
-      });
-
-      cartTotalEl.textContent = total.toFixed(2);
-      checkoutBtn.style.display = cart.length > 0 ? 'inline-block' : 'none';
-    }
-
-    function removeFromCart(index) {
-      cart.splice(index, 1);
-      localStorage.setItem('cart', JSON.stringify(cart));
-      updateCart();
-    }
-
-    function handleCheckoutForm() {
-      const form = document.getElementById('checkout-form');
-      if (!form) return;
-
-      form.addEventListener('submit', function(e) {
-        e.preventDefault();
-        if (cart.length === 0) {
-          alert("Your cart is empty.");
-          return;
-        }
-
-        alert("Thank you for your order! (Payment integration can be added later.)");
-        cart = [];
-        localStorage.removeItem('cart');
-        window.location.href = 'index.html';
-      });
-    }
-
-    window.onload = function() {
-      updateCart();
-      handleCheckoutForm();
-
-      document.getElementById('titleist-add')?.addEventListener('click', () => {
-        const qty = document.getElementById('titleist-quantity').value;
-        addToCart('Titleist', qty, 18);
-      });
-
-      document.getElementById('callaway-add')?.addEventListener('click', () => {
-        const qty = document.getElementById('callaway-quantity').value;
-        addToCart('Callaway', qty, 18);
-      });
-
-      document.getElementById('taylormade-add')?.addEventListener('click', () => {
-        const qty = document.getElementById('taylormade-quantity').value;
-        addToCart('TaylorMade', qty, 18);
-      });
-
-      document.getElementById('prov1-add')?.addEventListener('click', () => {
-        const qty = document.getElementById('prov1-quantity').value;
-        addToCart('Pro V1', qty, 27);
-      });
-    }
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
