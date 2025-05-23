@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Checkout - Mulligan Market</title>
   <style>
-    /* Reset and body */
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: linear-gradient(120deg, #d0e9ff, #ffffff);
@@ -74,7 +73,7 @@
       font-size: 1.2rem;
       color: #004080;
     }
-    input, select, textarea {
+    input, textarea {
       padding: 12px 15px;
       font-size: 1.15rem;
       border-radius: 8px;
@@ -84,7 +83,7 @@
       resize: vertical;
       font-family: inherit;
     }
-    input:focus, select:focus, textarea:focus {
+    input:focus, textarea:focus {
       border-color: #0056d2;
       outline: none;
       box-shadow: 0 0 8px #0056d2aa;
@@ -188,9 +187,7 @@
 
     <section id="order-summary">
       <h3>Your Order</h3>
-      <div id="order-items">
-        <!-- Order items will be inserted here -->
-      </div>
+      <div id="order-items"></div>
       <p id="order-total">Total: $0.00</p>
     </section>
 
@@ -209,15 +206,10 @@
       <label for="address">Shipping Address *</label>
       <textarea id="address" name="address" placeholder="Your full shipping address" required minlength="10"></textarea>
 
-      <label for="paymentMethod">Payment Method *</label>
-      <select id="paymentMethod" name="paymentMethod" required>
-        <option value="" disabled selected>Select payment method</option>
-        <option value="credit-card">Credit Card</option>
-        <option value="paypal">PayPal</option>
-        <option value="cash-on-delivery">Cash on Delivery</option>
-      </select>
+      <!-- PayPal only -->
+      <input type="hidden" id="paymentMethod" name="paymentMethod" value="paypal" />
 
-      <button type="submit">Place Order</button>
+      <button type="submit">Pay with PayPal</button>
     </form>
   </main>
 
@@ -226,9 +218,10 @@
   </footer>
 
   <script>
+    const businessEmail = "adamtfig54@icloud.com"; // Your PayPal business email
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-    // Display order items in summary
+    // Display order summary
     function displayOrderSummary() {
       const orderItemsDiv = document.getElementById('order-items');
       const orderTotalEl = document.getElementById('order-total');
@@ -244,9 +237,9 @@
 
       cart.forEach(item => {
         html += `<li style="margin-bottom:12px; font-weight:600; color:#004080;">
-          ${item.name} — ${item.quantity} balls — $${item.price.toFixed(2)}
+          ${item.name} — ${item.quantity} balls — $${(item.price * item.quantity).toFixed(2)}
         </li>`;
-        total += item.price;
+        total += item.price * item.quantity;
       });
 
       html += '</ul>';
@@ -254,7 +247,7 @@
       orderTotalEl.textContent = `Total: $${total.toFixed(2)}`;
     }
 
-    // Form validation helper
+    // Validate form
     function validateForm() {
       const form = document.getElementById('checkout-form');
       const errorDiv = document.getElementById('form-error');
@@ -273,7 +266,7 @@
         return false;
       }
 
-      // Additional phone pattern validation
+      // Additional phone validation
       const phoneInput = document.getElementById('phone');
       const phonePattern = /^[+]?[\d\s()-]{7,}$/;
       if (!phonePattern.test(phoneInput.value.trim())) {
@@ -286,22 +279,35 @@
       return true;
     }
 
-    // Handle form submission
+    // On submit, redirect to PayPal
     document.getElementById('checkout-form').addEventListener('submit', function(e) {
       e.preventDefault();
+
       if (!validateForm()) return;
 
-      // For now, just thank the user and clear the cart
-      alert("Thank you for your order! We will contact you soon.");
+      // Calculate total
+      let total = 0;
+      cart.forEach(item => {
+        total += item.price * item.quantity;
+      });
 
-      // Clear cart and redirect home
-      localStorage.removeItem('cart');
-      window.location.href = 'index.html';
+      // Construct PayPal URL
+      const paypalUrl = new URL("https://www.paypal.com/cgi-bin/webscr");
+      paypalUrl.searchParams.set('cmd', '_xclick');
+      paypalUrl.searchParams.set('business', businessEmail);
+      paypalUrl.searchParams.set('item_name', 'Mulligan Market Order');
+      paypalUrl.searchParams.set('amount', total.toFixed(2));
+      paypalUrl.searchParams.set('currency_code', 'USD');
+
+      // Optional: add return URL and cancel URL if you have pages for those
+      // paypalUrl.searchParams.set('return', 'https://yourwebsite.com/thankyou.html');
+      // paypalUrl.searchParams.set('cancel_return', 'https://yourwebsite.com/cancel.html');
+
+      // Redirect to PayPal
+      window.location.href = paypalUrl.toString();
     });
 
-    window.onload = () => {
-      displayOrderSummary();
-    };
+    window.onload = displayOrderSummary;
   </script>
 </body>
 </html>
