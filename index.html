@@ -4,74 +4,324 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Mulligan Market</title>
-  <link rel="stylesheet" href="styles.css" />
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f0f4f8;
+      color: #333;
+    }
+
+    header {
+      background: #2c3e50;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    nav a {
+      margin: 0 15px;
+      color: #ecf0f1;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    h2 {
+      text-align: center;
+      margin-top: 30px;
+      font-size: 2em;
+      color: #34495e;
+    }
+
+    #products {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .product {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      margin: 15px;
+      padding: 20px;
+      width: 280px;
+      text-align: center;
+      transition: transform 0.2s ease-in-out;
+    }
+
+    .product:hover {
+      transform: scale(1.03);
+    }
+
+    .product img {
+      width: 100%;
+      border-radius: 8px;
+    }
+
+    .product h3 {
+      margin: 10px 0 5px;
+    }
+
+    .product select {
+      padding: 5px;
+      margin: 10px 0;
+    }
+
+    .product button {
+      background: #27ae60;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .product button:hover {
+      background: #219150;
+    }
+
+    #cart {
+      max-width: 700px;
+      margin: 40px auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .cart-item:last-child {
+      border-bottom: none;
+    }
+
+    .remove-btn {
+      background: #e74c3c;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    #checkout-form {
+      margin-top: 30px;
+      display: none;
+      flex-direction: column;
+    }
+
+    #checkout-form input, #checkout-form select {
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    #checkout-form button {
+      background: #2980b9;
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    #checkout-form button:hover {
+      background: #21618c;
+    }
+
+    #cart-total {
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    @media (max-width: 600px) {
+      .product {
+        width: 90%;
+      }
+
+      #cart {
+        width: 90%;
+      }
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background-color: #2c3e50;
+      color: white;
+      margin-top: 40px;
+    }
+  </style>
 </head>
 <body>
+
   <header>
-    <div class="logo">
-      <h1>MULLIGAN MARKET</h1>
-    </div>
+    <h1>MULLIGAN MARKET</h1>
     <nav>
-      <a href="index.html">Home</a>
-      <a href="cart.html">Cart</a>
-      <a href="checkout.html">Checkout</a>
+      <a href="#">Home</a>
+      <a href="#cart">Cart</a>
     </nav>
   </header>
 
-  <main>
-    <h2>Golf Balls Available for Purchase</h2>
-    <div id="products">
-      <!-- Product Template -->
-      <div class="product">
-        <img src="titleist.jpg" alt="Titleist Ball" />
-        <h3>Titleist</h3>
-        <p>$18 (12), $33 (24)</p>
-        <select id="titleist-quantity">
-          <option value="12">12 balls</option>
-          <option value="24">24 balls</option>
-        </select>
-        <button onclick="addToCart('Titleist', getQuantity('titleist-quantity'))">Add to Cart</button>
-      </div>
-
-      <div class="product">
-        <img src="callaway.jpg.jpeg" alt="Callaway Ball" />
-        <h3>Callaway</h3>
-        <p>$18 (12), $33 (24)</p>
-        <select id="callaway-quantity">
-          <option value="12">12 balls</option>
-          <option value="24">24 balls</option>
-        </select>
-        <button onclick="addToCart('Callaway', getQuantity('callaway-quantity'))">Add to Cart</button>
-      </div>
-
-      <div class="product">
-        <img src="taylormade.jpg.jpeg" alt="TaylorMade Ball" />
-        <h3>TaylorMade</h3>
-        <p>$18 (12), $33 (24)</p>
-        <select id="taylormade-quantity">
-          <option value="12">12 balls</option>
-          <option value="24">24 balls</option>
-        </select>
-        <button onclick="addToCart('TaylorMade', getQuantity('taylormade-quantity'))">Add to Cart</button>
-      </div>
-
-      <div class="product">
-        <img src="prov1.jpg.jpeg" alt="Pro V1 Ball" />
-        <h3>Pro V1</h3>
-        <p>$27 (12), $52 (24)</p>
-        <select id="prov1-quantity">
-          <option value="12">12 balls</option>
-          <option value="24">24 balls</option>
-        </select>
-        <button onclick="addToCart('Pro V1', getQuantity('prov1-quantity'))">Add to Cart</button>
-      </div>
+  <h2>Golf Balls for Sale</h2>
+  <div id="products">
+    <!-- Product -->
+    <div class="product">
+      <img src="titleist.jpg" alt="Titleist" />
+      <h3>Titleist</h3>
+      <p>$18 (12), $33 (24)</p>
+      <select id="titleist-qty">
+        <option value="12">12 balls</option>
+        <option value="24">24 balls</option>
+      </select>
+      <button onclick="addToCart('Titleist', 'titleist-qty', 18)">Add to Cart</button>
     </div>
-  </main>
+
+    <div class="product">
+      <img src="callaway.jpg.jpeg" alt="Callaway" />
+      <h3>Callaway</h3>
+      <p>$18 (12), $33 (24)</p>
+      <select id="callaway-qty">
+        <option value="12">12 balls</option>
+        <option value="24">24 balls</option>
+      </select>
+      <button onclick="addToCart('Callaway', 'callaway-qty', 18)">Add to Cart</button>
+    </div>
+
+    <div class="product">
+      <img src="taylormade.jpg.jpeg" alt="TaylorMade" />
+      <h3>TaylorMade</h3>
+      <p>$18 (12), $33 (24)</p>
+      <select id="taylormade-qty">
+        <option value="12">12 balls</option>
+        <option value="24">24 balls</option>
+      </select>
+      <button onclick="addToCart('TaylorMade', 'taylormade-qty', 18)">Add to Cart</button>
+    </div>
+
+    <div class="product">
+      <img src="prov1.jpg.jpeg" alt="Pro V1" />
+      <h3>Pro V1</h3>
+      <p>$27 (12), $52 (24)</p>
+      <select id="prov1-qty">
+        <option value="12">12 balls</option>
+        <option value="24">24 balls</option>
+      </select>
+      <button onclick="addToCart('Pro V1', 'prov1-qty', 27)">Add to Cart</button>
+    </div>
+  </div>
+
+  <div id="cart">
+    <h2>Your Cart</h2>
+    <div id="cart-items"></div>
+    <p id="cart-total">Total: $0.00</p>
+    <button onclick="toggleCheckout()" id="checkoutBtn" style="display:none;">Proceed to Checkout</button>
+
+    <form id="checkout-form">
+      <h3>Checkout</h3>
+      <input type="text" placeholder="Your Name" required />
+      <input type="text" placeholder="Shipping Address" required />
+      <select required>
+        <option value="">Select Payment Method</option>
+        <option value="credit">Credit Card</option>
+        <option value="paypal">PayPal</option>
+      </select>
+      <button type="submit">Complete Purchase</button>
+    </form>
+  </div>
 
   <footer>
-    <p>&copy; 2025 Mulligan Market</p>
+    &copy; 2025 Mulligan Market
   </footer>
 
-  <script src="script.js"></script>
+  <script>
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    function getPrice(quantity, basePrice) {
+      if (basePrice === 27) return quantity == 24 ? 52 : 27;
+      return quantity == 24 ? 33 : basePrice;
+    }
+
+    function addToCart(productName, selectId, basePrice) {
+      const qty = parseInt(document.getElementById(selectId).value);
+      const price = getPrice(qty, basePrice);
+
+      const existing = cart.find(item => item.name === productName && item.quantity === qty);
+      if (existing) {
+        existing.quantity += qty;
+        existing.price += price;
+      } else {
+        cart.push({ name: productName, quantity: qty, price });
+      }
+
+      localStorage.setItem('cart', JSON.stringify(cart));
+      alert(`${productName} (${qty}) added to cart.`);
+      renderCart();
+    }
+
+    function renderCart() {
+      const cartItems = document.getElementById('cart-items');
+      const cartTotal = document.getElementById('cart-total');
+      const checkoutBtn = document.getElementById('checkoutBtn');
+
+      if (!cartItems) return;
+
+      cartItems.innerHTML = '';
+      let total = 0;
+
+      cart.forEach((item, i) => {
+        const div = document.createElement('div');
+        div.className = 'cart-item';
+        div.innerHTML = `
+          ${item.name} - ${item.quantity} balls - $${item.price.toFixed(2)}
+          <button class="remove-btn" onclick="removeFromCart(${i})">Remove</button>
+        `;
+        cartItems.appendChild(div);
+        total += item.price;
+      });
+
+      cartTotal.textContent = `Total: $${total.toFixed(2)}`;
+      checkoutBtn.style.display = cart.length ? 'block' : 'none';
+    }
+
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      localStorage.setItem('cart', JSON.stringify(cart));
+      renderCart();
+    }
+
+    function toggleCheckout() {
+      document.getElementById('checkout-form').style.display = 'flex';
+    }
+
+    document.getElementById('checkout-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      alert("Thank you for your purchase!");
+      cart = [];
+      localStorage.removeItem('cart');
+      document.getElementById('checkout-form').reset();
+      document.getElementById('checkout-form').style.display = 'none';
+      renderCart();
+    });
+
+    window.onload = renderCart;
+  </script>
 </body>
 </html>
