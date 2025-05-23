@@ -1,11 +1,11 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Mulligan Market</title>
   <style>
-    /* Basic styles - a little colorful and clean */
+    /* (Same CSS as before, unchanged) */
     body {
       font-family: Arial, sans-serif;
       background: #f0f8ff;
@@ -126,48 +126,40 @@
           <option value="12">12 balls</option>
           <option value="24">24 balls</option>
         </select>
-        <button onclick="addToCart('Titleist', document.getElementById('titleist-quantity').value, 18)">
-          Add to Cart
-        </button>
+        <button id="titleist-add">Add to Cart</button>
       </div>
 
       <div class="product">
-        <img src="callaway.jpg.jpeg" alt="Callaway Ball" />
+        <img src="callaway.jpg" alt="Callaway Ball" />
         <h3>Callaway</h3>
         <p>$18 (12 balls), $33 (24 balls)</p>
         <select id="callaway-quantity">
           <option value="12">12 balls</option>
           <option value="24">24 balls</option>
         </select>
-        <button onclick="addToCart('Callaway', document.getElementById('callaway-quantity').value, 18)">
-          Add to Cart
-        </button>
+        <button id="callaway-add">Add to Cart</button>
       </div>
 
       <div class="product">
-        <img src="taylormade.jpg.jpeg" alt="TaylorMade Ball" />
+        <img src="taylormade.jpg" alt="TaylorMade Ball" />
         <h3>TaylorMade</h3>
         <p>$18 (12 balls), $33 (24 balls)</p>
         <select id="taylormade-quantity">
           <option value="12">12 balls</option>
           <option value="24">24 balls</option>
         </select>
-        <button onclick="addToCart('TaylorMade', document.getElementById('taylormade-quantity').value, 18)">
-          Add to Cart
-        </button>
+        <button id="taylormade-add">Add to Cart</button>
       </div>
 
       <div class="product">
-        <img src="prov1.jpg.jpeg" alt="Pro V1 Ball" />
+        <img src="prov1.jpg" alt="Pro V1 Ball" />
         <h3>Pro V1</h3>
         <p>$27 (12 balls), $52 (24 balls)</p>
         <select id="prov1-quantity">
           <option value="12">12 balls</option>
           <option value="24">24 balls</option>
         </select>
-        <button onclick="addToCart('Pro V1', document.getElementById('prov1-quantity').value, 27)">
-          Add to Cart
-        </button>
+        <button id="prov1-add">Add to Cart</button>
       </div>
 
     </div>
@@ -178,51 +170,52 @@
   </footer>
 
   <script>
-    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    let cart = [];
+    try {
+      cart = JSON.parse(localStorage.getItem('cart')) || [];
+    } catch (e) {
+      console.warn("LocalStorage read error:", e);
+      cart = [];
+    }
 
-    // Add item to cart
     function addToCart(productName, quantity, unitPrice) {
       const qty = parseInt(quantity);
+      if (isNaN(qty) || (qty !== 12 && qty !== 24)) {
+        alert("Please select a valid quantity.");
+        return;
+      }
 
-      // Calculate price based on quantity and product
       let pricePerSet = 0;
       if (qty === 12) {
         pricePerSet = unitPrice;
       } else if (qty === 24) {
         pricePerSet = unitPrice === 18 ? 33 : 52;
-      } else {
-        alert("Invalid quantity selected.");
-        return;
       }
 
-      // Find if product already exists regardless of quantity for merging
       const productIndex = cart.findIndex(item => item.name === productName && item.quantity === qty);
-
       if (productIndex !== -1) {
-        // If same product & qty, increase quantity and price
         cart[productIndex].quantity += qty;
         cart[productIndex].price += pricePerSet;
       } else {
-        // Else add new item
-        cart.push({
-          name: productName,
-          quantity: qty,
-          price: pricePerSet
-        });
+        cart.push({ name: productName, quantity: qty, price: pricePerSet });
       }
 
-      localStorage.setItem('cart', JSON.stringify(cart));
+      try {
+        localStorage.setItem('cart', JSON.stringify(cart));
+      } catch (e) {
+        alert("Failed to save cart. Your browser might be in private mode or storage is disabled.");
+        return;
+      }
+
       alert(`${productName} (${qty} balls) added to cart.`);
       updateCart();
     }
 
-    // Update cart display on cart page (if loaded)
     function updateCart() {
       const cartItemsDiv = document.getElementById('cart-items');
       const cartTotalEl = document.getElementById('cart-total');
       const checkoutBtn = document.getElementById('checkout-button');
-
-      if (!cartItemsDiv) return; // if no cart page, exit
+      if (!cartItemsDiv) return;
 
       cartItemsDiv.innerHTML = '';
       let total = 0;
@@ -242,14 +235,12 @@
       checkoutBtn.style.display = cart.length > 0 ? 'inline-block' : 'none';
     }
 
-    // Remove item from cart
     function removeFromCart(index) {
       cart.splice(index, 1);
       localStorage.setItem('cart', JSON.stringify(cart));
       updateCart();
     }
 
-    // Checkout form handler on checkout.html page
     function handleCheckoutForm() {
       const form = document.getElementById('checkout-form');
       if (!form) return;
@@ -262,17 +253,35 @@
         }
 
         alert("Thank you for your order! (Payment integration can be added later.)");
-
         cart = [];
         localStorage.removeItem('cart');
         window.location.href = 'index.html';
       });
     }
 
-    // Run updates on page load
     window.onload = function() {
       updateCart();
       handleCheckoutForm();
+
+      document.getElementById('titleist-add')?.addEventListener('click', () => {
+        const qty = document.getElementById('titleist-quantity').value;
+        addToCart('Titleist', qty, 18);
+      });
+
+      document.getElementById('callaway-add')?.addEventListener('click', () => {
+        const qty = document.getElementById('callaway-quantity').value;
+        addToCart('Callaway', qty, 18);
+      });
+
+      document.getElementById('taylormade-add')?.addEventListener('click', () => {
+        const qty = document.getElementById('taylormade-quantity').value;
+        addToCart('TaylorMade', qty, 18);
+      });
+
+      document.getElementById('prov1-add')?.addEventListener('click', () => {
+        const qty = document.getElementById('prov1-quantity').value;
+        addToCart('Pro V1', qty, 27);
+      });
     }
   </script>
 </body>
